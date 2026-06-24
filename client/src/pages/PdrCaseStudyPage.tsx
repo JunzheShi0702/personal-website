@@ -28,7 +28,7 @@ const workflowSteps = [
 export function PdrCaseStudyPage() {
   return (
     <div className="space-y-8">
-      <section className="rounded-3xl border border-white/15 bg-slate-900/80 p-6 md:p-8">
+      <section className="rounded-3xl border border-white/15 p-6 md:p-8">
         <a
           href="/"
           className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400 transition hover:text-cyan-100"
