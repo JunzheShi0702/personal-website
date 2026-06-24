@@ -6,7 +6,6 @@ import { HomePage } from '../pages/HomePage'
 import { PdrCaseStudyPage } from '../pages/PdrCaseStudyPage'
 import { PublicationsPage } from '../pages/PublicationsPage'
 import { ResearchPage } from '../pages/ResearchPage'
-import { ResumePage } from '../pages/ResumePage'
 
 export const appRouter = createBrowserRouter([
   {
@@ -18,7 +17,7 @@ export const appRouter = createBrowserRouter([
       { path: 'projects/pdr-ai', element: <PdrCaseStudyPage /> },
       { path: 'research', element: <ResearchPage /> },
       { path: 'publications', element: <PublicationsPage /> },
-      { path: 'resume', element: <ResumePage /> },
+      { path: 'resume', element: <Navigate to='/#resume' replace /> },
       { path: 'contact', element: <Navigate to='/#contact' replace /> },
       { path: 'ask-junzhe', element: <AskJunzhePage /> },
     ],

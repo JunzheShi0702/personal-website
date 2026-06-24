@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail } from 'lucide-react'
@@ -5,6 +6,8 @@ import { BentoCard } from '../components/ui/BentoCard'
 import { SectionTitle } from '../components/ui/SectionTitle'
 import { homepagePathways } from '../content/siteContent'
 import universityShield from '../assets/university.shield.rgb.white.svg'
+
+const resumePath = '/resume.pdf'
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -32,6 +35,26 @@ const stagger = {
 }
 
 export function HomePage() {
+  const [resumeAvailable, setResumeAvailable] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    let isMounted = true
+
+    fetch(resumePath, { method: 'HEAD' })
+      .then((response) => {
+        if (!isMounted) return
+        setResumeAvailable(response.ok)
+      })
+      .catch(() => {
+        if (!isMounted) return
+        setResumeAvailable(false)
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
   return (
     <div className="space-y-10">
       <section className="relative px-2 py-6 md:py-10">
@@ -159,6 +182,72 @@ export function HomePage() {
             Read PDR AI case study
           </Link>
         </BentoCard>
+      </section>
+
+      <section id="resume" className="space-y-5 scroll-mt-24">
+        <SectionTitle
+          eyebrow="Resume"
+          title="Resume and downloadable PDF"
+          subtitle="Preview inline when supported, or open in a new tab when your browser blocks embedded PDFs."
+        />
+
+        <section className="rounded-3xl border border-white/15 bg-slate-900/80 p-6 md:p-8">
+          {resumeAvailable ? (
+            <a
+              href={resumePath}
+              download
+              className="inline-flex rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-200"
+            >
+              Download Resume PDF
+            </a>
+          ) : null}
+        </section>
+
+        <section className="rounded-2xl border border-white/15 bg-slate-900/75 p-3 md:p-4">
+          {resumeAvailable === null ? (
+            <div className="h-[36vh] rounded-xl border border-white/10 bg-slate-950/55 p-6 text-sm text-slate-300">
+              Checking resume file...
+            </div>
+          ) : resumeAvailable ? (
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={resumePath}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-full border border-white/20 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:text-cyan-50"
+                >
+                  Open In New Tab
+                </a>
+              </div>
+              <object
+                aria-label="Junzhe Shi Resume"
+                data={`${resumePath}#toolbar=1&navpanes=0`}
+                type="application/pdf"
+                className="h-[78vh] w-full rounded-xl border border-white/10 bg-slate-950/55"
+              >
+                <div className="h-[36vh] rounded-xl border border-white/10 bg-slate-950/55 p-6 text-sm text-slate-300">
+                  Your browser cannot preview this PDF inline. Use
+                  <a
+                    href={resumePath}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mx-1 font-semibold text-cyan-100 underline decoration-cyan-200/70 underline-offset-2"
+                  >
+                    Open In New Tab
+                  </a>
+                  or the download button above.
+                </div>
+              </object>
+            </div>
+          ) : (
+            <div className="h-[36vh] rounded-xl border border-white/10 bg-slate-950/55 p-6 text-sm text-slate-300">
+              Resume PDF is not uploaded yet. Add your file to
+              <span className="mx-1 font-semibold text-cyan-100">client/public/resume.pdf</span>
+              to enable preview and download.
+            </div>
+          )}
+        </section>
       </section>
 
       <section id="contact" className="rounded-3xl border border-white/15 bg-slate-900/75 p-6 md:p-8">

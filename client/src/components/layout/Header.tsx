@@ -5,7 +5,7 @@ const navItems = [
   { label: 'Projects', to: '/projects/atlas' },
   { label: 'Research', to: '/research' },
   { label: 'Publications', to: '/publications' },
-  { label: 'Resume', to: '/resume' },
+  { label: 'Resume', to: '/#resume' },
 ]
 
 export function Header() {

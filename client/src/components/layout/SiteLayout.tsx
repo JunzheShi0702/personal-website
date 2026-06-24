@@ -7,6 +7,15 @@ export function SiteLayout() {
   const location = useLocation()
 
   useEffect(() => {
+    if (location.hash) {
+      const targetId = location.hash.slice(1)
+      const target = document.getElementById(targetId)
+      if (target) {
+        target.scrollIntoView({ block: 'start', behavior: 'auto' })
+        return
+      }
+    }
+
     // Keep a small offset so route transitions feel less cramped under the sticky header.
     window.scrollTo({ top: 16, left: 0, behavior: 'auto' })
   }, [location.pathname, location.search, location.hash])
