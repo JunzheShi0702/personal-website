@@ -19,6 +19,7 @@ export const appRouter = createBrowserRouter([
       { path: 'research', element: <ResearchPage /> },
       { path: 'publications', element: <PublicationsPage /> },
       { path: 'resume', element: <ResumePage /> },
+      { path: 'resume.pdf', element: <Navigate to='/resume' replace /> },
       { path: 'contact', element: <Navigate to='/#contact' replace /> },
       { path: 'ask-junzhe', element: <AskJunzhePage /> },
     ],
