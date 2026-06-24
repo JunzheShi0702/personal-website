@@ -1,24 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Outfit', 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk', 'Outfit', sans-serif;
+}
 
 :root {
-  --bg: #f7f4ee;
-  --surface: #fffdf7;
-  --chip-bg: #f5efe2;
-  --border: #d8d1c3;
-  --text: #3f473f;
-  --heading: #17211a;
-  --muted: #5b645b;
-  --accent: #175c4c;
-  --shadow-soft: 0 12px 30px rgba(40, 37, 25, 0.08);
-
-  --font-body: 'Manrope', 'Segoe UI', sans-serif;
-  --font-display: 'Fraunces', Georgia, serif;
-
-  font-family: var(--font-body);
-  line-height: 1.5;
-  font-weight: 500;
-  color: var(--text);
-  background: var(--bg);
+  font-family: var(--font-sans);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,47 +18,18 @@
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
-  min-height: 100%;
-}
-
 body {
   margin: 0;
-  min-height: 100svh;
-  background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.45), rgba(249, 246, 236, 0.85)),
-    var(--bg);
 }
 
 h1,
 h2,
-h3 {
-  margin: 0;
-  color: var(--heading);
-  line-height: 1.08;
+h3,
+h4 {
   font-family: var(--font-display);
 }
 
-h1 {
-  font-size: clamp(2rem, 5vw, 4rem);
-  letter-spacing: -0.025em;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 3vw, 2.3rem);
-  letter-spacing: -0.02em;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-a {
-  color: inherit;
-}
-
-p {
-  margin: 0;
+::selection {
+  background: rgba(34, 211, 238, 0.28);
+  color: #f8fafc;
 }
