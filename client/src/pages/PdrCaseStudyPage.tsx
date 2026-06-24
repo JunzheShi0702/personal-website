@@ -1,32 +1,28 @@
 import { ScreenshotCard } from '../components/ui/ScreenshotCard'
 import launchstackLogo from '../assets/launchstack-logo.png'
 
-const stages = [
+const architectureLayers = [
   {
-    title: 'Import and context setup',
-    detail:
-      'Users upload source documents, define revision goals, and set transformation constraints before generation begins.',
+    title: 'Services Layer',
+    items: ['Marketing Engine', 'Legal Services', 'Employee Onboarding', 'Document Reasoning'],
   },
   {
-    title: 'Draft generation with control',
-    detail:
-      'AI proposes revised drafts while preserving user visibility into instruction scope and transformation intent.',
+    title: 'Tools Layer',
+    items: ['RAG Pipeline (BM25 + Vector)', 'Web Search', 'Doc Ingestion & OCR', 'Entity Extraction & Knowledge Graph'],
   },
   {
-    title: 'Preview and diff review',
-    detail:
-      'Users inspect granular changes in a review layer instead of accepting a single opaque rewritten result.',
+    title: 'Physical Layer',
+    items: ['PostgreSQL + pgvector', 'Next.js 15 + Inngest', 'S3 Storage', 'External ML Sidecars'],
   },
-  {
-    title: 'Regeneration and selective acceptance',
-    detail:
-      'Sections can be regenerated or accepted stepwise; accepted edits persist in rewrite state across sessions.',
-  },
-  {
-    title: 'DOCX handling and output',
-    detail:
-      'Revision output supports document workflows including Track Changes style review and final export pathways.',
-  },
+]
+
+const workflowSteps = [
+  { step: '01', label: 'Upload', description: 'Cloud or database storage with role-based access' },
+  { step: '02', label: 'Ingest', description: 'Unified adapters for PDF, DOCX, images, and more' },
+  { step: '03', label: 'Process', description: 'OCR, chunking, embedding, and entity extraction' },
+  { step: '04', label: 'Store', description: 'Vectors in pgvector, chunks for BM25, knowledge graph' },
+  { step: '05', label: 'Retrieve', description: 'Ensemble search with vector, BM25, and reranking' },
+  { step: '06', label: 'Use', description: 'AI chat, predictive analysis, document insights' },
 ]
 
 export function PdrCaseStudyPage() {
@@ -53,10 +49,10 @@ export function PdrCaseStudyPage() {
               />
             </div>
             <p className="text-balance text-3xl font-semibold tracking-tight text-slate-50 md:text-5xl">
-              Human-AI document revision platform
+              Modular AI engine for Next.js apps
             </p>
             <p className="max-w-4xl text-lg leading-relaxed text-slate-300 md:text-xl">
-              A collaborative rewriting platform designed around reviewability, user control, and iterative quality rather than one-shot generation.
+              Launchstack combines document ingestion, semantic search, knowledge graphs, and LLM abstractions into a framework-agnostic engine — wired into the Next.js app you already have.
             </p>
           </div>
         </div>
@@ -88,46 +84,60 @@ export function PdrCaseStudyPage() {
 
       <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
         <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
-          <h3 className="text-xl font-semibold text-white">Why this product exists</h3>
+          <h3 className="text-xl font-semibold text-white">Why Launchstack</h3>
           <p className="mt-3 text-sm leading-relaxed text-slate-300">
-            One-shot rewriting can create fast output but weak trust: users lose
-            control over factual drift, tone mismatch, and legal or procedural nuance.
-            PDR AI reframes revision as a guided collaboration loop where AI accelerates
-            options and humans decide what survives.
+            Document AI is fragmented: ingestion is separate from retrieval, which is separate from LLM
+            orchestration. Launchstack unifies the stack into a single, portable TypeScript engine that
+            reads zero environment variables at runtime — you supply the config.
           </p>
-          <h4 className="mt-5 text-lg font-semibold text-slate-100">Core technical stack</h4>
-          <p className="mt-2 text-sm text-slate-300">
-            Next.js, TypeScript, API routes, persistence-backed rewrite state, diff
-            rendering, and DOCX-focused revision operations integrated into editing
-            workflows.
-          </p>
+          <h4 className="mt-5 text-lg font-semibold text-slate-100">Core capabilities</h4>
+          <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-slate-300">
+            <li>Unified ingestion for 10+ document types</li>
+            <li>RAG with vector search, BM25, and optional reranking</li>
+            <li>Knowledge graph entity extraction and traversal</li>
+            <li>Background jobs and agent guardrails</li>
+            <li>Multi-tenant document scoping and RBAC</li>
+          </ul>
         </article>
         <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
-          <h3 className="text-xl font-semibold text-white">Workflow architecture</h3>
+          <h3 className="text-xl font-semibold text-white">Three-layer design</h3>
           <div className="mt-3 space-y-3">
-            {stages.map((stage) => (
+            {architectureLayers.map((layer) => (
               <div
-                key={stage.title}
+                key={layer.title}
                 className="rounded-xl border border-white/10 bg-slate-950/55 p-3"
               >
-                <h4 className="text-sm font-semibold text-cyan-100">{stage.title}</h4>
-                <p className="mt-1 text-sm text-slate-300">{stage.detail}</p>
+                <h4 className="text-sm font-semibold text-cyan-100">{layer.title}</h4>
+                <p className="mt-1 text-xs text-slate-400">{layer.items.join(' · ')}</p>
               </div>
             ))}
           </div>
         </article>
       </section>
 
+      <section className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
+        <h3 className="text-xl font-semibold text-white">End-to-end workflow</h3>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+          {workflowSteps.map((item) => (
+            <div key={item.step} className="rounded-lg border border-white/10 bg-slate-950/55 p-3 text-center">
+              <p className="text-lg font-bold text-cyan-300">{item.step}</p>
+              <p className="mt-1 text-sm font-semibold text-white">{item.label}</p>
+              <p className="mt-1 text-xs leading-tight text-slate-400">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="group grid gap-4 lg:grid-cols-2">
         <ScreenshotCard
           src="/screenshots/pdr-live-hero.png"
-          alt="PDR AI live landing page"
-          caption="Live LaunchStack homepage highlighting document AI, team workflows, and deployment entry points."
+          alt="Launchstack platform overview"
+          caption="Document management interface with multi-tenant role-based access, upload workflows, and document analytics."
         />
         <ScreenshotCard
           src="/screenshots/pdr-live-features.png"
-          alt="PDR AI live feature sections"
-          caption="Live product sections showing document RAG, employee management, and analytics capabilities."
+          alt="Launchstack feature modules"
+          caption="RAG-powered search, predictive document analysis, knowledge graph visualization, and AI chat on grounded data."
         />
       </section>
     </div>
