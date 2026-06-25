@@ -226,17 +226,17 @@ export function AtlasCaseStudyPage() {
 
       <section className="space-y-4">
         <div>
-          <h3 className="text-xl font-semibold text-white">Live product evidence</h3>
+          <h3 className="text-xl font-semibold text-white">My engineering contributions</h3>
           <p className="mt-2 max-w-3xl text-sm text-slate-300">
-            These screenshots come from the deployed Atlas product and show the
-            exact user-facing behaviors implemented across the weekly calendar,
-            custom event system, evaluation transparency, and schedule audit.
+            These screenshots show the user-facing features I implemented across
+            natural-language schedule operations, evaluation transparency, and
+            conflict-aware planning.
           </p>
         </div>
-        <div className="grid gap-4 md:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-3">
           <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">
-              01 LLM Operation +/−
+              Contribution 01 · Schedule operations
             </p>
             <p className="mt-2 text-sm text-slate-300">
               The assistant executes add and remove requests in chat and applies
@@ -245,16 +245,7 @@ export function AtlasCaseStudyPage() {
           </article>
           <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">
-              02 Edit Proof
-            </p>
-            <p className="mt-2 text-sm text-slate-300">
-              The modal proves custom events can be edited directly with title,
-              day, time, and location controls.
-            </p>
-          </article>
-          <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">
-              03 Evaluation Transparency
+              Contribution 02 · Evaluation transparency
             </p>
             <p className="mt-2 text-sm text-slate-300">
               Source-level evaluation rows are inspectable through raw data,
@@ -263,7 +254,7 @@ export function AtlasCaseStudyPage() {
           </article>
           <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">
-              04 Conflict Proof
+              Contribution 03 · Conflict-aware planning
             </p>
             <p className="mt-2 text-sm text-slate-300">
               The weekly view shows the amber overlap warning with a conflict
@@ -275,28 +266,19 @@ export function AtlasCaseStudyPage() {
           <ScreenshotCard
             src="/screenshots/atlas-proof-4-schedule-audit.jpeg"
             alt="Atlas chat showing add and remove operations"
-            caption="01 LLM operation +/−: add and remove commands are executed through chat and reflected in schedule state."
+            caption="Contribution 01 · Schedule operations: add and remove commands are executed through chat and reflected in schedule state."
             badge="01"
-            imageClassName="h-[24rem] w-full bg-slate-950 object-cover object-top"
+            imageClassName="block h-auto w-full bg-slate-950 object-contain"
             figureClassName="overflow-hidden rounded-2xl border border-white/20 bg-slate-950/70 shadow-[0_18px_60px_-28px_rgba(34,211,238,0.35)]"
             captionClassName="border-t border-white/10 bg-slate-950/70 px-4 py-2.5 text-sm text-slate-200"
           />
-          <div className="grid gap-4 md:grid-cols-2">
-            <ScreenshotCard
-              src="/screenshots/atlas-proof-2-custom-event-dialog.jpeg"
-              alt="Atlas custom event edit modal"
-              caption="02 Edit proof: custom events can be edited with title, day, time, and location fields."
-              badge="02"
-              imageClassName="h-[22rem] w-full bg-slate-950 object-cover object-center"
-              figureClassName="overflow-hidden rounded-2xl border border-white/20 bg-slate-950/70 shadow-[0_14px_48px_-26px_rgba(15,23,42,0.95)]"
-              captionClassName="border-t border-white/10 bg-slate-950/70 px-4 py-2.5 text-sm text-slate-200"
-            />
+          <div className="space-y-4">
             <ScreenshotCard
               src="/screenshots/atlas-proof-3-eval-raw-data.png"
               alt="Atlas raw evaluation data table"
-              caption="03 Evaluation transparency: raw metric rows, term, instructor, and respondent counts are visible for auditability."
-              badge="03"
-              imageClassName="h-[22rem] w-full bg-slate-950 object-cover object-top"
+              caption="Contribution 02 · Evaluation transparency: raw metric rows, term, instructor, and respondent counts remain visible for auditability."
+              badge="02"
+              imageClassName="block h-auto w-full bg-slate-950 object-contain"
               figureClassName="overflow-hidden rounded-2xl border border-white/20 bg-slate-950/70 shadow-[0_14px_48px_-26px_rgba(15,23,42,0.95)]"
               captionClassName="border-t border-white/10 bg-slate-950/70 px-4 py-2.5 text-sm text-slate-200"
             />
@@ -304,9 +286,9 @@ export function AtlasCaseStudyPage() {
           <ScreenshotCard
             src="/screenshots/atlas-proof-1-weekly-calendar.jpeg"
             alt="Atlas conflict proof with overlapping course and custom event"
-            caption="04 Conflict proof: the amber overlap warning appears with both a conflict event and a conflict course block."
-            badge="04"
-            imageClassName="h-[24rem] w-full bg-slate-950 object-cover object-top"
+            caption="Contribution 03 · Conflict-aware planning: the weekly calendar identifies overlapping courses and custom events in the same time window."
+            badge="03"
+            imageClassName="block h-auto w-full bg-slate-950 object-contain"
             figureClassName="overflow-hidden rounded-2xl border border-white/20 bg-slate-950/70 shadow-[0_18px_60px_-28px_rgba(34,211,238,0.35)]"
             captionClassName="border-t border-white/10 bg-slate-950/70 px-4 py-2.5 text-sm text-slate-200"
           />

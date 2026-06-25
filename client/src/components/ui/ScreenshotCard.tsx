@@ -68,7 +68,7 @@ export function ScreenshotCard({
           onError={handleImageError}
           className={
             imageClassName ??
-            'h-56 w-full object-cover object-top transition duration-500 group-hover:scale-[1.02]'
+            'block h-auto w-full object-contain transition duration-500 group-hover:scale-[1.01]'
           }
         />
         {badge ? (
