@@ -39,9 +39,10 @@ Implementation notes:
 - `api/chat.ts` is the Vercel serverless route.
 - `api/_lib/hermesClient.ts` calls `${HERMES_API_URL}/v1/chat/completions` with `gpt-5.4-mini` and `stream: false`.
 - `api/_lib/rateLimiter.ts` applies in-memory per-IP limits of 8 requests/minute and 80 requests/day.
-- `api/_lib/cache.ts` caches repeated questions for 5 minutes.
-- `api/_lib/promptSecurity.ts` adds server-side scope and prompt-injection guardrails.
-- `src/lib/junzheKnowledge.ts` contains the initial structured website knowledge base and TODOs for resume, transcript summary, research summaries, papers, and project details.
+- `api/_lib/promptSecurity.ts` adds a small server-side safety wrapper and hard-blocks obvious abuse.
+- Hermes is the source of truth for the website-agent knowledge base and persona.
+- The website backend does not inject local project/research knowledge into prompts.
+- Response caching is disabled so follow-up questions cannot receive stale standalone answers.
 
 Production setup on Vercel:
 

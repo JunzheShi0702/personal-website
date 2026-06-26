@@ -12,7 +12,6 @@ export type ChatRequestBody = {
 
 export type ChatSuccessResponse = {
   answer: string
-  cached?: boolean
 }
 
 export type ChatErrorResponse = {

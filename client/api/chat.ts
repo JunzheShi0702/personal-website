@@ -1,7 +1,5 @@
-import { getCachedAnswer, normalizeCacheKey, setCachedAnswer } from './_lib/cache.js'
 import { callHermesChat } from './_lib/hermesClient.js'
-import { getRelevantJunzheContext } from './_lib/knowledge.js'
-import { buildSystemPrompt, findSecurityIssue } from './_lib/promptSecurity.js'
+import { buildSafetyPrompt, findSecurityIssue } from './_lib/promptSecurity.js'
 import { checkRateLimit } from './_lib/rateLimiter.js'
 import type { AssistantChatMessage, ChatRequestBody } from './_lib/types.js'
 
@@ -100,22 +98,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ answer: securityIssue })
   }
 
-  const cacheKey = normalizeCacheKey(validation.message)
-  const cachedAnswer = getCachedAnswer(cacheKey)
-  if (cachedAnswer) {
-    return res.status(200).json({ answer: cachedAnswer, cached: true })
-  }
-
   try {
-    const context = getRelevantJunzheContext(validation.message)
     const messages: AssistantChatMessage[] = [
-      buildSystemPrompt(context),
+      buildSafetyPrompt(),
       ...validation.history,
       { role: 'user', content: validation.message },
     ]
 
     const answer = await callHermesChat(messages)
-    setCachedAnswer(cacheKey, answer)
 
     return res.status(200).json({ answer })
   } catch {

@@ -134,7 +134,7 @@ export function ChatWidget() {
               <div className="flex justify-start">
                 <div className="flex items-center gap-2 rounded-2xl border border-cyan-200/20 bg-cyan-200/10 px-4 py-3 text-xs text-slate-300">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-200" />
-                  Reading the public portfolio context...
+                  Asking the Hermes website agent...
                 </div>
               </div>
             ) : null}
