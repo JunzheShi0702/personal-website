@@ -3,7 +3,7 @@ import { callHermesChat } from './_lib/hermesClient'
 import { buildSystemPrompt, findSecurityIssue } from './_lib/promptSecurity'
 import { checkRateLimit } from './_lib/rateLimiter'
 import type { AssistantChatMessage, ChatRequestBody } from './_lib/types'
-import { getRelevantJunzheContext } from '../src/lib/junzheKnowledge'
+import { getRelevantJunzheContext } from './_lib/knowledge'
 
 type VercelRequest = {
   method?: string
@@ -33,8 +33,8 @@ function getClientIp(req: VercelRequest) {
   return req.socket.remoteAddress ?? 'unknown'
 }
 
-function validateBody(body: ChatRequestBody) {
-  if (typeof body.message !== 'string' || body.message.trim().length === 0) {
+function validateBody(body: ChatRequestBody | undefined) {
+  if (!body || typeof body.message !== 'string' || body.message.trim().length === 0) {
     return { ok: false as const, error: 'Please enter a question before sending.' }
   }
 
