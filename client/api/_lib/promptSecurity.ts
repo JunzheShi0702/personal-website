@@ -1,4 +1,4 @@
-import type { AssistantChatMessage } from './types'
+import type { AssistantChatMessage } from './types.js'
 
 const BLOCKED_PATTERNS = [
   /ignore\s+(all\s+)?(previous|prior|above)\s+instructions/i,

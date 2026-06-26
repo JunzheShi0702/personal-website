@@ -1,4 +1,4 @@
-import type { AssistantChatMessage } from './types'
+import type { AssistantChatMessage } from './types.js'
 
 const HERMES_MODEL = 'gpt-5.4-mini'
 const REQUEST_TIMEOUT_MS = 45_000

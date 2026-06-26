@@ -1,9 +1,9 @@
-import { getCachedAnswer, normalizeCacheKey, setCachedAnswer } from './_lib/cache'
-import { callHermesChat } from './_lib/hermesClient'
-import { buildSystemPrompt, findSecurityIssue } from './_lib/promptSecurity'
-import { checkRateLimit } from './_lib/rateLimiter'
-import type { AssistantChatMessage, ChatRequestBody } from './_lib/types'
-import { getRelevantJunzheContext } from './_lib/knowledge'
+import { getCachedAnswer, normalizeCacheKey, setCachedAnswer } from './_lib/cache.js'
+import { callHermesChat } from './_lib/hermesClient.js'
+import { getRelevantJunzheContext } from './_lib/knowledge.js'
+import { buildSystemPrompt, findSecurityIssue } from './_lib/promptSecurity.js'
+import { checkRateLimit } from './_lib/rateLimiter.js'
+import type { AssistantChatMessage, ChatRequestBody } from './_lib/types.js'
 
 type VercelRequest = {
   method?: string
