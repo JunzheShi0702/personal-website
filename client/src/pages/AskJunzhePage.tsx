@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { SectionTitle } from '../components/ui/SectionTitle'
 import { useAssistant } from '../features/assistant/useAssistant'
@@ -12,8 +12,7 @@ const suggestedPrompts = [
 
 export function AskJunzhePage() {
   const [prompt, setPrompt] = useState('')
-  const { messages, isLoading, canSend, sendMessage } = useAssistant()
-  const formRef = useRef<HTMLFormElement>(null)
+  const { messages, isLoading, error, canSend, sendMessage } = useAssistant()
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -31,8 +30,8 @@ export function AskJunzhePage() {
           subtitle="This assistant is portfolio-specific and grounded in public project and research materials. It is not a general-purpose chatbot."
         />
         <p className="mt-4 text-sm text-slate-300">
-          Backend note: UI is production-ready and connected to a modular assistant API
-          adapter, with mock fallback until RAG/LLM services are wired.
+          Backend note: messages go through the local server-side API route before
+          Hermes, so provider keys never touch the browser.
         </p>
       </section>
 
@@ -45,8 +44,7 @@ export function AskJunzhePage() {
                 key={example}
                 type="button"
                 onClick={() => {
-                  setPrompt(example)
-                  formRef.current?.requestSubmit()
+                  void sendMessage(example)
                 }}
                 className="rounded-lg border border-white/15 bg-slate-950/50 px-3 py-2 text-left text-sm text-slate-200 transition hover:border-cyan-200/45 hover:text-cyan-100"
               >
@@ -80,10 +78,14 @@ export function AskJunzhePage() {
                 Thinking through portfolio materials...
               </div>
             ) : null}
+            {error ? (
+              <div className="mr-8 rounded-2xl border border-amber-200/25 bg-amber-200/10 px-4 py-3 text-sm text-amber-100">
+                {error}
+              </div>
+            ) : null}
           </div>
 
           <form
-            ref={formRef}
             onSubmit={handleSubmit}
             className="border-t border-white/10 p-3"
           >

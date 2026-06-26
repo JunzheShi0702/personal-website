@@ -1,32 +1,53 @@
-# React + TypeScript + Vite
+# Junzhe Shi Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This is a React + TypeScript + Vite portfolio deployed to Vercel.
 
-Currently, two official plugins are available:
+## Ask Junzhe AI chatbot
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The floating “Ask Junzhe” widget calls the local server-side route:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```txt
+POST /api/chat
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+The browser never calls Hermes directly and never receives the Hermes API key.
+
+Required server-side environment variables:
+
+```bash
+HERMES_API_URL=https://api.junzheshi.com
+HERMES_API_KEY=
+```
+
+Local Vercel-style test:
+
+```bash
+cd client
+HERMES_API_URL=https://api.junzheshi.com HERMES_API_KEY=your_key npx vercel dev
+```
+
+Then test the API:
+
+```bash
+curl -X POST http://localhost:3000/api/chat \
+  -H 'Content-Type: application/json' \
+  -d '{"message":"What projects has Junzhe built?","history":[]}'
+```
+
+Implementation notes:
+
+- `api/chat.ts` is the Vercel serverless route.
+- `api/_lib/hermesClient.ts` calls `${HERMES_API_URL}/v1/chat/completions` with `gpt-5.4-mini` and `stream: false`.
+- `api/_lib/rateLimiter.ts` applies in-memory per-IP limits of 8 requests/minute and 80 requests/day.
+- `api/_lib/cache.ts` caches repeated questions for 5 minutes.
+- `api/_lib/promptSecurity.ts` adds server-side scope and prompt-injection guardrails.
+- `src/lib/junzheKnowledge.ts` contains the initial structured website knowledge base and TODOs for resume, transcript summary, research summaries, papers, and project details.
+
+Production setup on Vercel:
+
+1. Open the Vercel project.
+2. Go to Settings → Environment Variables.
+3. Add `HERMES_API_URL` with value `https://api.junzheshi.com`.
+4. Add `HERMES_API_KEY` with the Hermes key.
+5. Apply both to Production, Preview, and Development if you want all environments to work.
+6. Redeploy the latest production deployment after saving the variables.

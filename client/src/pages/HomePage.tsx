@@ -36,14 +36,14 @@ const stagger = {
 export function HomePage() {
   return (
     <div className="space-y-10">
-      <section className="relative px-2 py-6 md:py-10">
+      <section className="relative isolate px-2 py-6 md:py-10">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-1 top-0 select-none opacity-[0.12] md:-top-6 md:right-4"
+          className="pointer-events-none absolute right-1 top-0 -z-10 select-none opacity-[0.12] md:-top-6 md:right-4"
         >
           <img src={universityShield} alt="" className="h-56 w-auto md:h-80" />
         </div>
-        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative z-10 grid items-start gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/85">
               Research Engineering Portfolio
@@ -74,24 +74,67 @@ export function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid self-start gap-4 sm:grid-cols-2 lg:grid-cols-1">
             <BentoCard>
               <p className="text-xs uppercase tracking-[0.15em] text-cyan-200/70">
                 Focus
               </p>
-              <p className="mt-2 text-sm text-slate-200">
-                AI-assisted product systems, human-in-the-loop workflows, and
-                explainable recommendation experiences.
+              <p className="mt-3 text-base font-medium leading-relaxed text-slate-100">
+                Building AI products that help people make complex decisions without
+                hiding the evidence or tradeoffs.
               </p>
+              <div className="mt-4 space-y-3 border-t border-white/10 pt-4 text-sm leading-relaxed text-slate-300">
+                <p>
+                  <span className="font-semibold text-cyan-100">Atlas:</span>{' '}
+                  constraint-aware course planning with natural-language schedule
+                  operations and evidence-backed recommendations.
+                </p>
+                <p>
+                  <span className="font-semibold text-cyan-100">LaunchStack:</span>{' '}
+                  diff-first document rewriting and research-grounded campaign
+                  generation with explicit user approval.
+                </p>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {['Agentic workflows', 'Retrieval systems', 'Human review'].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-cyan-200/15 bg-cyan-300/5 px-3 py-1 text-xs text-cyan-100/80"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </BentoCard>
             <BentoCard>
               <p className="text-xs uppercase tracking-[0.15em] text-violet-200/80">
                 Signature Lens
               </p>
-              <p className="mt-2 text-sm text-slate-200">
-                Translating uncertainty-heavy domains into decision tools people can
-                trust and act on.
+              <p className="mt-3 text-base font-medium leading-relaxed text-slate-100">
+                Translating uncertainty-heavy domains into systems people can inspect,
+                question, and confidently act on.
               </p>
+              <div className="mt-4 space-y-3 border-t border-white/10 pt-4 text-sm leading-relaxed text-slate-300">
+                <p>
+                  I expose raw evaluation records, source citations, schedule
+                  conflicts, and before-and-after diffs instead of asking users to
+                  trust an opaque model response.
+                </p>
+                <p>
+                  Contract tests, validation boundaries, and clarification gates keep
+                  AI behavior reliable when prompts, tools, or upstream data change.
+                </p>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {['Source attribution', 'Explicit constraints', 'Tested behavior'].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-violet-200/15 bg-violet-300/5 px-3 py-1 text-xs text-violet-100/80"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </BentoCard>
           </div>
         </div>

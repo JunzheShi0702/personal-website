@@ -13,6 +13,7 @@ const initialMessage: AssistantMessage = {
 export function useAssistant() {
   const [messages, setMessages] = useState<AssistantMessage[]>([initialMessage])
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const canSend = useMemo(() => !isLoading, [isLoading])
 
@@ -29,12 +30,16 @@ export function useAssistant() {
 
     const history = [...messages, userMessage]
     setMessages(history)
+    setError(null)
     setIsLoading(true)
 
     try {
       const response = await askJunzheAssistant({
-        prompt: trimmedPrompt,
-        history,
+        message: trimmedPrompt,
+        history: history
+          .filter((message) => message.id !== 'boot')
+          .slice(-12)
+          .map(({ role, content }) => ({ role, content })),
       })
 
       const assistantMessage: AssistantMessage = {
@@ -45,10 +50,16 @@ export function useAssistant() {
       }
 
       setMessages((current) => [...current, assistantMessage])
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error
+          ? caughtError.message
+          : 'Ask Junzhe is unavailable right now.'
+      setError(message)
     } finally {
       setIsLoading(false)
     }
   }
 
-  return { messages, isLoading, canSend, sendMessage }
+  return { messages, isLoading, error, canSend, sendMessage }
 }

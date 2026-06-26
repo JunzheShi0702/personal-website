@@ -8,11 +8,12 @@ export type AssistantMessage = {
 }
 
 export type AssistantApiPayload = {
-  prompt: string
-  history: AssistantMessage[]
+  message: string
+  history: Pick<AssistantMessage, 'role' | 'content'>[]
 }
 
 export type AssistantApiResponse = {
   answer: string
+  error?: string
   sources?: string[]
 }

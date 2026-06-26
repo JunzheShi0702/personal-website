@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { ChatWidget } from '../../features/assistant/ChatWidget'
 import { Footer } from './Footer'
 import { Header } from './Header'
 
@@ -31,6 +32,7 @@ export function SiteLayout() {
         </main>
         <Footer />
       </div>
+      <ChatWidget />
     </div>
   )
 }
