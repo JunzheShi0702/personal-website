@@ -1,6 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { SiteLayout } from '../components/layout/SiteLayout'
-import { AskJunzhePage } from '../pages/AskJunzhePage'
 import { AtlasCaseStudyPage } from '../pages/AtlasCaseStudyPage'
 import { HomePage } from '../pages/HomePage'
 import { PdrCaseStudyPage } from '../pages/PdrCaseStudyPage'
@@ -18,7 +17,7 @@ export const appRouter = createBrowserRouter([
       { path: 'publications', element: <Navigate to="/research#publications" replace /> },
       { path: 'resume', element: <Navigate to='/#resume' replace /> },
       { path: 'contact', element: <Navigate to='/#contact' replace /> },
-      { path: 'ask-junzhe', element: <AskJunzhePage /> },
+      { path: 'ask-junzhe', element: <Navigate to="/" replace /> },
     ],
   },
 ])

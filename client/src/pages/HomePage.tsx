@@ -64,14 +64,6 @@ export function HomePage() {
               >
                 Explore Flagship Projects
               </Link>
-              <Link
-                to="/ask-junzhe"
-                className="inline-flex items-center gap-2 rounded-full border border-cyan-300/60 bg-slate-950 px-5 py-2 text-sm font-semibold text-cyan-200 shadow-lg transition hover:border-cyan-200 hover:text-cyan-100"
-              >
-                <span aria-hidden="true">✦</span>
-                Open Ask Junzhe AI
-                <span aria-hidden="true">✦</span>
-              </Link>
             </div>
           </div>
           <div className="grid self-start gap-4 sm:grid-cols-2 lg:grid-cols-1">

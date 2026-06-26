@@ -2,16 +2,8 @@ import { useMemo, useState } from 'react'
 import { askJunzheAssistant } from './api'
 import type { AssistantMessage } from './types'
 
-const initialMessage: AssistantMessage = {
-  id: 'boot',
-  role: 'assistant',
-  content:
-    'I am the Ask Junzhe AI portfolio assistant. I answer questions about projects, research, publications, and technical decisions based on public portfolio materials.',
-  createdAt: Date.now(),
-}
-
 export function useAssistant() {
-  const [messages, setMessages] = useState<AssistantMessage[]>([initialMessage])
+  const [messages, setMessages] = useState<AssistantMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -37,7 +29,6 @@ export function useAssistant() {
       const response = await askJunzheAssistant({
         message: trimmedPrompt,
         history: history
-          .filter((message) => message.id !== 'boot')
           .slice(-12)
           .map(({ role, content }) => ({ role, content })),
       })

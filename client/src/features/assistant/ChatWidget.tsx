@@ -111,8 +111,12 @@ export function ChatWidget() {
               </article>
             ))}
 
-            {messages.length <= 1 ? (
+            {messages.length === 0 ? (
               <div className="grid gap-2 pt-1">
+                <p className="rounded-2xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs leading-relaxed text-slate-400">
+                  Ask about Junzhe’s projects, research, skills, or contact info.
+                  Replies are generated through the deployed API.
+                </p>
                 {starterQuestions.map((question) => (
                   <button
                     key={question}

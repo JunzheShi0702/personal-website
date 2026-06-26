@@ -32,12 +32,6 @@ export const homepagePathways = [
       'Scientific work across healthcare AI, materials science, astronomy, and nuclear physics—with methods, contributions, and publications.',
     to: '/research',
   },
-  {
-    title: 'Ask Junzhe AI',
-    description:
-      'Portfolio assistant for Q&A on projects, research trajectory, and technology stack.',
-    to: '/ask-junzhe',
-  },
 ]
 
 export const researchTracks: ResearchTrack[] = [

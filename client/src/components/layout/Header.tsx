@@ -41,21 +41,6 @@ export function Header() {
               {item.label}
             </NavLink>
           ))}
-          <NavLink
-            to="/ask-junzhe"
-            className={({ isActive }) =>
-              clsx(
-                'flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold shadow-lg transition',
-                isActive
-                  ? 'bg-slate-950 text-cyan-200 border border-cyan-300/60'
-                  : 'bg-slate-950 text-cyan-200 border border-cyan-300/60 hover:border-cyan-200 hover:text-cyan-100',
-              )
-            }
-          >
-            <span aria-hidden="true">✦</span>
-            Ask Junzhe AI
-            <span aria-hidden="true">✦</span>
-          </NavLink>
         </nav>
       </div>
     </header>
