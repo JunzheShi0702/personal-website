@@ -64,89 +64,125 @@ export function HomePage() {
         >
           <img src={universityShield} alt="" className="h-56 w-auto md:h-80" />
         </div>
-        <div className="relative z-10 grid items-start gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/85">
-              Research Engineering Portfolio
-            </p>
-            <h1 className="max-w-3xl text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
-              Junzhe Shi builds research-driven AI systems for real human decision-making.
-            </h1>
-            <p className="max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
-              I am a Johns Hopkins student studying Computer Science and Applied
-              Mathematics and Statistics. This site is the deep-dive layer behind my
-              GitHub README: visual storytelling, project architecture, and technical
-              lessons learned from building AI products.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                to="/projects"
-                className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
-              >
-                Explore Flagship Projects
-              </Link>
+        <div className="relative z-10 grid items-stretch gap-6 lg:grid-cols-[1.12fr_0.88fr]">
+          <div className="flex flex-col justify-between gap-7">
+            <div className="space-y-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/85">
+                Research Engineering Portfolio
+              </p>
+              <h1 className="max-w-3xl text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
+                Junzhe Shi builds research-driven AI systems for real human decision-making.
+              </h1>
+              <p className="max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
+                I am a Johns Hopkins student studying Computer Science and Applied
+                Mathematics and Statistics. This site is the deep-dive layer behind my
+                GitHub README: visual storytelling, project architecture, and technical
+                lessons learned from building AI products.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to="/projects"
+                  className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
+                >
+                  Explore Flagship Projects
+                </Link>
+                <Link
+                  to="/research"
+                  className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-200/60 hover:text-white"
+                >
+                  View Research
+                </Link>
+                <a
+                  href={resumePath}
+                  className="inline-flex items-center gap-2 px-1 py-2 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
+                >
+                  <Download className="h-4 w-4" />
+                  Resume
+                </a>
+              </div>
+            </div>
+
+            <div className="grid gap-4 border-t border-white/10 pt-5 md:grid-cols-[0.95fr_1.05fr]">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
+                  Current Focus
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {['AI systems', 'Decision support', 'Human-AI collaboration'].map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-cyan-200/15 bg-cyan-300/5 px-3 py-1 text-xs text-cyan-100/85"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+                  Explore
+                </p>
+                <div className="mt-3 grid gap-2 text-sm">
+                  <Link to="/projects" className="text-slate-200 transition hover:text-cyan-100">
+                    Public project evidence
+                  </Link>
+                  <Link to="/projects/atlas#architecture" className="text-slate-200 transition hover:text-cyan-100">
+                    Atlas architecture
+                  </Link>
+                  <Link to="/research#publications" className="text-slate-200 transition hover:text-cyan-100">
+                    Publications and research tracks
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="grid self-start gap-4 sm:grid-cols-2 lg:grid-cols-1">
-            <BentoCard>
-              <p className="text-xs uppercase tracking-[0.15em] text-cyan-200/70">
-                Focus
-              </p>
-              <p className="mt-3 text-base font-medium leading-relaxed text-slate-100">
-                Building AI products that help people make complex decisions without
-                hiding the evidence or tradeoffs.
-              </p>
-              <div className="mt-4 space-y-3 border-t border-white/10 pt-4 text-sm leading-relaxed text-slate-300">
-                <p>
-                  <span className="font-semibold text-cyan-100">Atlas:</span>{' '}
-                  constraint-aware course planning with natural-language schedule
-                  operations and evidence-backed recommendations.
+          <div className="self-stretch">
+            <BentoCard className="flex h-full flex-col justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.15em] text-cyan-200/70">
+                  What I Build
                 </p>
-                <p>
-                  <span className="font-semibold text-cyan-100">LaunchStack:</span>{' '}
-                  diff-first document rewriting and research-grounded campaign
-                  generation with explicit user approval.
+                <p className="mt-3 text-lg font-medium leading-relaxed text-slate-100">
+                  Inspectable AI systems that keep people in control of complex
+                  decisions.
                 </p>
+                <div className="mt-5 grid gap-3">
+                  {[
+                    ['Atlas', 'Course planning with schedule-aware AI advising.', '/projects/atlas'],
+                    ['LaunchStack', 'Grounded founder workflows with reviewable AI output.', '/projects/pdr-ai'],
+                  ].map(([title, description, href]) => (
+                    <Link
+                      key={title}
+                      to={href}
+                      className="rounded-2xl border border-white/10 bg-slate-950/45 p-4 transition hover:border-cyan-200/40 hover:bg-slate-950/70"
+                    >
+                      <p className="text-sm font-semibold text-cyan-100">{title}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-slate-300">
+                        {description}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
               </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {['Agentic workflows', 'Retrieval systems', 'Human review'].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-cyan-200/15 bg-cyan-300/5 px-3 py-1 text-xs text-cyan-100/80"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </BentoCard>
-            <BentoCard>
-              <p className="text-xs uppercase tracking-[0.15em] text-violet-200/80">
-                Signature Lens
-              </p>
-              <p className="mt-3 text-base font-medium leading-relaxed text-slate-100">
-                Translating uncertainty-heavy domains into systems people can inspect,
-                question, and confidently act on.
-              </p>
-              <div className="mt-4 space-y-3 border-t border-white/10 pt-4 text-sm leading-relaxed text-slate-300">
-                <p>
-                  I expose raw evaluation records, source citations, schedule
-                  conflicts, and before-and-after diffs instead of asking users to
-                  trust an opaque model response.
+
+              <div className="mt-5 border-t border-white/10 pt-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-violet-200/75">
+                  Research Lens
                 </p>
-                <p>
-                  Contract tests, validation boundaries, and clarification gates keep
-                  AI behavior reliable when prompts, tools, or upstream data change.
+                <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                  Grounding, retrieval, evaluation, and human review for AI that
+                  supports real decisions.
                 </p>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {['Source attribution', 'Explicit constraints', 'Tested behavior'].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-violet-200/15 bg-violet-300/5 px-3 py-1 text-xs text-violet-100/80"
-                  >
-                    {item}
-                  </span>
-                ))}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {['Evidence-based reasoning', 'Agent reliability', 'High-stakes AI'].map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-violet-200/15 bg-violet-300/5 px-3 py-1 text-xs text-violet-100/80"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </div>
             </BentoCard>
           </div>
