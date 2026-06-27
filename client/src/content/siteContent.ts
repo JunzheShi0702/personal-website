@@ -70,7 +70,7 @@ export const homepagePathways = [
 export const flagshipProjects: FlagshipProject[] = [
   {
     title: 'Atlas',
-    eyebrow: 'Public flagship · Decision support',
+    eyebrow: 'Public demo + case study · Decision support',
     summary:
       'AI-assisted course search and schedule planning with constraint-aware recommendations, auditability, and retrieval over JHU course data.',
     researchRelevance:

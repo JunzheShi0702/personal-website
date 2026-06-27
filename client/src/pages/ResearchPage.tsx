@@ -25,7 +25,7 @@ const researchSnapshot = [
   {
     label: 'Completed outputs',
     value:
-      'Selected publication entries below include venue, year, DOI, context, and contribution notes.',
+      'Selected DOI-linked entries below include venue, year, context, and contribution notes.',
   },
   {
     label: 'AI systems direction',
@@ -68,7 +68,7 @@ export function ResearchPage() {
                 href="#publications"
                 className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-200/60 hover:text-white"
               >
-                Selected publications
+                DOI-linked outputs
               </a>
             </nav>
           </div>
@@ -244,15 +244,14 @@ export function ResearchPage() {
       <section id="publications" className="scroll-mt-28">
         <div className="border-b border-white/10 pb-5">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-200/70">
-            Selected publications
+            Selected DOI-linked outputs
           </p>
           <h2 className="mt-2 text-2xl font-semibold text-white">
-            Published outputs connected to the research
+            Research outputs connected to the work
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
             Work across materials science, computational physics, and astronomy,
-            presented with DOI links, publication context, and the contribution
-            behind each paper.
+            presented with DOI links, research context, and contribution notes.
           </p>
         </div>
 

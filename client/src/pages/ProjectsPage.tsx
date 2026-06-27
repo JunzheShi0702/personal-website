@@ -37,7 +37,7 @@ export function ProjectsPage() {
           AI systems, engineering judgment, and evidence you can inspect.
         </h1>
         <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
-          Start with the public flagship systems, then scan selected engineering
+          Start with the flagship systems, then scan selected engineering
           experience that demonstrates implementation maturity and systems judgment.
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
@@ -45,7 +45,7 @@ export function ProjectsPage() {
             href="#flagship"
             className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
           >
-            Public flagship projects
+            Flagship projects
           </a>
           <a
             href="#experience"
@@ -58,9 +58,9 @@ export function ProjectsPage() {
 
       <section id="flagship" className="space-y-5 scroll-mt-28">
         <SectionTitle
-          eyebrow="Public Flagship Projects"
+          eyebrow="Flagship Projects"
           title="Built systems with visible evidence"
-          subtitle="These are the strongest public projects. Each card gives several ways to inspect the system before opening the full case study."
+          subtitle="These are the strongest inspectable projects. Each card gives several ways to inspect the system before opening the full case study."
         />
 
         <div className="grid gap-5 lg:grid-cols-2">

@@ -37,23 +37,23 @@ const stagger = {
 const evidenceSnapshot = [
   {
     stat: '2',
-    title: 'Flagship AI systems',
-    detail: 'Atlas and LaunchStack',
+    title: 'Flagship Systems',
+    detail: 'Atlas · LaunchStack',
   },
   {
     stat: '2',
-    title: 'Public case studies',
-    detail: 'Atlas + LaunchStack deep dives',
+    title: 'Technical Case Studies',
+    detail: 'Architecture · Evaluation',
+  },
+  {
+    stat: '3',
+    title: 'Published Papers',
+    detail: 'DOI-linked outputs',
   },
   {
     stat: '4',
-    title: 'Research directions',
-    detail: 'Systems, collaboration, support, grounding',
-  },
-  {
-    stat: '2',
-    title: 'Engineering tracks',
-    detail: 'ReferMe and Go Microservices',
+    title: 'Research Domains',
+    detail: 'AI · Healthcare · Physics · Materials',
   },
 ]
 
@@ -107,7 +107,7 @@ export function HomePage() {
                   to="/projects"
                   className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
                 >
-                  Explore Flagship Projects
+                  Explore Projects
                 </Link>
                 <Link
                   to="/research"
@@ -241,14 +241,17 @@ export function HomePage() {
 
       <section className="space-y-5">
         <SectionTitle
-          eyebrow="Public Flagship Projects"
+          eyebrow="Flagship Projects"
           title="Click into the evidence"
           subtitle="The homepage stays light; each card exposes enough proof to invite inspection."
         />
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4">
           {flagshipProjects.map((project) => (
-            <BentoCard key={project.title} className="overflow-hidden p-0">
-              <div className="relative aspect-[16/9] overflow-hidden border-b border-white/10 bg-slate-950">
+            <BentoCard
+              key={project.title}
+              className="grid overflow-hidden p-0 lg:grid-cols-[minmax(0,1.85fr)_minmax(17rem,0.62fr)]"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-slate-950 lg:aspect-[16/9]">
                 <img
                   src={project.heroImage}
                   alt=""
@@ -258,17 +261,19 @@ export function HomePage() {
                   {project.heroLabel}
                 </div>
               </div>
-              <div className="p-5">
+              <div className="flex flex-col justify-between gap-4 p-4 md:p-5">
                 <p className="text-xs uppercase tracking-[0.16em] text-cyan-200/80">
                   {project.eyebrow}
                 </p>
-                <h3 className="mt-2 text-xl font-semibold text-white">
-                  {project.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                  {project.summary}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-3">
+                <div>
+                  <h3 className="mt-1 text-xl font-semibold text-white">
+                    {project.title}
+                  </h3>
+                  <p className="mt-2 max-w-2xl text-xs leading-relaxed text-slate-300 md:text-sm">
+                    {project.summary}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
                   {project.links.slice(0, 4).map((link) => (
                     <ProjectAction key={`${project.title}-${link.label}`} link={link} />
                   ))}
