@@ -36,20 +36,24 @@ const stagger = {
 
 const evidenceSnapshot = [
   {
-    label: 'Flagship systems',
-    value: 'Atlas and LaunchStack show AI planning, grounding, review, and human approval workflows.',
+    stat: '2',
+    title: 'Flagship AI systems',
+    detail: 'Atlas and LaunchStack',
   },
   {
-    label: 'Public evidence',
-    value: 'Case studies, live demos, screenshots, repository evidence, presentation material, and commit proof.',
+    stat: '2',
+    title: 'Public case studies',
+    detail: 'Atlas + LaunchStack deep dives',
   },
   {
-    label: 'Research outputs',
-    value: 'Research tracks connect to selected DOI-linked publications and contribution notes.',
+    stat: '4',
+    title: 'Research directions',
+    detail: 'Systems, collaboration, support, grounding',
   },
   {
-    label: 'Engineering maturity',
-    value: 'Selected experience highlights full-stack product work and backend systems thinking.',
+    stat: '2',
+    title: 'Engineering tracks',
+    detail: 'ReferMe and Go Microservices',
   },
 ]
 
@@ -228,15 +232,18 @@ export function HomePage() {
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           {evidenceSnapshot.map((item) => (
             <article
-              key={item.label}
-              className="rounded-2xl border border-white/15 bg-slate-900/65 p-4"
+              key={item.title}
+              className="grid grid-cols-[auto_1fr] gap-3 rounded-2xl border border-white/15 bg-slate-900/65 p-4"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
-                {item.label}
+              <p className="font-display text-3xl font-semibold leading-none text-cyan-100">
+                {item.stat}
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                {item.value}
-              </p>
+              <div>
+                <p className="text-sm font-semibold text-white">{item.title}</p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                  {item.detail}
+                </p>
+              </div>
             </article>
           ))}
         </div>
