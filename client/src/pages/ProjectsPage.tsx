@@ -38,8 +38,7 @@ export function ProjectsPage() {
         </h1>
         <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
           Start with the public flagship systems, then scan selected engineering
-          experience that demonstrates implementation maturity without pretending
-          private work has public artifacts.
+          experience that demonstrates implementation maturity and systems judgment.
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
           <a
@@ -61,18 +60,21 @@ export function ProjectsPage() {
         <SectionTitle
           eyebrow="Public Flagship Projects"
           title="Built systems with visible evidence"
-          subtitle="These are the strongest public work samples. Each card gives several ways to inspect the project before opening the full case study."
+          subtitle="These are the strongest public projects. Each card gives several ways to inspect the system before opening the full case study."
         />
 
         <div className="grid gap-5 lg:grid-cols-2">
           {flagshipProjects.map((project) => (
             <BentoCard key={project.title} className="overflow-hidden p-0">
-              <div className="aspect-[16/9] overflow-hidden border-b border-white/10 bg-slate-950">
+              <div className="relative aspect-[16/9] overflow-hidden border-b border-white/10 bg-slate-950">
                 <img
                   src={project.heroImage}
                   alt=""
                   className="h-full w-full object-cover object-top opacity-90 transition duration-500 group-hover:scale-[1.02] group-hover:opacity-100"
                 />
+                <div className="absolute left-4 top-4 rounded-full border border-cyan-200/30 bg-slate-950/85 px-3 py-1 text-xs font-semibold text-cyan-100">
+                  {project.heroLabel}
+                </div>
               </div>
               <div className="p-5 md:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
@@ -136,7 +138,7 @@ export function ProjectsPage() {
         <SectionTitle
           eyebrow="Selected Engineering Experience"
           title="Engineering maturity with clear evidence boundaries"
-          subtitle="These entries are intentionally framed as experience. They do not show repo/demo/screenshot links because no public artifacts are available in this repo."
+          subtitle="These entries are framed as engineering experience: context, architecture, contributions, and skills demonstrated."
         />
 
         <div className="grid gap-4 lg:grid-cols-2">
@@ -153,9 +155,6 @@ export function ProjectsPage() {
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-slate-300">
                 {project.context}
-              </p>
-              <p className="mt-3 rounded-2xl border border-amber-200/15 bg-amber-200/10 px-4 py-3 text-xs leading-relaxed text-amber-100/90">
-                {project.publicStatus}
               </p>
 
               <div className="mt-5 grid gap-3 sm:grid-cols-2">

@@ -34,9 +34,28 @@ const stagger = {
   }),
 }
 
+const evidenceSnapshot = [
+  {
+    label: 'Flagship systems',
+    value: 'Atlas and LaunchStack show AI planning, grounding, review, and human approval workflows.',
+  },
+  {
+    label: 'Public evidence',
+    value: 'Case studies, live demos, screenshots, repository evidence, presentation material, and commit proof.',
+  },
+  {
+    label: 'Research outputs',
+    value: 'Research tracks connect to selected DOI-linked publications and contribution notes.',
+  },
+  {
+    label: 'Engineering maturity',
+    value: 'Selected experience highlights full-stack product work and backend systems thinking.',
+  },
+]
+
 function ProjectAction({ link }: { link: ProjectLink }) {
   const className =
-    'inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-200 transition hover:text-cyan-50'
+    'inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-200/10 hover:text-white'
 
   if (link.external) {
     return (
@@ -189,6 +208,40 @@ export function HomePage() {
         </div>
       </section>
 
+      <section className="space-y-4">
+        <div className="flex flex-col gap-2 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
+              Evidence Snapshot
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-white">
+              Proof points before the deep dive
+            </h2>
+          </div>
+          <Link
+            to="/projects"
+            className="text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
+          >
+            Inspect projects
+          </Link>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          {evidenceSnapshot.map((item) => (
+            <article
+              key={item.label}
+              className="rounded-2xl border border-white/15 bg-slate-900/65 p-4"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
+                {item.label}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                {item.value}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="space-y-5">
         <SectionTitle
           eyebrow="Start Here"
@@ -229,12 +282,15 @@ export function HomePage() {
         <div className="grid gap-4 md:grid-cols-2">
           {flagshipProjects.map((project) => (
             <BentoCard key={project.title} className="overflow-hidden p-0">
-              <div className="aspect-[16/9] overflow-hidden border-b border-white/10 bg-slate-950">
+              <div className="relative aspect-[16/9] overflow-hidden border-b border-white/10 bg-slate-950">
                 <img
                   src={project.heroImage}
                   alt=""
                   className="h-full w-full object-cover object-top opacity-90 transition duration-500 group-hover:scale-[1.02] group-hover:opacity-100"
                 />
+                <div className="absolute left-3 top-3 rounded-full border border-cyan-200/30 bg-slate-950/85 px-3 py-1 text-xs font-semibold text-cyan-100">
+                  {project.heroLabel}
+                </div>
               </div>
               <div className="p-5">
                 <p className="text-xs uppercase tracking-[0.16em] text-cyan-200/80">

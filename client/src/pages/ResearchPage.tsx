@@ -23,19 +23,19 @@ const researchSnapshot = [
       'Healthcare AI research support focused on evidence review, cohort planning, patient safety, and responsible clinical AI framing.',
   },
   {
+    label: 'Completed outputs',
+    value:
+      'Selected publication entries below include venue, year, DOI, context, and contribution notes.',
+  },
+  {
+    label: 'AI systems direction',
+    value:
+      'Current portfolio projects connect research thinking to grounding, decision support, human review, and evaluation.',
+  },
+  {
     label: 'Quantitative foundation',
     value:
       'Earlier research work spans materials science, exoplanet transit modeling, and subatomic physics simulation.',
-  },
-  {
-    label: 'Public evidence',
-    value:
-      'Selected publications include DOI links and contribution notes connected to the research tracks below.',
-  },
-  {
-    label: 'Method pattern',
-    value:
-      'Model the domain, interrogate assumptions, then communicate methods and evidence provenance clearly.',
   },
 ]
 
@@ -103,7 +103,7 @@ export function ResearchPage() {
               Research snapshot
             </p>
             <h2 className="mt-2 text-2xl font-semibold text-white">
-              Concrete evidence behind the research direction
+              Evidence behind the research direction
             </h2>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -141,6 +141,10 @@ export function ResearchPage() {
         <div className="rounded-3xl border border-white/15 bg-slate-950/70 p-5 md:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/70">
             Research domains
+          </p>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
+            The timeline separates current research support from completed
+            research experiences and published outputs already present on this site.
           </p>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {researchTracks.map((track) => (

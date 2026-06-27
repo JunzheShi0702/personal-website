@@ -34,13 +34,13 @@ export type FlagshipProject = {
   evidence: string[]
   links: ProjectLink[]
   heroImage: string
+  heroLabel: string
   previewImages: string[]
 }
 
 export type EngineeringExperience = {
   title: string
   context: string
-  publicStatus: string
   focus: string[]
   skills: string[]
   nextDetails: string[]
@@ -93,6 +93,7 @@ export const flagshipProjects: FlagshipProject[] = [
       '/screenshots/atlas-proof-1-weekly-calendar.jpeg',
     ],
     heroImage: '/screenshots/atlas-proof-4-schedule-audit.jpeg',
+    heroLabel: 'AI planning + schedule audit',
   },
   {
     title: 'LaunchStack',
@@ -120,6 +121,7 @@ export const flagshipProjects: FlagshipProject[] = [
       '/screenshots/pdr-proof-2-results.app.jpeg',
     ],
     heroImage: '/screenshots/pdr-proof-1-diff.app.jpeg',
+    heroLabel: 'Diff review + human approval',
   },
 ]
 
@@ -127,9 +129,7 @@ export const engineeringExperience: EngineeringExperience[] = [
   {
     title: 'ReferMe',
     context:
-      'Selected engineering experience. Public repository, deployment, screenshots, and benchmarks are not available in this website repo.',
-    publicStatus:
-      'No public repository, demo, screenshot, or benchmark is shown because none is available in this website repo.',
+      'Selected engineering experience focused on product workflow design and full-stack implementation.',
     focus: ['Product engineering', 'User workflow design', 'Full-stack implementation'],
     skills: ['System decomposition', 'User-facing flow design', 'Practical delivery'],
     nextDetails: ['Context', 'Tech stack', 'My contributions', 'Engineering challenges'],
@@ -137,9 +137,7 @@ export const engineeringExperience: EngineeringExperience[] = [
   {
     title: 'Go Microservices',
     context:
-      'Selected systems engineering experience. Public repository, deployment, screenshots, and benchmarks are not available in this website repo.',
-    publicStatus:
-      'No public repository, demo, screenshot, or benchmark is shown because none is available in this website repo.',
+      'Selected systems engineering experience focused on service boundaries, backend architecture, and operational thinking.',
     focus: ['Service architecture', 'Backend systems', 'Operational thinking'],
     skills: ['Go', 'Microservice boundaries', 'API design'],
     nextDetails: ['Architecture', 'Tech stack', 'My contributions', 'Lessons learned'],
