@@ -20,7 +20,7 @@ export const config = {
 }
 
 const MAX_MESSAGE_LENGTH = 1200
-const MAX_HISTORY_MESSAGES = 12
+const MAX_NON_SYSTEM = 6
 
 function getClientIp(req: VercelRequest) {
   const forwardedFor = req.headers['x-forwarded-for']
@@ -51,13 +51,6 @@ function validateBody(body: ChatRequestBody | undefined) {
 
   const history = Array.isArray(body.history) ? body.history : []
 
-  if (history.length > MAX_HISTORY_MESSAGES) {
-    return {
-      ok: false as const,
-      error: `Please keep the conversation history to ${MAX_HISTORY_MESSAGES} messages or fewer.`,
-    }
-  }
-
   const sanitizedHistory: AssistantChatMessage[] = history
     .filter((entry): entry is { role: 'user' | 'assistant'; content: string } => {
       if (!entry || typeof entry !== 'object') return false
@@ -68,13 +61,29 @@ function validateBody(body: ChatRequestBody | undefined) {
         maybeEntry.content.trim().length > 0
       )
     })
-    .slice(-MAX_HISTORY_MESSAGES)
     .map((entry) => ({
       role: entry.role,
       content: entry.content.trim().slice(0, MAX_MESSAGE_LENGTH),
     }))
 
   return { ok: true as const, message, history: sanitizedHistory }
+}
+
+function buildHermesMessages(
+  conversationHistory: AssistantChatMessage[],
+  currentMessage: string,
+): AssistantChatMessage[] {
+  const systemMessage = conversationHistory.find((message) => message.role === 'system')
+  const nonSystem = conversationHistory.filter(
+    (message) => message.role === 'user' || message.role === 'assistant',
+  )
+  const trimmedHistory = nonSystem.slice(-MAX_NON_SYSTEM)
+
+  return [
+    ...(systemMessage ? [systemMessage] : []),
+    ...trimmedHistory,
+    { role: 'user', content: currentMessage },
+  ]
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -99,11 +108,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const messages: AssistantChatMessage[] = [
+    const conversationHistory: AssistantChatMessage[] = [
       buildSafetyPrompt(),
       ...validation.history,
-      { role: 'user', content: validation.message },
     ]
+    const messages = buildHermesMessages(conversationHistory, validation.message)
 
     const answer = await callHermesChat(messages)
 

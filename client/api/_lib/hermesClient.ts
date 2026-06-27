@@ -26,6 +26,7 @@ export async function callHermesChat(messages: AssistantChatMessage[]) {
         model: HERMES_MODEL,
         messages,
         stream: false,
+        max_completion_tokens: 400,
       }),
     })
 

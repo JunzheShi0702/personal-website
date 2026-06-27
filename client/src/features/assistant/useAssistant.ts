@@ -28,8 +28,8 @@ export function useAssistant() {
     try {
       const response = await askJunzheAssistant({
         message: trimmedPrompt,
-        history: history
-          .slice(-12)
+        history: messages
+          .slice(-6)
           .map(({ role, content }) => ({ role, content })),
       })
 
