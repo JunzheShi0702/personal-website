@@ -261,19 +261,19 @@ export function HomePage() {
                   {project.heroLabel}
                 </div>
               </div>
-              <div className="flex flex-col justify-between gap-4 p-4 md:p-5">
+              <div className="flex flex-col justify-between gap-5 p-5 md:p-6">
                 <p className="text-xs uppercase tracking-[0.16em] text-cyan-200/80">
                   {project.eyebrow}
                 </p>
                 <div>
-                  <h3 className="mt-1 text-xl font-semibold text-white">
+                  <h3 className="mt-2 text-2xl font-semibold text-white">
                     {project.title}
                   </h3>
-                  <p className="mt-2 max-w-2xl text-xs leading-relaxed text-slate-300 md:text-sm">
+                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300">
                     {project.summary}
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2.5">
                   {project.links.slice(0, 4).map((link) => (
                     <ProjectAction key={`${project.title}-${link.label}`} link={link} />
                   ))}
