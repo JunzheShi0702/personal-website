@@ -125,37 +125,33 @@ export function HomePage() {
               </div>
             </div>
 
-            <div className="grid gap-4 border-t border-white/10 pt-5 md:grid-cols-[0.95fr_1.05fr]">
-              <div>
+            <div className="border-t border-white/10 pt-5">
+              <div className="mb-3 flex items-center justify-between gap-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
-                  Current Focus
+                  Evidence Snapshot
                 </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {['AI systems', 'Decision support', 'Human-AI collaboration'].map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-cyan-200/15 bg-cyan-300/5 px-3 py-1 text-xs text-cyan-100/85"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+                <Link
+                  to="/projects"
+                  className="text-xs font-semibold text-cyan-200 transition hover:text-cyan-100"
+                >
+                  Inspect projects
+                </Link>
               </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-                  Explore
-                </p>
-                <div className="mt-3 grid gap-2 text-sm">
-                  <Link to="/projects" className="text-slate-200 transition hover:text-cyan-100">
-                    Public project evidence
-                  </Link>
-                  <Link to="/projects/atlas#architecture" className="text-slate-200 transition hover:text-cyan-100">
-                    Atlas architecture
-                  </Link>
-                  <Link to="/research#publications" className="text-slate-200 transition hover:text-cyan-100">
-                    Publications and research tracks
-                  </Link>
-                </div>
+              <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+                {evidenceSnapshot.map((item) => (
+                  <article
+                    key={item.title}
+                    className="rounded-2xl border border-white/15 bg-slate-900/65 p-3"
+                  >
+                    <p className="font-display text-2xl font-semibold leading-none text-cyan-100">
+                      {item.stat}
+                    </p>
+                    <p className="mt-1 text-xs font-semibold text-white">{item.title}</p>
+                    <p className="mt-0.5 text-[11px] leading-snug text-slate-400">
+                      {item.detail}
+                    </p>
+                  </article>
+                ))}
               </div>
             </div>
           </div>
@@ -209,43 +205,6 @@ export function HomePage() {
               </div>
             </BentoCard>
           </div>
-        </div>
-      </section>
-
-      <section className="space-y-4">
-        <div className="flex flex-col gap-2 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
-              Evidence Snapshot
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold text-white">
-              Proof points before the deep dive
-            </h2>
-          </div>
-          <Link
-            to="/projects"
-            className="text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
-          >
-            Inspect projects
-          </Link>
-        </div>
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          {evidenceSnapshot.map((item) => (
-            <article
-              key={item.title}
-              className="grid grid-cols-[auto_1fr] gap-3 rounded-2xl border border-white/15 bg-slate-900/65 p-4"
-            >
-              <p className="font-display text-3xl font-semibold leading-none text-cyan-100">
-                {item.stat}
-              </p>
-              <div>
-                <p className="text-sm font-semibold text-white">{item.title}</p>
-                <p className="mt-1 text-xs leading-relaxed text-slate-400">
-                  {item.detail}
-                </p>
-              </div>
-            </article>
-          ))}
         </div>
       </section>
 
