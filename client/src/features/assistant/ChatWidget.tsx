@@ -16,45 +16,47 @@ const starterQuestions = [
 
 function AssistantMarkdown({ content }: { content: string }) {
   return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeSanitize]}
-      components={{
-        a: ({ href, children }) => (
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-cyan-100 underline decoration-cyan-200/40 underline-offset-4 transition hover:text-white hover:decoration-cyan-100"
-          >
-            {children}
-          </a>
-        ),
-        p: ({ children }) => <p className="my-0">{children}</p>,
-        ul: ({ children }) => (
-          <ul className="my-1.5 list-disc space-y-1 pl-4 marker:text-cyan-200/80">
-            {children}
-          </ul>
-        ),
-        ol: ({ children }) => (
-          <ol className="my-1.5 list-decimal space-y-1 pl-4 marker:text-cyan-200/80">
-            {children}
-          </ol>
-        ),
-        li: ({ children }) => <li className="pl-1">{children}</li>,
-        strong: ({ children }) => (
-          <strong className="font-semibold text-white">{children}</strong>
-        ),
-        em: ({ children }) => <em className="text-slate-100">{children}</em>,
-        code: ({ children }) => (
-          <code className="rounded-md border border-cyan-200/15 bg-slate-950/60 px-1.5 py-0.5 font-mono text-[0.82em] text-cyan-50">
-            {children}
-          </code>
-        ),
-      }}
-    >
-      {content}
-    </ReactMarkdown>
+    <div className="space-y-2 break-words [overflow-wrap:anywhere]">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeSanitize]}
+        components={{
+          a: ({ href, children }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="break-words font-medium text-cyan-100 underline decoration-cyan-200/40 underline-offset-4 [overflow-wrap:anywhere] transition hover:text-white hover:decoration-cyan-100"
+            >
+              {children}
+            </a>
+          ),
+          p: ({ children }) => <p className="my-0">{children}</p>,
+          ul: ({ children }) => (
+            <ul className="my-1.5 list-disc space-y-1 pl-4 marker:text-cyan-200/80">
+              {children}
+            </ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="my-1.5 list-decimal space-y-1 pl-4 marker:text-cyan-200/80">
+              {children}
+            </ol>
+          ),
+          li: ({ children }) => <li className="pl-1">{children}</li>,
+          strong: ({ children }) => (
+            <strong className="font-semibold text-white">{children}</strong>
+          ),
+          em: ({ children }) => <em className="text-slate-100">{children}</em>,
+          code: ({ children }) => (
+            <code className="break-words rounded-md border border-cyan-200/15 bg-slate-950/60 px-1.5 py-0.5 font-mono text-[0.82em] text-cyan-50 [overflow-wrap:anywhere]">
+              {children}
+            </code>
+          ),
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
   )
 }
 
@@ -141,16 +143,16 @@ export function ChatWidget() {
               <article
                 key={message.id}
                 className={[
-                  'flex',
+                  'flex min-w-0',
                   message.role === 'assistant' ? 'justify-start' : 'justify-end',
                 ].join(' ')}
               >
                 <div
                   className={[
-                    'max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed',
+                    'min-w-0 max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed',
                     message.role === 'assistant'
-                      ? 'border border-cyan-200/20 bg-cyan-200/10 text-slate-100'
-                      : 'whitespace-pre-wrap border border-white/10 bg-white/10 text-white',
+                      ? 'break-words border border-cyan-200/20 bg-cyan-200/10 text-slate-100 [overflow-wrap:anywhere]'
+                      : 'whitespace-pre-wrap break-words border border-white/10 bg-white/10 text-white [overflow-wrap:anywhere]',
                   ].join(' ')}
                 >
                   {message.role === 'assistant' ? (
