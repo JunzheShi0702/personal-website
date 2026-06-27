@@ -3,6 +3,7 @@ import { SiteLayout } from '../components/layout/SiteLayout'
 import { AtlasCaseStudyPage } from '../pages/AtlasCaseStudyPage'
 import { HomePage } from '../pages/HomePage'
 import { PdrCaseStudyPage } from '../pages/PdrCaseStudyPage'
+import { ProjectsPage } from '../pages/ProjectsPage'
 import { ResearchPage } from '../pages/ResearchPage'
 
 export const appRouter = createBrowserRouter([
@@ -11,6 +12,7 @@ export const appRouter = createBrowserRouter([
     element: <SiteLayout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: 'projects', element: <ProjectsPage /> },
       { path: 'projects/atlas', element: <AtlasCaseStudyPage /> },
       { path: 'projects/pdr-ai', element: <PdrCaseStudyPage /> },
       { path: 'research', element: <ResearchPage /> },

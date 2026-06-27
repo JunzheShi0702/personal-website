@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Download, Mail } from 'lucide-react'
+import { ArrowUpRight, Download, Mail } from 'lucide-react'
 import { BentoCard } from '../components/ui/BentoCard'
 import { SectionTitle } from '../components/ui/SectionTitle'
-import { homepagePathways } from '../content/siteContent'
+import { flagshipProjects, homepagePathways } from '../content/siteContent'
+import type { ProjectLink } from '../content/siteContent'
 import universityShield from '../assets/university.shield.rgb.white.svg'
 
 const resumePath = '/resume.pdf'
@@ -33,6 +34,26 @@ const stagger = {
   }),
 }
 
+function ProjectAction({ link }: { link: ProjectLink }) {
+  const className =
+    'inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-200 transition hover:text-cyan-50'
+
+  if (link.external) {
+    return (
+      <a href={link.href} target="_blank" rel="noreferrer" className={className}>
+        {link.label}
+        <ArrowUpRight className="h-3.5 w-3.5" />
+      </a>
+    )
+  }
+
+  return (
+    <Link to={link.href} className={className}>
+      {link.label}
+    </Link>
+  )
+}
+
 export function HomePage() {
   return (
     <div className="space-y-10">
@@ -59,7 +80,7 @@ export function HomePage() {
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
-                to="/projects/atlas"
+                to="/projects"
                 className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
               >
                 Explore Flagship Projects
@@ -134,9 +155,9 @@ export function HomePage() {
 
       <section className="space-y-5">
         <SectionTitle
-          eyebrow="Three Deep Paths"
-          title="Start where you want to dive deeper"
-          subtitle="The README is the map. This site is the full terrain: system-level context, visualized workflows, and product decisions."
+          eyebrow="Start Here"
+          title="Choose a path into the work"
+          subtitle="Short entry points for visitors who want projects, research context, or a direct way to connect."
         />
         <div className="grid gap-4 md:grid-cols-3">
           {homepagePathways.map((path, index) => (
@@ -163,39 +184,45 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2">
-        <BentoCard>
-          <p className="text-xs uppercase tracking-[0.16em] text-cyan-200/80">
-            Flagship Build
-          </p>
-          <h3 className="mt-2 text-xl font-semibold text-white">Atlas</h3>
-          <p className="mt-2 text-sm text-slate-300">
-            AI-assisted course search and schedule planning with constraint-aware
-            recommendations, rationale-rich advising, and retrieval over course data.
-          </p>
-          <Link
-            to="/projects/atlas"
-            className="mt-4 inline-block text-sm font-semibold text-cyan-200 hover:text-cyan-100"
-          >
-            Read Atlas case study
-          </Link>
-        </BentoCard>
-        <BentoCard>
-          <p className="text-xs uppercase tracking-[0.16em] text-violet-200/80">
-            Human + AI Collaboration
-          </p>
-          <h3 className="mt-2 text-xl font-semibold text-white">PDR AI / LaunchStack</h3>
-          <p className="mt-2 text-sm text-slate-300">
-            Multi-step document revision platform designed for user control,
-            transparent diffs, regeneration loops, and staged acceptance.
-          </p>
-          <Link
-            to="/projects/pdr-ai"
-            className="mt-4 inline-block text-sm font-semibold text-cyan-200 hover:text-cyan-100"
-          >
-            Read PDR AI case study
-          </Link>
-        </BentoCard>
+      <section className="space-y-5">
+        <SectionTitle
+          eyebrow="Public Flagship Projects"
+          title="Click into the evidence"
+          subtitle="The homepage stays light; each card exposes enough proof to invite inspection."
+        />
+        <div className="grid gap-4 md:grid-cols-2">
+          {flagshipProjects.map((project) => (
+            <BentoCard key={project.title} className="overflow-hidden p-0">
+              <div className="grid grid-cols-3 gap-px bg-white/10">
+                {project.previewImages.map((src) => (
+                  <div key={src} className="aspect-[5/3] overflow-hidden bg-slate-950">
+                    <img
+                      src={src}
+                      alt=""
+                      className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="p-5">
+                <p className="text-xs uppercase tracking-[0.16em] text-cyan-200/80">
+                  {project.eyebrow}
+                </p>
+                <h3 className="mt-2 text-xl font-semibold text-white">
+                  {project.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                  {project.summary}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {project.links.slice(0, 4).map((link) => (
+                    <ProjectAction key={`${project.title}-${link.label}`} link={link} />
+                  ))}
+                </div>
+              </div>
+            </BentoCard>
+          ))}
+        </div>
       </section>
 
       <section id="resume" className="space-y-5 scroll-mt-24">

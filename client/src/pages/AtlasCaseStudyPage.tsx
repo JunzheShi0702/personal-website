@@ -36,6 +36,33 @@ const architectureBlocks = [
   },
 ]
 
+const atAGlance = [
+  {
+    label: 'Problem',
+    value:
+      'Students need one inspectable workflow for course discovery, schedule editing, and advising tradeoffs.',
+  },
+  {
+    label: 'Stack',
+    value: 'React, TypeScript, Node.js, Express, PostgreSQL, pgvector, SIS data.',
+  },
+  {
+    label: 'My role',
+    value:
+      'Weekly calendar, event contracts, evaluation transparency, and schedule-aware agent behavior.',
+  },
+  {
+    label: 'Evaluation',
+    value:
+      'Raw evaluation rows, schedule audit surfaces, and 14 golden `/api/agent` cases in CI.',
+  },
+  {
+    label: 'Research significance',
+    value:
+      'A decision-support AI system focused on grounding, constraints, reliability, and user trust.',
+  },
+]
+
 const mindMapBranches = [
   {
     title: 'Input Layer',
@@ -109,6 +136,27 @@ export function AtlasCaseStudyPage() {
           >
             Explore PDR AI case study
           </a>
+        </div>
+      </section>
+
+      <section className="rounded-3xl border border-white/15 bg-slate-950/80 p-5 md:p-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/75">
+          At a Glance
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-5">
+          {atAGlance.map((item) => (
+            <div
+              key={item.label}
+              className="rounded-2xl border border-white/10 bg-slate-900/70 p-4"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
+                {item.label}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-300">
+                {item.value}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -205,7 +253,7 @@ export function AtlasCaseStudyPage() {
         </div>
       </section>
 
-      <section className="space-y-4">
+      <section id="architecture" className="space-y-4 scroll-mt-28">
         <h3 className="text-xl font-semibold text-white">System architecture</h3>
         <div className="grid gap-4 md:grid-cols-3">
           {architectureBlocks.map((block) => (
@@ -224,7 +272,7 @@ export function AtlasCaseStudyPage() {
         </div>
       </section>
 
-      <section className="space-y-4">
+      <section id="evidence" className="space-y-4 scroll-mt-28">
         <div>
           <h3 className="text-xl font-semibold text-white">My engineering contributions</h3>
           <p className="mt-2 max-w-3xl text-sm text-slate-300">
@@ -261,6 +309,11 @@ export function AtlasCaseStudyPage() {
               course block and a conflict custom event in the same time window.
             </p>
           </article>
+        </div>
+        <div className="rounded-2xl border border-dashed border-cyan-200/25 bg-cyan-300/5 p-4 text-sm text-slate-300">
+          Future asset TODO: add a short silent clip showing natural-language
+          schedule edits and the resulting calendar state change. No GIF/video
+          asset currently exists in this repo.
         </div>
         <div className="group space-y-4">
           <ScreenshotCard

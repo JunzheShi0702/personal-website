@@ -19,6 +19,34 @@ const architectureLayers = [
   },
 ]
 
+const atAGlance = [
+  {
+    label: 'Problem',
+    value:
+      'Founder knowledge is scattered across documents, calls, messages, and repositories.',
+  },
+  {
+    label: 'Stack',
+    value:
+      'React, TypeScript, AI workflows, knowledge graph patterns, document automation.',
+  },
+  {
+    label: 'My role',
+    value:
+      'Human-in-the-loop document workflows, research-to-campaign flow, and DOCX redlining integration.',
+  },
+  {
+    label: 'Evaluation',
+    value:
+      'Diff review, source references, authenticated API validation, and 18 unit tests for the DOCX path.',
+  },
+  {
+    label: 'Research significance',
+    value:
+      'A human-AI collaboration system focused on grounding, approval, provenance, and reusable context.',
+  },
+]
+
 const workflowSteps = [
   { step: '01', label: 'Connect', description: 'Bring scattered founder knowledge into one workspace' },
   { step: '02', label: 'Understand', description: 'Parse content, relationships, and source context' },
@@ -324,6 +352,27 @@ export function PdrCaseStudyPage() {
         </div>
       </section>
 
+      <section className="rounded-3xl border border-white/15 bg-slate-950/80 p-5 md:p-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/75">
+          At a Glance
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-5">
+          {atAGlance.map((item) => (
+            <div
+              key={item.label}
+              className="rounded-2xl border border-white/10 bg-slate-900/70 p-4"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
+                {item.label}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-300">
+                {item.value}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
         <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
           <h3 className="text-xl font-semibold text-white">Why LaunchStack</h3>
@@ -375,7 +424,7 @@ export function PdrCaseStudyPage() {
         </p>
       </section>
 
-      <section className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
+      <section id="architecture" className="scroll-mt-28 rounded-2xl border border-white/15 bg-slate-900/75 p-5">
         <h3 className="text-xl font-semibold text-white">End-to-end workflow</h3>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           {workflowSteps.map((item) => (
@@ -388,11 +437,18 @@ export function PdrCaseStudyPage() {
         </div>
       </section>
 
-      <ControlledRewriteProof />
+      <section id="evidence" className="space-y-4 scroll-mt-28">
+        <div className="rounded-2xl border border-dashed border-cyan-200/25 bg-cyan-300/5 p-4 text-sm text-slate-300">
+          Future asset TODO: add a short silent clip showing the rewrite review
+          or research-to-campaign interaction. No GIF/video asset currently
+          exists in this repo.
+        </div>
+        <ControlledRewriteProof />
+      </section>
 
       <ResearchToCampaignProof />
 
-      <section className="overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80">
+      <section id="technical-notes" className="scroll-mt-28 overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80">
         <div className="grid gap-0 lg:grid-cols-[0.72fr_1.28fr]">
           <div className="border-b border-white/10 bg-gradient-to-br from-violet-400/15 via-cyan-300/5 to-transparent p-6 lg:border-b-0 lg:border-r lg:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/80">

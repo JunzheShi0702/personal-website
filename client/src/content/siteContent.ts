@@ -19,18 +19,127 @@ export type Publication = {
   link?: string
 }
 
+export type ProjectLink = {
+  label: string
+  href: string
+  external?: boolean
+}
+
+export type FlagshipProject = {
+  title: string
+  eyebrow: string
+  summary: string
+  researchRelevance: string
+  stack: string[]
+  evidence: string[]
+  links: ProjectLink[]
+  previewImages: string[]
+}
+
+export type EngineeringExperience = {
+  title: string
+  context: string
+  publicStatus: string
+  focus: string[]
+  skills: string[]
+  nextDetails: string[]
+}
+
 export const homepagePathways = [
   {
-    title: 'Flagship Project Case Studies',
+    title: 'Projects',
     description:
-      'Deep dives into Atlas and PDR AI with product reasoning, system architecture, and lessons learned.',
-    to: '/projects/atlas',
+      'Inspect flagship AI systems, public evidence, and selected engineering experience.',
+    to: '/projects',
   },
   {
-    title: 'Research and Publications',
+    title: 'Research',
     description:
       'Scientific work across healthcare AI, materials science, astronomy, and nuclear physics—with methods, contributions, and publications.',
     to: '/research',
+  },
+  {
+    title: 'Contact',
+    description:
+      'For research collaborations, AI systems roles, and technical build opportunities.',
+    to: '/#contact',
+  },
+]
+
+export const flagshipProjects: FlagshipProject[] = [
+  {
+    title: 'Atlas',
+    eyebrow: 'Public flagship · Decision support',
+    summary:
+      'AI-assisted course search and schedule planning with constraint-aware recommendations, auditability, and retrieval over JHU course data.',
+    researchRelevance:
+      'A concrete AI systems case study in high-stakes student planning: grounding, clarification, evaluation, and human-inspectable recommendations.',
+    stack: ['React', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'pgvector'],
+    evidence: ['Live demo', 'Presentation', 'Architecture', 'Screenshots', 'Evaluation notes'],
+    links: [
+      { label: 'Case Study', href: '/projects/atlas' },
+      { label: 'Live Demo', href: 'https://team-02-frontend.onrender.com/', external: true },
+      { label: 'Screenshots', href: '/projects/atlas#evidence' },
+      {
+        label: 'Presentation',
+        href: '/ppt/AI%20Enabled%20SWE%20Final%20Presentation.pptx',
+        external: true,
+      },
+    ],
+    previewImages: [
+      '/screenshots/atlas-proof-4-schedule-audit.jpeg',
+      '/screenshots/atlas-proof-3-eval-raw-data.png',
+      '/screenshots/atlas-proof-1-weekly-calendar.jpeg',
+    ],
+  },
+  {
+    title: 'LaunchStack',
+    eyebrow: 'Public flagship · Human-AI collaboration',
+    summary:
+      'Open-source founder knowledge graph and AI workflow platform for grounded answers, controlled rewriting, and research-to-campaign generation.',
+    researchRelevance:
+      'Shows human-in-the-loop AI system design: source-aware generation, visible process, explicit approval, and implementation-backed reliability.',
+    stack: ['React', 'TypeScript', 'AI workflows', 'Knowledge graph', 'Document automation'],
+    evidence: ['Live demo', 'GitHub repo', 'Commit proof', 'Screenshot gallery', 'Technical notes'],
+    links: [
+      { label: 'Case Study', href: '/projects/pdr-ai' },
+      { label: 'Live Demo', href: 'https://launch-stack-web.vercel.app/', external: true },
+      { label: 'GitHub', href: 'https://github.com/JunzheShi0702/LaunchStack', external: true },
+      { label: 'Screenshots', href: '/projects/pdr-ai#evidence' },
+      {
+        label: 'Commit Proof',
+        href: 'https://github.com/JunzheShi0702/LaunchStack/commit/ce08f6e',
+        external: true,
+      },
+    ],
+    previewImages: [
+      '/screenshots/pdr-proof-1-diff.app.jpeg',
+      '/screenshots/pdr-proof-2-process.app.jpeg',
+      '/screenshots/pdr-proof-2-results.app.jpeg',
+    ],
+  },
+]
+
+export const engineeringExperience: EngineeringExperience[] = [
+  {
+    title: 'ReferMe',
+    context:
+      'Selected engineering experience. Public repository, deployment, screenshots, and benchmarks are not available in this website repo.',
+    publicStatus:
+      'Present as engineering experience only until approved public evidence is added.',
+    focus: ['Product engineering', 'User workflow design', 'Full-stack implementation'],
+    skills: ['System decomposition', 'User-facing flow design', 'Practical delivery'],
+    nextDetails: ['Context', 'Tech stack', 'My contributions', 'Engineering challenges'],
+  },
+  {
+    title: 'Go Microservices',
+    context:
+      'Selected systems engineering experience. Public repository, deployment, screenshots, and benchmarks are not available in this website repo.',
+    publicStatus:
+      'Present as engineering experience only until approved public evidence is added.',
+    focus: ['Service architecture', 'Backend systems', 'Operational thinking'],
+    skills: ['Go', 'Microservice boundaries', 'API design'],
+    nextDetails: ['Architecture', 'Tech stack', 'My contributions', 'Lessons learned'],
   },
 ]
 
