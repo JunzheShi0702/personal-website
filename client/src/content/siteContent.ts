@@ -33,6 +33,7 @@ export type FlagshipProject = {
   stack: string[]
   evidence: string[]
   links: ProjectLink[]
+  heroImage: string
   previewImages: string[]
 }
 
@@ -91,6 +92,7 @@ export const flagshipProjects: FlagshipProject[] = [
       '/screenshots/atlas-proof-3-eval-raw-data.png',
       '/screenshots/atlas-proof-1-weekly-calendar.jpeg',
     ],
+    heroImage: '/screenshots/atlas-proof-4-schedule-audit.jpeg',
   },
   {
     title: 'LaunchStack',
@@ -117,6 +119,7 @@ export const flagshipProjects: FlagshipProject[] = [
       '/screenshots/pdr-proof-2-process.app.jpeg',
       '/screenshots/pdr-proof-2-results.app.jpeg',
     ],
+    heroImage: '/screenshots/pdr-proof-1-diff.app.jpeg',
   },
 ]
 
@@ -126,7 +129,7 @@ export const engineeringExperience: EngineeringExperience[] = [
     context:
       'Selected engineering experience. Public repository, deployment, screenshots, and benchmarks are not available in this website repo.',
     publicStatus:
-      'Present as engineering experience only until approved public evidence is added.',
+      'No public repository, demo, screenshot, or benchmark is shown because none is available in this website repo.',
     focus: ['Product engineering', 'User workflow design', 'Full-stack implementation'],
     skills: ['System decomposition', 'User-facing flow design', 'Practical delivery'],
     nextDetails: ['Context', 'Tech stack', 'My contributions', 'Engineering challenges'],
@@ -136,7 +139,7 @@ export const engineeringExperience: EngineeringExperience[] = [
     context:
       'Selected systems engineering experience. Public repository, deployment, screenshots, and benchmarks are not available in this website repo.',
     publicStatus:
-      'Present as engineering experience only until approved public evidence is added.',
+      'No public repository, demo, screenshot, or benchmark is shown because none is available in this website repo.',
     focus: ['Service architecture', 'Backend systems', 'Operational thinking'],
     skills: ['Go', 'Microservice boundaries', 'API design'],
     nextDetails: ['Architecture', 'Tech stack', 'My contributions', 'Lessons learned'],

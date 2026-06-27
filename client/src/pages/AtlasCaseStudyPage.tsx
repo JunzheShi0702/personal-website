@@ -139,7 +139,7 @@ export function AtlasCaseStudyPage() {
         </div>
       </section>
 
-      <section className="rounded-3xl border border-white/15 bg-slate-950/80 p-5 md:p-6">
+      <section id="research-significance" className="scroll-mt-28 rounded-3xl border border-white/15 bg-slate-950/80 p-5 md:p-6">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/75">
           At a Glance
         </p>
@@ -160,7 +160,30 @@ export function AtlasCaseStudyPage() {
         </div>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+      <section className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
+          Inspect this case study
+        </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {[
+            ['Architecture', '#architecture'],
+            ['Evaluation / testing', '#evidence'],
+            ['Design rationale', '#design-rationale'],
+            ['Lessons learned', '#design-rationale'],
+            ['Research significance', '#research-significance'],
+          ].map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-200/10 hover:text-white"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="design-rationale" className="grid scroll-mt-28 gap-4 xl:grid-cols-[1.2fr_0.8fr]">
         <div className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
           <h3 className="text-xl font-semibold text-white">Problem and motivation</h3>
           <p className="mt-3 text-sm leading-relaxed text-slate-300">
@@ -309,11 +332,6 @@ export function AtlasCaseStudyPage() {
               course block and a conflict custom event in the same time window.
             </p>
           </article>
-        </div>
-        <div className="rounded-2xl border border-dashed border-cyan-200/25 bg-cyan-300/5 p-4 text-sm text-slate-300">
-          Future asset TODO: add a short silent clip showing natural-language
-          schedule edits and the resulting calendar state change. No GIF/video
-          asset currently exists in this repo.
         </div>
         <div className="group space-y-4">
           <ScreenshotCard

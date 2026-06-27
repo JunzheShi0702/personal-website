@@ -67,6 +67,13 @@ export function ProjectsPage() {
         <div className="grid gap-5 lg:grid-cols-2">
           {flagshipProjects.map((project) => (
             <BentoCard key={project.title} className="overflow-hidden p-0">
+              <div className="aspect-[16/9] overflow-hidden border-b border-white/10 bg-slate-950">
+                <img
+                  src={project.heroImage}
+                  alt=""
+                  className="h-full w-full object-cover object-top opacity-90 transition duration-500 group-hover:scale-[1.02] group-hover:opacity-100"
+                />
+              </div>
               <div className="p-5 md:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
                   {project.eyebrow}
@@ -120,18 +127,6 @@ export function ProjectsPage() {
                   ))}
                 </div>
               </div>
-
-              <div className="grid grid-cols-3 gap-px border-t border-white/10 bg-white/10">
-                {project.previewImages.map((src) => (
-                  <div key={src} className="aspect-[4/3] overflow-hidden bg-slate-950">
-                    <img
-                      src={src}
-                      alt=""
-                      className="h-full w-full object-cover opacity-90 transition duration-500 hover:scale-105 hover:opacity-100"
-                    />
-                  </div>
-                ))}
-              </div>
             </BentoCard>
           ))}
         </div>
@@ -140,7 +135,7 @@ export function ProjectsPage() {
       <section id="experience" className="space-y-5 scroll-mt-28">
         <SectionTitle
           eyebrow="Selected Engineering Experience"
-          title="Engineering maturity without fake public proof"
+          title="Engineering maturity with clear evidence boundaries"
           subtitle="These entries are intentionally framed as experience. They do not show repo/demo/screenshot links because no public artifacts are available in this repo."
         />
 
@@ -178,7 +173,7 @@ export function ProjectsPage() {
                 <div>
                   <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
                     <Image className="h-4 w-4" />
-                    Details to add
+                    Review lens
                   </p>
                   <ul className="mt-3 space-y-2 text-sm text-slate-300">
                     {project.nextDetails.map((item) => (

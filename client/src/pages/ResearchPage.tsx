@@ -16,6 +16,29 @@ const methodThreads = [
   },
 ]
 
+const researchSnapshot = [
+  {
+    label: 'Current research context',
+    value:
+      'Healthcare AI research support focused on evidence review, cohort planning, patient safety, and responsible clinical AI framing.',
+  },
+  {
+    label: 'Quantitative foundation',
+    value:
+      'Earlier research work spans materials science, exoplanet transit modeling, and subatomic physics simulation.',
+  },
+  {
+    label: 'Public evidence',
+    value:
+      'Selected publications include DOI links and contribution notes connected to the research tracks below.',
+  },
+  {
+    label: 'Method pattern',
+    value:
+      'Model the domain, interrogate assumptions, then communicate methods and evidence provenance clearly.',
+  },
+]
+
 export function ResearchPage() {
   return (
     <div className="space-y-10">
@@ -73,11 +96,75 @@ export function ResearchPage() {
         </div>
       </section>
 
+      <section className="space-y-5">
+        <div className="flex flex-col gap-3 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
+              Research snapshot
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-white">
+              Concrete evidence behind the research direction
+            </h2>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <a
+              href="#research-tracks"
+              className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:text-white"
+            >
+              Tracks
+            </a>
+            <a
+              href="#publications"
+              className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:text-white"
+            >
+              DOI-linked outputs
+            </a>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {researchSnapshot.map((item) => (
+            <article
+              key={item.label}
+              className="rounded-2xl border border-white/15 bg-slate-900/70 p-5"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
+                {item.label}
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-slate-300">
+                {item.value}
+              </p>
+            </article>
+          ))}
+        </div>
+
+        <div className="rounded-3xl border border-white/15 bg-slate-950/70 p-5 md:p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/70">
+            Research domains
+          </p>
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            {researchTracks.map((track) => (
+              <a
+                key={track.id}
+                href={`#${track.id}`}
+                className="rounded-2xl border border-white/10 bg-slate-900/70 p-4 transition hover:border-cyan-200/35 hover:bg-slate-900"
+              >
+                <p className="font-semibold text-white">{track.title}</p>
+                <p className="mt-1 font-mono text-xs text-slate-500">{track.period}</p>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                  {track.outcome}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="research-tracks" className="scroll-mt-28">
         <div className="flex flex-col gap-3 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
-              Research tracks
+              Research timeline
             </p>
             <h2 className="mt-2 text-2xl font-semibold text-white">
               Questions, contributions, and outcomes
@@ -93,6 +180,7 @@ export function ResearchPage() {
           {researchTracks.map((track, index) => (
             <article
               key={track.id}
+              id={track.id}
               className="relative grid gap-4 pl-12 md:grid-cols-[7rem_1fr] md:pl-0"
             >
               <div className="md:pt-6">
@@ -159,7 +247,8 @@ export function ResearchPage() {
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
             Work across materials science, computational physics, and astronomy,
-            presented with the contribution behind each paper rather than as a DOI list.
+            presented with DOI links, publication context, and the contribution
+            behind each paper.
           </p>
         </div>
 

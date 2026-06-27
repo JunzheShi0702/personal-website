@@ -352,7 +352,7 @@ export function PdrCaseStudyPage() {
         </div>
       </section>
 
-      <section className="rounded-3xl border border-white/15 bg-slate-950/80 p-5 md:p-6">
+      <section id="research-significance" className="scroll-mt-28 rounded-3xl border border-white/15 bg-slate-950/80 p-5 md:p-6">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/75">
           At a Glance
         </p>
@@ -373,7 +373,30 @@ export function PdrCaseStudyPage() {
         </div>
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+      <section className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
+          Inspect this case study
+        </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {[
+            ['Architecture', '#architecture'],
+            ['Evaluation / testing', '#technical-notes'],
+            ['Design rationale', '#design-rationale'],
+            ['Technical notes', '#technical-notes'],
+            ['Research significance', '#research-significance'],
+          ].map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-200/10 hover:text-white"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="design-rationale" className="grid scroll-mt-28 gap-4 lg:grid-cols-[1.1fr_0.9fr]">
         <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
           <h3 className="text-xl font-semibold text-white">Why LaunchStack</h3>
           <p className="mt-3 text-sm leading-relaxed text-slate-300">
@@ -438,15 +461,9 @@ export function PdrCaseStudyPage() {
       </section>
 
       <section id="evidence" className="space-y-4 scroll-mt-28">
-        <div className="rounded-2xl border border-dashed border-cyan-200/25 bg-cyan-300/5 p-4 text-sm text-slate-300">
-          Future asset TODO: add a short silent clip showing the rewrite review
-          or research-to-campaign interaction. No GIF/video asset currently
-          exists in this repo.
-        </div>
         <ControlledRewriteProof />
+        <ResearchToCampaignProof />
       </section>
-
-      <ResearchToCampaignProof />
 
       <section id="technical-notes" className="scroll-mt-28 overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80">
         <div className="grid gap-0 lg:grid-cols-[0.72fr_1.28fr]">

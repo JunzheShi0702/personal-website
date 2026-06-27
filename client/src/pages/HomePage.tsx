@@ -229,16 +229,12 @@ export function HomePage() {
         <div className="grid gap-4 md:grid-cols-2">
           {flagshipProjects.map((project) => (
             <BentoCard key={project.title} className="overflow-hidden p-0">
-              <div className="grid grid-cols-3 gap-px bg-white/10">
-                {project.previewImages.map((src) => (
-                  <div key={src} className="aspect-[5/3] overflow-hidden bg-slate-950">
-                    <img
-                      src={src}
-                      alt=""
-                      className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
-                    />
-                  </div>
-                ))}
+              <div className="aspect-[16/9] overflow-hidden border-b border-white/10 bg-slate-950">
+                <img
+                  src={project.heroImage}
+                  alt=""
+                  className="h-full w-full object-cover object-top opacity-90 transition duration-500 group-hover:scale-[1.02] group-hover:opacity-100"
+                />
               </div>
               <div className="p-5">
                 <p className="text-xs uppercase tracking-[0.16em] text-cyan-200/80">
