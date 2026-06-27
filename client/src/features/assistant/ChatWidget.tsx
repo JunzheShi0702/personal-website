@@ -1,6 +1,9 @@
 import { MessageCircle, Minus, Send, Sparkles, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
+import ReactMarkdown from 'react-markdown'
+import rehypeSanitize from 'rehype-sanitize'
+import remarkGfm from 'remark-gfm'
 import { useAssistant } from './useAssistant'
 
 const starterQuestions = [
@@ -10,6 +13,50 @@ const starterQuestions = [
   'What AI/ML experience does Junzhe have?',
   'How can I contact Junzhe?',
 ]
+
+function AssistantMarkdown({ content }: { content: string }) {
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeSanitize]}
+      components={{
+        a: ({ href, children }) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-cyan-100 underline decoration-cyan-200/40 underline-offset-4 transition hover:text-white hover:decoration-cyan-100"
+          >
+            {children}
+          </a>
+        ),
+        p: ({ children }) => <p className="my-0">{children}</p>,
+        ul: ({ children }) => (
+          <ul className="my-1.5 list-disc space-y-1 pl-4 marker:text-cyan-200/80">
+            {children}
+          </ul>
+        ),
+        ol: ({ children }) => (
+          <ol className="my-1.5 list-decimal space-y-1 pl-4 marker:text-cyan-200/80">
+            {children}
+          </ol>
+        ),
+        li: ({ children }) => <li className="pl-1">{children}</li>,
+        strong: ({ children }) => (
+          <strong className="font-semibold text-white">{children}</strong>
+        ),
+        em: ({ children }) => <em className="text-slate-100">{children}</em>,
+        code: ({ children }) => (
+          <code className="rounded-md border border-cyan-200/15 bg-slate-950/60 px-1.5 py-0.5 font-mono text-[0.82em] text-cyan-50">
+            {children}
+          </code>
+        ),
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  )
+}
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
@@ -100,13 +147,17 @@ export function ChatWidget() {
               >
                 <div
                   className={[
-                    'max-w-[88%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-relaxed',
+                    'max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed',
                     message.role === 'assistant'
                       ? 'border border-cyan-200/20 bg-cyan-200/10 text-slate-100'
-                      : 'border border-white/10 bg-white/10 text-white',
+                      : 'whitespace-pre-wrap border border-white/10 bg-white/10 text-white',
                   ].join(' ')}
                 >
-                  {message.content}
+                  {message.role === 'assistant' ? (
+                    <AssistantMarkdown content={message.content} />
+                  ) : (
+                    message.content
+                  )}
                 </div>
               </article>
             ))}
