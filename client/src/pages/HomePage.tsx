@@ -46,7 +46,7 @@ const evidenceSnapshot = [
     detail: 'Architecture · Evaluation',
   },
   {
-    stat: '3',
+    stat: '4',
     title: 'Published Papers',
     detail: 'DOI-linked outputs',
   },

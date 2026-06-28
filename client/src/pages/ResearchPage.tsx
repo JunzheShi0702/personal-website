@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
+import { motion, useReducedMotion, type Transition } from 'framer-motion'
 import {
-  additionalDoiOutputCount,
   publications,
   publishedPaperCount,
   researchTracks,
@@ -30,7 +30,7 @@ const researchSnapshot = [
   {
     label: 'Completed outputs',
     value:
-      `${publishedPaperCount} published papers and ${additionalDoiOutputCount} additional DOI-linked output are listed with venue, year, context, and contribution notes.`,
+      `${publishedPaperCount} published papers are listed with DOI links, venue, year, context, and contribution notes.`,
   },
   {
     label: 'AI systems direction',
@@ -64,6 +64,10 @@ const researchArc = [
 ]
 
 export function ResearchPage() {
+  const prefersReducedMotion = useReducedMotion()
+  const hoverLift = prefersReducedMotion ? undefined : { y: -4 }
+  const cardTransition: Transition = { duration: 0.18, ease: [0.22, 1, 0.36, 1] }
+
   return (
     <div className="space-y-10">
       <section className="overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80">
@@ -137,9 +141,11 @@ export function ResearchPage() {
         </div>
         <div className="mt-5 grid gap-3 md:grid-cols-4">
           {researchArc.map((item, index) => (
-            <article
+            <motion.article
               key={item.label}
-              className="rounded-2xl border border-white/10 bg-slate-950/45 p-4"
+              whileHover={hoverLift}
+              transition={cardTransition}
+              className="rounded-2xl border border-white/10 bg-slate-950/45 p-4 transition-colors hover:border-cyan-200/30 hover:bg-slate-950/70"
             >
               <p className="font-mono text-xs text-cyan-200/65">
                 {String(index + 1).padStart(2, '0')}
@@ -148,7 +154,7 @@ export function ResearchPage() {
               <p className="mt-1 text-sm leading-relaxed text-slate-400">
                 {item.detail}
               </p>
-            </article>
+            </motion.article>
           ))}
         </div>
       </section>
@@ -181,9 +187,11 @@ export function ResearchPage() {
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {researchSnapshot.map((item) => (
-            <article
+            <motion.article
               key={item.label}
-              className="rounded-2xl border border-white/15 bg-slate-900/70 p-5"
+              whileHover={hoverLift}
+              transition={cardTransition}
+              className="rounded-2xl border border-white/15 bg-slate-900/70 p-5 transition-colors hover:border-cyan-200/35 hover:bg-slate-900/90"
             >
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
                 {item.label}
@@ -191,7 +199,7 @@ export function ResearchPage() {
               <p className="mt-3 text-sm leading-relaxed text-slate-300">
                 {item.value}
               </p>
-            </article>
+            </motion.article>
           ))}
         </div>
 
@@ -205,17 +213,19 @@ export function ResearchPage() {
           </p>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {researchTracks.map((track) => (
-              <a
+              <motion.a
                 key={track.id}
                 href={`#${track.id}`}
-                className="rounded-2xl border border-white/10 bg-slate-900/70 p-4 transition hover:border-cyan-200/35 hover:bg-slate-900"
+                whileHover={hoverLift}
+                transition={cardTransition}
+                className="rounded-2xl border border-white/10 bg-slate-900/70 p-4 transition-colors hover:border-cyan-200/35 hover:bg-slate-900"
               >
                 <p className="font-semibold text-white">{track.title}</p>
                 <p className="mt-1 font-mono text-xs text-slate-500">{track.period}</p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">
                   {track.outcome}
                 </p>
-              </a>
+              </motion.a>
             ))}
           </div>
         </div>
@@ -239,9 +249,11 @@ export function ResearchPage() {
 
         <div className="relative mt-6 space-y-5 before:absolute before:bottom-8 before:left-[1.05rem] before:top-8 before:w-px before:bg-gradient-to-b before:from-cyan-300/50 before:via-violet-300/30 before:to-transparent md:before:left-[8.45rem]">
           {researchTracks.map((track, index) => (
-            <article
+            <motion.article
               key={track.id}
               id={track.id}
+              whileHover={hoverLift}
+              transition={cardTransition}
               className="relative grid gap-4 pl-12 md:grid-cols-[7rem_1fr] md:pl-0"
             >
               <div className="md:pt-6">
@@ -251,7 +263,9 @@ export function ResearchPage() {
                 </span>
               </div>
 
-              <div className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6">
+              <div
+                className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 transition-colors hover:border-cyan-200/30 hover:bg-slate-900/90 md:p-6"
+              >
                 <h3 className="text-xl font-semibold text-white">{track.title}</h3>
                 <div className="mt-5 grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
                   <div>
@@ -293,7 +307,7 @@ export function ResearchPage() {
                   </div>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </section>
@@ -304,13 +318,11 @@ export function ResearchPage() {
             Selected research outputs
           </p>
           <h2 className="mt-2 text-2xl font-semibold text-white">
-            {publishedPaperCount} published papers + {additionalDoiOutputCount} additional DOI-linked output
+            {publishedPaperCount} DOI-linked published papers
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
             Work across materials science, computational physics, and astronomy,
             presented with DOI links, research context, and contribution notes.
-            The homepage counts only the three published papers; this list also
-            includes one DOI-linked output that is not counted as a published paper.
           </p>
         </div>
 

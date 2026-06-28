@@ -19,8 +19,7 @@ export type Publication = {
   link?: string
 }
 
-export const publishedPaperCount = 3
-export const additionalDoiOutputCount = 1
+export const publishedPaperCount = 4
 
 export type ProjectLink = {
   label: string
@@ -229,6 +228,18 @@ export const publications: Publication[] = [
     link: 'https://doi.org/10.1039/D3TC01711G',
   },
   {
+    title: 'The Relationship Between and Eccentricities Based on Glauber Model',
+    venue: 'Theoretical and Natural Science',
+    year: '2023',
+    doi: '10.54254/2753-8818/11/20230390',
+    context:
+      'Extended analysis on geometric eccentricity relationships in heavy-ion collision simulations.',
+    contribution:
+      'Collision simulation analysis and interpretation of geometric eccentricity relationships.',
+    researchTrack: 'Subatomic Physics / Glauber Monte Carlo',
+    link: 'https://doi.org/10.54254/2753-8818/11/20230390',
+  },
+  {
     title:
       'Optimization of Asymmetry of Pb-Pb Nucleus Collision Based on Glauber Model Simulation',
     venue: 'Theoretical and Natural Science',
@@ -240,18 +251,6 @@ export const publications: Publication[] = [
       'Glauber Monte Carlo analysis, harmonic-level asymmetry evaluation, and numerical interpretation.',
     researchTrack: 'Subatomic Physics / Glauber Monte Carlo',
     link: 'https://doi.org/10.54254/2753-8818/28/20230428',
-  },
-  {
-    title: 'The Relationship Between and Eccentricities Based on Glauber Model',
-    venue: 'Theoretical and Natural Science',
-    year: '2023',
-    doi: '10.54254/2753-8818/11/20230390',
-    context:
-      'Extended analysis on geometric eccentricity relationships in heavy-ion collision simulations.',
-    contribution:
-      'Collision simulation analysis and interpretation of geometric eccentricity relationships.',
-    researchTrack: 'Subatomic Physics / Glauber Monte Carlo',
-    link: 'https://doi.org/10.54254/2753-8818/11/20230390',
   },
   {
     title:
