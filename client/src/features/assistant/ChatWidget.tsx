@@ -7,10 +7,10 @@ import remarkGfm from 'remark-gfm'
 import { useAssistant } from './useAssistant'
 
 const starterQuestions = [
-  'What projects has Junzhe built?',
-  'What are Junzhe’s research interests?',
-  'Tell me about Atlas.',
-  'What AI/ML experience does Junzhe have?',
+  'Show me Atlas evidence links.',
+  'What did Junzhe build in LaunchStack?',
+  'Which project links can I inspect?',
+  'How does research connect to the projects?',
   'How can I contact Junzhe?',
 ]
 

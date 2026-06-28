@@ -102,7 +102,7 @@ Public URL checks:
 | `/projects` | Projects | Flagship project cards plus selected engineering experience | yes | yes | yes |
 | `/projects/atlas` | Atlas case study | Problem, stack, role, architecture, workflow, evaluation notes, screenshots | no direct header | no | yes via project card |
 | `/projects/pdr-ai` | LaunchStack case study | Problem, stack, role, architecture, proof carousels, technical notes, repo/commit links | no direct header | no | yes via project card |
-| `/research` | Research | Research snapshot, domains, timeline, selected DOI-linked publications | yes | yes | yes |
+| `/research` | Research | Research snapshot, domains, timeline, selected research outputs | yes | yes | yes |
 | `/publications` | Redirect | Redirects to `/research#publications` | no | no | no direct link |
 | `/resume` | Redirect | Redirects to `/#resume` | header uses `/#resume` | no | resume section |
 | `/contact` | Redirect | Redirects to `/#contact` | header uses `/#contact` | footer uses `/#contact` | contact section |
@@ -132,8 +132,8 @@ Unrouted but present:
 
 | Project | Category | Links shown | Link status | Assets | Case study | Architecture | Evaluation/testing | Contribution | Research significance |
 |---|---|---|---|---|---:|---:|---:|---:|---:|
-| Atlas | Flagship project | Case Study, Live Demo, Screenshots, Presentation | Demo `200`; internal routes/assets present | 3 screenshots, large card hero image, logo | yes | yes | yes, including `14 golden` CI claim | yes | yes |
-| LaunchStack | Flagship project | Case Study, Live Demo, GitHub, Screenshots, Commit Proof | Demo/repo/commit `200`; internal routes/assets present | 8 screenshots, carousel galleries, logo | yes | yes | yes, including `18 unit tests` claim | yes | yes |
+| Atlas | Flagship project | Case Study, Live Demo, Screenshots, Presentation | Demo `200`; internal routes/assets present | 3 screenshots, large card hero image, logo | yes | yes | yes, including a golden-case evaluation suite | yes | yes |
+| LaunchStack | Flagship project | Case Study, Live Demo, GitHub, Screenshots, Commit Proof | Demo/repo/commit `200`; internal routes/assets present | 8 screenshots, carousel galleries, logo | yes | yes | yes, including automated DOCX-path tests | yes | yes |
 | ReferMe | Engineering experience | none | no visible links | none | no | implied via "Review lens" only | no | broad | no |
 | Go Microservices | Engineering experience | none | no visible links | none | no | broad | no | broad | no |
 
@@ -155,7 +155,7 @@ Given the permission "you may make a personal copy of the repo and redeploy it,"
 
 Current research tracks shown:
 
-- Healthcare AI Research Support, `2026 - Present`
+- Healthcare AI Research Support, `Current research support`
 - Perovskite Solar Cell Optimization, `2023 - 2024`
 - Exoplanet Transit Modeling, `2022 - 2023`
 - Subatomic Physics / Glauber Monte Carlo, `2021 - 2022`
@@ -166,11 +166,11 @@ Research page sections:
 - Research Snapshot
 - Research Domains
 - Research Timeline
-- Selected Publications
+- Selected research outputs
 
-Publications/research outputs shown:
+Research outputs shown:
 
-- 4 selected DOI-linked publications.
+- 3 published papers plus 1 additional DOI-linked output.
 
 DOI links shown:
 
@@ -181,19 +181,19 @@ DOI links shown:
 
 Numeric research stats/claims shown:
 
-- "approximately 10% to 20%" efficiency gain in `siteContent.ts`
-- "high-fit predictive accuracy" in `siteContent.ts`
-- "10,000+ collision simulation analysis" in `siteContent.ts`
-- 4 DOI-linked outputs appear, but the homepage does not currently claim a publication count.
+- Device-performance interpretation, workflow refinement, and publication output.
+- Curve-fitting and residual-analysis workflows.
+- Large-scale collision simulation analysis.
+- Research page now labels 3 published papers plus 1 additional DOI-linked output.
 
 Claims that may need stronger evidence:
 
-- Healthcare AI `2026 - Present` current research status.
-- "approximately 10% to 20%" efficiency gain.
-- "high-fit predictive accuracy."
-- "10,000+ collision simulation analysis."
-- Atlas `14 golden` CI cases.
-- LaunchStack `18 unit tests`.
+- Healthcare AI current research support status.
+- Device-performance interpretation claim.
+- Curve-fitting and residual-analysis claim.
+- Large-scale collision simulation analysis claim.
+- Atlas golden-case evaluation suite.
+- LaunchStack automated DOCX-path tests.
 
 ### 7. Placeholder / Unfinished Content Audit
 
@@ -261,12 +261,12 @@ Misleading link text:
 | Priority | Risk | File / line | Notes |
 |---|---|---|---|
 | High | Atlas "public" wording may be misread as public source | `siteContent.ts:73` | No repo link exists, but wording could be clearer |
-| High | Atlas `14 golden cases` is a specific test claim without visible public proof | `AtlasCaseStudyPage.tsx:26`, `AtlasCaseStudyPage.tsx:57` | Keep only if defensible from Atlas repo/course artifacts |
-| Medium | LaunchStack `18 unit tests` is specific | `PdrCaseStudyPage.tsx:41`, `PdrCaseStudyPage.tsx:506` | Safer because public repo/commit exists, but verify count |
-| Medium | Perovskite `approximately 10% to 20%` claim | `siteContent.ts:178` | Needs publication support or softer wording |
-| Medium | "high-fit predictive accuracy" | `siteContent.ts:194` | Sounds metric-like without number/source nearby |
-| Medium | `10,000+ collision simulation analysis` | `siteContent.ts:207` | Numeric claim should be publication-backed |
-| Medium | Healthcare AI `2026 - Present` | `siteContent.ts:151` | Current-status claim; keep only if still accurate |
+| Medium | Atlas golden-case evaluation suite | `AtlasCaseStudyPage.tsx` | Qualitative wording is safer without public source proof |
+| Medium | LaunchStack automated DOCX-path tests | `PdrCaseStudyPage.tsx` | Safer than a specific test count unless exact public proof is linked |
+| Low | Perovskite device-performance interpretation claim | `siteContent.ts` | Softened from a numeric efficiency range |
+| Low | Curve-fitting and residual-analysis claim | `siteContent.ts` | Softened from a metric-like accuracy claim |
+| Low | Large-scale collision simulation analysis | `siteContent.ts` | Softened from a specific simulation count |
+| Medium | Healthcare AI current research support | `siteContent.ts` | Current-status claim; keep only if still accurate |
 | Low | Unrouted Contact/Resume pages | `ContactPage.tsx:21`, `ResumePage.tsx:6` | Not user-visible, but dead code can confuse maintenance |
 | Low | LinkedIn curl status `999` | `HomePage.tsx:316` | Likely anti-bot, not confirmed broken |
 | Low | Ask Junzhe unavailable wording | `api.ts:17` | Fine as an error state, but visible when API fails |
@@ -287,12 +287,12 @@ Misleading link text:
 ### 12. Top 10 Issues Ranked
 
 1. Clarify Atlas "public" wording so it cannot imply public source code.
-2. Verify or soften Atlas `14 golden cases`.
-3. Verify or cite LaunchStack `18 unit tests`.
+2. Verify or source Atlas golden-case evaluation suite if stronger proof becomes available.
+3. Verify or cite LaunchStack automated DOCX-path tests if stronger proof becomes available.
 4. Add stronger evidence links for current Healthcare AI research if available.
-5. Add evidence or soften "approximately 10% to 20%" efficiency gain.
-6. Add evidence or soften "high-fit predictive accuracy."
-7. Add evidence or soften "10,000+ collision simulation analysis."
+5. Add evidence for device-performance interpretation if stronger proof becomes available.
+6. Add evidence for curve-fitting/residual-analysis details if stronger proof becomes available.
+7. Add evidence for large-scale simulation analysis if stronger proof becomes available.
 8. ReferMe and Go Microservices are evidence-light compared with flagship projects.
 9. Contact/Resume components exist but are not routed, creating maintenance ambiguity.
 10. LinkedIn cannot be verified via curl, though likely due platform blocking.
@@ -302,7 +302,7 @@ Misleading link text:
 1. Change Atlas label from "Public flagship" to "Public demo / case study" or similar.
 2. Add a one-line Atlas availability note: demo/presentation public, source not linked.
 3. Link Atlas evaluation/test claims to presentation slides or visible proof if available.
-4. Link LaunchStack `18 unit tests` directly to the relevant repo path or commit diff if possible.
+4. Link LaunchStack automated tests directly to the relevant repo path or commit diff if possible.
 5. Add source/context links for research numeric claims where DOI pages support them.
 6. Add lightweight detail pages or expandable cards for ReferMe and Go Microservices only if real evidence exists.
 7. Add a small "Evidence type" label to research outputs: paper, DOI, project, demo, repo.

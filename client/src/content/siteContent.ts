@@ -19,6 +19,9 @@ export type Publication = {
   link?: string
 }
 
+export const publishedPaperCount = 3
+export const additionalDoiOutputCount = 1
+
 export type ProjectLink = {
   label: string
   href: string
@@ -50,7 +53,7 @@ export const homepagePathways = [
   {
     title: 'Projects',
     description:
-      'Inspect flagship AI systems, public evidence, and selected engineering experience.',
+      'Inspect featured AI systems, public evidence, and selected engineering experience.',
     to: '/projects',
   },
   {
@@ -70,7 +73,7 @@ export const homepagePathways = [
 export const flagshipProjects: FlagshipProject[] = [
   {
     title: 'Atlas',
-    eyebrow: 'Public demo + case study · Decision support',
+    eyebrow: 'Featured system · public demo and case study',
     summary:
       'AI-assisted course search and schedule planning with constraint-aware recommendations, auditability, and retrieval over JHU course data.',
     researchRelevance:
@@ -97,7 +100,7 @@ export const flagshipProjects: FlagshipProject[] = [
   },
   {
     title: 'LaunchStack',
-    eyebrow: 'Public flagship · Human-AI collaboration',
+    eyebrow: 'Featured system · Human-AI collaboration',
     summary:
       'Open-source founder knowledge graph and AI workflow platform for grounded answers, controlled rewriting, and research-to-campaign generation.',
     researchRelevance:
@@ -148,9 +151,9 @@ export const researchTracks: ResearchTrack[] = [
   {
     id: 'healthcare-ai',
     title: 'Healthcare AI Research Support',
-    period: '2026 - Present',
+    period: 'Current research support',
     question:
-      'Data Science for Psychiatry Lab: REACH-oriented cohort planning for thyroid hormone prescribing patterns in psychiatric contexts.',
+      'REACH-oriented cohort planning for thyroid hormone prescribing patterns in psychiatric contexts.',
     contribution:
       'Supported cohort planning and evidence review, with attention to patient safety, confounding factors, and responsible clinical AI use.',
     methods: [
@@ -175,7 +178,7 @@ export const researchTracks: ResearchTrack[] = [
       'Manuscript and review co-authoring',
     ],
     outcome:
-      'Supported efficiency gains from approximately 10% to 20% and produced publication output.',
+      'Supported device-performance interpretation, workflow refinement, and publication output.',
   },
   {
     id: 'exoplanet',
@@ -191,7 +194,7 @@ export const researchTracks: ResearchTrack[] = [
       'Visualization with Matplotlib',
     ],
     outcome:
-      'Achieved high-fit predictive accuracy and published modeling methodology.',
+      'Built curve-fitting and residual-analysis workflows for published modeling methodology.',
   },
   {
     id: 'subatomic',
@@ -204,7 +207,7 @@ export const researchTracks: ResearchTrack[] = [
     methods: [
       'ROOT on Ubuntu Linux',
       'Harmonic-level asymmetry optimization',
-      '10,000+ collision simulation analysis',
+      'Large-scale collision simulation analysis',
     ],
     outcome:
       'Quantified collision-eccentricity relationships with publication-backed numerical findings.',

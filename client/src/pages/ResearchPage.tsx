@@ -1,5 +1,10 @@
 import { ArrowUpRight } from 'lucide-react'
-import { publications, researchTracks } from '../content/siteContent'
+import {
+  additionalDoiOutputCount,
+  publications,
+  publishedPaperCount,
+  researchTracks,
+} from '../content/siteContent'
 
 const methodThreads = [
   {
@@ -25,7 +30,7 @@ const researchSnapshot = [
   {
     label: 'Completed outputs',
     value:
-      'Selected DOI-linked entries below include venue, year, context, and contribution notes.',
+      `${publishedPaperCount} published papers and ${additionalDoiOutputCount} additional DOI-linked output are listed with venue, year, context, and contribution notes.`,
   },
   {
     label: 'AI systems direction',
@@ -36,6 +41,25 @@ const researchSnapshot = [
     label: 'Quantitative foundation',
     value:
       'Earlier research work spans materials science, exoplanet transit modeling, and subatomic physics simulation.',
+  },
+]
+
+const researchArc = [
+  {
+    label: 'Physics',
+    detail: 'Simulation and uncertainty',
+  },
+  {
+    label: 'Materials',
+    detail: 'Experimental evidence',
+  },
+  {
+    label: 'AI Systems',
+    detail: 'Grounded decisions',
+  },
+  {
+    label: 'Clinical AI',
+    detail: 'Safety and governance',
   },
 ]
 
@@ -68,7 +92,7 @@ export function ResearchPage() {
                 href="#publications"
                 className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-200/60 hover:text-white"
               >
-                DOI-linked outputs
+                Research outputs
               </a>
             </nav>
           </div>
@@ -93,6 +117,39 @@ export function ResearchPage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6">
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
+              Research arc
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-white">
+              From quantitative models to human-facing AI systems
+            </h2>
+          </div>
+          <p className="max-w-xl text-sm leading-relaxed text-slate-400">
+            The common thread is not one domain; it is making uncertain evidence
+            structured enough for people to inspect and use.
+          </p>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-4">
+          {researchArc.map((item, index) => (
+            <article
+              key={item.label}
+              className="rounded-2xl border border-white/10 bg-slate-950/45 p-4"
+            >
+              <p className="font-mono text-xs text-cyan-200/65">
+                {String(index + 1).padStart(2, '0')}
+              </p>
+              <p className="mt-2 font-semibold text-white">{item.label}</p>
+              <p className="mt-1 text-sm leading-relaxed text-slate-400">
+                {item.detail}
+              </p>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -144,7 +201,7 @@ export function ResearchPage() {
           </p>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
             The timeline separates current research support from completed
-            research experiences and published outputs already present on this site.
+            research experiences and research outputs already present on this site.
           </p>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {researchTracks.map((track) => (
@@ -244,14 +301,16 @@ export function ResearchPage() {
       <section id="publications" className="scroll-mt-28">
         <div className="border-b border-white/10 pb-5">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-200/70">
-            Selected DOI-linked outputs
+            Selected research outputs
           </p>
           <h2 className="mt-2 text-2xl font-semibold text-white">
-            Research outputs connected to the work
+            {publishedPaperCount} published papers + {additionalDoiOutputCount} additional DOI-linked output
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
             Work across materials science, computational physics, and astronomy,
             presented with DOI links, research context, and contribution notes.
+            The homepage counts only the three published papers; this list also
+            includes one DOI-linked output that is not counted as a published paper.
           </p>
         </div>
 
@@ -300,7 +359,7 @@ export function ResearchPage() {
                   aria-label={`Open ${paper.title}`}
                   className="inline-flex items-center gap-1 text-sm font-semibold text-cyan-100 transition hover:text-white"
                 >
-                  Open paper
+                  Open DOI
                   <ArrowUpRight className="h-4 w-4" />
                 </a>
               ) : null}

@@ -38,7 +38,7 @@ const atAGlance = [
   {
     label: 'Evaluation',
     value:
-      'Diff review, source references, authenticated API validation, and 18 unit tests for the DOCX path.',
+      'Diff review, source references, authenticated API validation, and automated tests for the DOCX path.',
   },
   {
     label: 'Research significance',
@@ -307,7 +307,7 @@ export function PdrCaseStudyPage() {
         <div className="mt-5">
           <div className="space-y-5 md:space-y-6">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300/80 md:text-base">
-              Flagship Case Study
+              Featured Case Study
             </p>
             <div className="inline-flex w-fit items-center overflow-hidden rounded-2xl">
               <img
@@ -382,6 +382,7 @@ export function PdrCaseStudyPage() {
             ['Architecture', '#architecture'],
             ['Evaluation / testing', '#technical-notes'],
             ['Design rationale', '#design-rationale'],
+            ['Lessons learned', '#lessons'],
             ['Technical notes', '#technical-notes'],
             ['Research significance', '#research-significance'],
           ].map(([label, href]) => (
@@ -465,6 +466,27 @@ export function PdrCaseStudyPage() {
         <ResearchToCampaignProof />
       </section>
 
+      <section id="lessons" className="scroll-mt-28 rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/75">
+          Lessons and trade-offs
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          {[
+            ['Review before automation', 'Diff review and explicit approval keep AI-generated edits under user control.'],
+            ['Grounding needs provenance', 'Source references and visible research steps make generated outputs easier to trust.'],
+            ['Interfaces keep evolving', 'LaunchStack 2.0 has since evolved its legal drafting interface, so this case study documents a specific implemented path.'],
+          ].map(([title, detail]) => (
+            <article
+              key={title}
+              className="rounded-2xl border border-white/10 bg-slate-950/45 p-4"
+            >
+              <p className="text-sm font-semibold text-cyan-100">{title}</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-400">{detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section id="technical-notes" className="scroll-mt-28 overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80">
         <div className="grid gap-0 lg:grid-cols-[0.72fr_1.28fr]">
           <div className="border-b border-white/10 bg-gradient-to-br from-violet-400/15 via-cyan-300/5 to-transparent p-6 lg:border-b-0 lg:border-r lg:p-8">
@@ -503,7 +525,7 @@ export function PdrCaseStudyPage() {
                 ['Authenticated API', 'Clerk-protected endpoint with Zod request validation'],
                 ['Native review output', 'Insertions and deletions preserved as DOCX Track Changes'],
                 ['Resilient feedback', 'Multi-step progress states and actionable service errors'],
-                ['18 unit tests', 'Auth, validation, integration, failures, and edge cases'],
+                ['Automated tests', 'Auth, validation, integration, failures, and edge cases'],
               ].map(([title, description]) => (
                 <div
                   key={title}

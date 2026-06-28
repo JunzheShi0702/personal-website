@@ -37,7 +37,7 @@ const stagger = {
 const evidenceSnapshot = [
   {
     stat: '2',
-    title: 'Flagship Systems',
+    title: 'Featured AI Systems',
     detail: 'Atlas · LaunchStack',
   },
   {
@@ -94,13 +94,13 @@ export function HomePage() {
                 Research Engineering Portfolio
               </p>
               <h1 className="max-w-3xl text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                Junzhe Shi builds research-driven AI systems for real human decision-making.
+                Junzhe Shi builds AI systems that make messy evidence inspectable.
               </h1>
               <p className="max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
                 I am a Johns Hopkins student studying Computer Science and Applied
-                Mathematics and Statistics. This site is the deep-dive layer behind my
-                GitHub README: visual storytelling, project architecture, and technical
-                lessons learned from building AI products.
+                Mathematics and Statistics. My work connects quantitative modeling,
+                human-AI interaction, and systems engineering through projects you can
+                inspect: Atlas and LaunchStack.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
@@ -162,13 +162,13 @@ export function HomePage() {
                   What I Build
                 </p>
                 <p className="mt-3 text-lg font-medium leading-relaxed text-slate-100">
-                  Inspectable AI systems that keep people in control of complex
-                  decisions.
+                  Decision-support tools where retrieval, evaluation, and human review
+                  are part of the product, not hidden behind the prompt.
                 </p>
                 <div className="mt-5 grid gap-3">
                   {[
-                    ['Atlas', 'Course planning with schedule-aware AI advising.', '/projects/atlas'],
-                    ['LaunchStack', 'Grounded founder workflows with reviewable AI output.', '/projects/pdr-ai'],
+                    ['Atlas', 'Course planning with schedule-aware AI advising and audit trails.', '/projects/atlas'],
+                    ['LaunchStack', 'Founder workflows where AI output stays source-aware and reviewable.', '/projects/pdr-ai'],
                   ].map(([title, description, href]) => (
                     <Link
                       key={title}
@@ -189,8 +189,8 @@ export function HomePage() {
                   Research Lens
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                  Grounding, retrieval, evaluation, and human review for AI that
-                  supports real decisions.
+                  A path from physics and materials modeling toward AI systems for
+                  evidence-heavy decisions.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {['Evidence-based reasoning', 'Agent reliability', 'High-stakes AI'].map((item) => (
@@ -241,7 +241,7 @@ export function HomePage() {
 
       <section className="space-y-5">
         <SectionTitle
-          eyebrow="Flagship Projects"
+          eyebrow="Featured Projects"
           title="Click into the evidence"
           subtitle="The homepage stays light; each card exposes enough proof to invite inspection."
         />

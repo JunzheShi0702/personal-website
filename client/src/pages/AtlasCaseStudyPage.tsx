@@ -23,7 +23,7 @@ const architectureBlocks = [
     points: [
       'Node.js / Express APIs for auth, profile onboarding, schedules, audits, and `/api/agent` orchestration.',
       'Contract-focused response normalization with guardrails for search, summary, details, and text payloads.',
-      'AI eval suite (14 golden cases) in CI protects user-visible behavior from prompt/tool regressions.',
+      'A golden-case `/api/agent` evaluation suite protects user-visible behavior from prompt/tool regressions.',
     ],
   },
   {
@@ -54,7 +54,7 @@ const atAGlance = [
   {
     label: 'Evaluation',
     value:
-      'Raw evaluation rows, schedule audit surfaces, and 14 golden `/api/agent` cases in CI.',
+      'Raw evaluation rows, schedule audit surfaces, and a golden-case `/api/agent` evaluation suite.',
   },
   {
     label: 'Research significance',
@@ -96,7 +96,7 @@ export function AtlasCaseStudyPage() {
         <div className="mt-7">
           <div className="space-y-4 md:space-y-5">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300/80 md:text-base">
-              Flagship Case Study
+              Featured Case Study
             </p>
             <div className="inline-flex w-fit items-center rounded-2xl border border-white/85 bg-white px-5 py-3 shadow-[0_14px_30px_rgba(2,6,23,0.35)]">
               <img
@@ -169,7 +169,7 @@ export function AtlasCaseStudyPage() {
             ['Architecture', '#architecture'],
             ['Evaluation / testing', '#evidence'],
             ['Design rationale', '#design-rationale'],
-            ['Lessons learned', '#design-rationale'],
+            ['Lessons learned', '#lessons'],
             ['Research significance', '#research-significance'],
           ].map(([label, href]) => (
             <a
@@ -243,6 +243,27 @@ export function AtlasCaseStudyPage() {
                 <span className="hidden text-slate-500 md:block" aria-hidden="true">›</span>
               )}
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="lessons" className="scroll-mt-28 rounded-3xl border border-white/15 bg-slate-950/80 p-5 md:p-6">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/75">
+          Lessons learned
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          {[
+            ['Metadata quality matters', 'Recommendation quality depends on SIS metadata quality and refresh cadence.'],
+            ['Scrapers need observability', 'Evaluation scraping is sensitive to upstream UI changes and needs discover/debug tooling.'],
+            ['Contracts protect UX', 'Golden-case contract tests on `/api/agent` reduce silent regressions when prompts or normalization change.'],
+          ].map(([title, detail]) => (
+            <article
+              key={title}
+              className="rounded-2xl border border-white/10 bg-slate-900/70 p-4"
+            >
+              <p className="text-sm font-semibold text-cyan-100">{title}</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-400">{detail}</p>
+            </article>
           ))}
         </div>
       </section>
