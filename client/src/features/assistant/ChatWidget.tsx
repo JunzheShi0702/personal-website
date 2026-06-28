@@ -1,4 +1,5 @@
 import { MessageCircle, Minus, Send, Sparkles, X } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, KeyboardEvent } from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -66,6 +67,7 @@ export function ChatWidget() {
   const { messages, isLoading, error, canSend, sendMessage } = useAssistant()
   const scrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!isOpen) return
@@ -100,43 +102,55 @@ export function ChatWidget() {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
-      {isOpen ? (
-        <section className="flex h-[min(42rem,calc(100vh-2rem))] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-[1.75rem] border border-white/15 bg-slate-950/95 text-slate-100 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:w-[26rem]">
-          <header className="border-b border-white/10 bg-white/[0.03] p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-cyan-300 text-slate-950 shadow-lg shadow-cyan-400/20">
-                    <Sparkles size={18} />
-                  </span>
-                  <div>
-                    <h2 className="font-display text-base font-semibold text-white">
-                      Ask Junzhe
-                    </h2>
-                    <p className="text-xs text-slate-400">Portfolio-only AI assistant</p>
+      <AnimatePresence mode="wait" initial={false}>
+        {isOpen ? (
+          <motion.section
+            key="ask-junzhe-panel"
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96, y: 16 }}
+            transition={{
+              duration: prefersReducedMotion ? 0.01 : 0.2,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            style={{ transformOrigin: 'bottom right' }}
+            className="flex h-[min(42rem,calc(100vh-2rem))] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-[1.75rem] border border-white/15 bg-slate-950/95 text-slate-100 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:w-[26rem]"
+          >
+            <header className="border-b border-white/10 bg-white/[0.03] p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-cyan-300 text-slate-950 shadow-lg shadow-cyan-400/20">
+                      <Sparkles size={18} />
+                    </span>
+                    <div>
+                      <h2 className="font-display text-base font-semibold text-white">
+                        Ask Junzhe
+                      </h2>
+                      <p className="text-xs text-slate-400">Portfolio-only AI assistant</p>
+                    </div>
                   </div>
                 </div>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    aria-label="Minimize Ask Junzhe"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-full border border-white/10 p-2 text-slate-300 transition hover:border-cyan-200/40 hover:text-white"
+                  >
+                    <Minus size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Close Ask Junzhe"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-full border border-white/10 p-2 text-slate-300 transition hover:border-cyan-200/40 hover:text-white"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
               </div>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  aria-label="Minimize Ask Junzhe"
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-full border border-white/10 p-2 text-slate-300 transition hover:border-cyan-200/40 hover:text-white"
-                >
-                  <Minus size={16} />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Close Ask Junzhe"
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-full border border-white/10 p-2 text-slate-300 transition hover:border-cyan-200/40 hover:text-white"
-                >
-                  <X size={16} />
-                </button>
-              </div>
-            </div>
-          </header>
+            </header>
 
           <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto p-4">
             {messages.map((message) => (
@@ -228,19 +242,31 @@ export function ChatWidget() {
               Enter sends. Shift+Enter adds a new line.
             </p>
           </form>
-        </section>
-      ) : (
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="group flex items-center gap-2 rounded-full border border-cyan-200/30 bg-slate-950/90 px-4 py-3 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(8,47,73,0.38)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-cyan-200/60 hover:bg-slate-900"
-        >
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-300 text-slate-950 transition group-hover:bg-cyan-200">
-            <MessageCircle size={17} />
-          </span>
-          Ask Junzhe
-        </button>
-      )}
+          </motion.section>
+        ) : (
+          <motion.button
+            key="ask-junzhe-button"
+            type="button"
+            onClick={() => setIsOpen(true)}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9, y: 10 }}
+            transition={{
+              duration: prefersReducedMotion ? 0.01 : 0.18,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            whileHover={prefersReducedMotion ? undefined : { y: -2, scale: 1.015 }}
+            whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
+            style={{ transformOrigin: 'bottom right' }}
+            className="group flex items-center gap-2 rounded-full border border-cyan-200/30 bg-slate-950/90 px-4 py-3 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(8,47,73,0.38)] backdrop-blur-xl transition hover:border-cyan-200/60 hover:bg-slate-900"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-300 text-slate-950 transition group-hover:bg-cyan-200">
+              <MessageCircle size={17} />
+            </span>
+            Ask Junzhe
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
