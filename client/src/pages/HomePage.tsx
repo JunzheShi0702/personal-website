@@ -210,39 +210,8 @@ export function HomePage() {
 
       <section className="space-y-5">
         <SectionTitle
-          eyebrow="Start Here"
-          title="Choose a path into the work"
-          subtitle="Short entry points for visitors who want projects, research context, or a direct way to connect."
-        />
-        <div className="grid gap-4 md:grid-cols-3">
-          {homepagePathways.map((path, index) => (
-            <motion.div
-              key={path.to}
-              custom={index}
-              initial="hidden"
-              animate="visible"
-              variants={stagger}
-            >
-              <Link to={path.to} className="block">
-                <BentoCard className="h-full">
-                  <h3 className="text-lg font-semibold text-white">{path.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                    {path.description}
-                  </p>
-                  <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/80">
-                    Open section
-                  </p>
-                </BentoCard>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      <section className="space-y-5">
-        <SectionTitle
           eyebrow="Featured Projects"
-          title="Click into the evidence"
+          title="Top Featured Projects - Click Into Evidence"
           subtitle="The homepage stays light; each card exposes enough proof to invite inspection."
         />
         <div className="grid gap-4">
@@ -280,6 +249,37 @@ export function HomePage() {
                 </div>
               </div>
             </BentoCard>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-5">
+        <SectionTitle
+          eyebrow="Start Here"
+          title="Choose a path into the work"
+          subtitle="Short entry points for visitors who want projects, research context, or a direct way to connect."
+        />
+        <div className="grid gap-4 md:grid-cols-3">
+          {homepagePathways.map((path, index) => (
+            <motion.div
+              key={path.to}
+              custom={index}
+              initial="hidden"
+              animate="visible"
+              variants={stagger}
+            >
+              <Link to={path.to} className="block">
+                <BentoCard className="h-full">
+                  <h3 className="text-lg font-semibold text-white">{path.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                    {path.description}
+                  </p>
+                  <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/80">
+                    Open section
+                  </p>
+                </BentoCard>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </section>
