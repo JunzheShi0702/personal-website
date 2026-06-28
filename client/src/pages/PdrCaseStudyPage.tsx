@@ -461,7 +461,7 @@ export function PdrCaseStudyPage() {
         </div>
       </section>
 
-      <section id="evidence" className="space-y-4 scroll-mt-28">
+      <section id="evidence" data-jump-highlight="frame" className="space-y-4 scroll-mt-28">
         <ControlledRewriteProof />
         <ResearchToCampaignProof />
       </section>

@@ -15,6 +15,7 @@ export function SiteLayout() {
     const target = document.getElementById(targetId)
     if (!target) return false
     const targetHasFrame =
+      target.dataset.jumpHighlight === 'frame' ||
       target.classList.contains('border') ||
       Array.from(target.classList).some((className) => className.startsWith('border-'))
     const titleTarget = target.matches('h1, h2, h3, h4, [data-section-title]')

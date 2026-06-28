@@ -210,8 +210,8 @@ export function HomePage() {
 
       <section className="space-y-5">
         <SectionTitle
-          eyebrow="Featured Projects"
-          title="Top Featured Projects - Click Into Evidence"
+          eyebrow="Click Into Evidence"
+          title="Featured AI Projects"
           subtitle="The homepage stays light; each card exposes enough proof to invite inspection."
         />
         <div className="grid gap-4">

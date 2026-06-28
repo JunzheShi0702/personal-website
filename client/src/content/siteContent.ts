@@ -78,11 +78,23 @@ export const flagshipProjects: FlagshipProject[] = [
     researchRelevance:
       'A concrete AI systems case study in high-stakes student planning: grounding, clarification, evaluation, and human-inspectable recommendations.',
     stack: ['React', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'pgvector'],
-    evidence: ['Live demo', 'Presentation', 'Architecture', 'Screenshots', 'Evaluation notes'],
+    evidence: [
+      'AI course planning',
+      'Retrieval-grounded advising',
+      'Schedule audit agent',
+      'Constraint-aware ranking',
+      'Custom event reasoning',
+      'pgvector semantic search',
+    ],
     links: [
       { label: 'Case Study', href: '/projects/atlas' },
       { label: 'Live Demo', href: 'https://team-02-frontend.onrender.com/', external: true },
       { label: 'Screenshots', href: '/projects/atlas#evidence' },
+      {
+        label: 'Code Sample',
+        href: 'https://github.com/JunzheShi0702/atlas-custom-schedule-events',
+        external: true,
+      },
       {
         label: 'Presentation',
         href: '/ppt/AI%20Enabled%20SWE%20Final%20Presentation.pptx',
@@ -105,7 +117,14 @@ export const flagshipProjects: FlagshipProject[] = [
     researchRelevance:
       'Shows human-in-the-loop AI system design: source-aware generation, visible process, explicit approval, and implementation-backed reliability.',
     stack: ['React', 'TypeScript', 'AI workflows', 'Knowledge graph', 'Document automation'],
-    evidence: ['Live demo', 'GitHub repo', 'Commit proof', 'Screenshot gallery', 'Technical notes'],
+    evidence: [
+      'AI knowledge graph',
+      'Source-grounded generation',
+      'Human-in-the-loop review',
+      'Agentic workflow design',
+      'RAG answer synthesis',
+      'AI document automation',
+    ],
     links: [
       { label: 'Case Study', href: '/projects/pdr-ai' },
       { label: 'Live Demo', href: 'https://launch-stack-web.vercel.app/', external: true },

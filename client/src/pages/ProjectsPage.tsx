@@ -66,7 +66,7 @@ export function ProjectsPage() {
         <div className="grid gap-5 lg:grid-cols-2">
           {flagshipProjects.map((project) => (
             <BentoCard key={project.title} className="overflow-hidden p-0">
-              <div className="relative aspect-[16/9] overflow-hidden border-b border-white/10 bg-slate-950">
+              <div className="relative m-3 mb-0 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 bg-slate-950">
                 <img
                   src={project.heroImage}
                   alt=""

@@ -131,6 +131,14 @@ export function AtlasCaseStudyPage() {
             Download Presentation
           </a>
           <a
+            href="https://github.com/JunzheShi0702/atlas-custom-schedule-events"
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm font-semibold text-cyan-100/90 transition hover:text-cyan-50"
+          >
+            View Code Sample
+          </a>
+          <a
             href="/projects/pdr-ai"
             className="text-sm font-semibold text-cyan-100/90 transition hover:text-cyan-50"
           >
