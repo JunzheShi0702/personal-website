@@ -14,18 +14,9 @@ export function SiteLayout() {
   const scrollToHashTarget = useCallback((targetId: string) => {
     const target = document.getElementById(targetId)
     if (!target) return false
-    const targetHasFrame =
-      target.dataset.jumpHighlight === 'frame' ||
-      target.classList.contains('border') ||
-      Array.from(target.classList).some((className) => className.startsWith('border-'))
     const titleTarget = target.matches('h1, h2, h3, h4, [data-section-title]')
       ? target
       : target.querySelector<HTMLElement>('h1, h2, h3, h4, [data-section-title]')
-    const highlightTarget = targetHasFrame ? target : titleTarget ?? target
-    const highlightClass =
-      targetHasFrame || !titleTarget
-        ? 'section-jump-frame-highlight'
-        : 'section-jump-title-highlight'
 
     target.scrollIntoView({
       block: 'start',
@@ -40,11 +31,16 @@ export function SiteLayout() {
       })
 
     const highlightDelay = prefersReducedMotion ? 80 : 620
-    window.setTimeout(() => highlightTarget.classList.add(highlightClass), highlightDelay)
-    window.setTimeout(
-      () => highlightTarget.classList.remove(highlightClass),
-      highlightDelay + 1800,
-    )
+    if (titleTarget) {
+      window.setTimeout(
+        () => titleTarget.classList.add('section-jump-title-highlight'),
+        highlightDelay,
+      )
+      window.setTimeout(
+        () => titleTarget.classList.remove('section-jump-title-highlight'),
+        highlightDelay + 1800,
+      )
+    }
     return true
   }, [prefersReducedMotion])
 

@@ -318,7 +318,7 @@ export function PdrCaseStudyPage() {
         />
       </section>
 
-      <section className="grid gap-10 border-y border-white/10 py-14 lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <SectionLabel>Trust mechanisms</SectionLabel>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
@@ -361,7 +361,7 @@ export function PdrCaseStudyPage() {
         </div>
       </section>
 
-      <section id="technical-notes" className="scroll-mt-28 border-y border-white/10 py-14">
+      <section id="technical-notes" className="scroll-mt-28">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
             <SectionLabel>Reliability</SectionLabel>

@@ -83,7 +83,7 @@ export function ResearchPage() {
 
         <div className="mt-10 grid gap-10 lg:grid-cols-3">
           {researchFocus.map((item) => (
-            <article key={item.title} className="border-t border-white/10 pt-5">
+            <article key={item.title}>
               <h3 className="text-xl font-semibold text-slate-50">{item.title}</h3>
               <p className="mt-3 text-base leading-relaxed text-slate-300">
                 {item.description}
@@ -109,12 +109,12 @@ export function ResearchPage() {
           </p>
         </div>
 
-        <div className="mt-12 divide-y divide-white/10">
+        <div className="mt-12 space-y-10">
           {researchTracks.map((track, index) => (
             <article
               key={track.id}
               id={track.id}
-              className="grid gap-5 py-6 scroll-mt-28 md:grid-cols-[9rem_1fr]"
+              className="grid scroll-mt-28 gap-5 md:grid-cols-[9rem_1fr]"
             >
               <div>
                 <p className="font-mono text-sm text-cyan-200/70">
@@ -204,11 +204,11 @@ export function ResearchPage() {
           </p>
         </div>
 
-        <div className="mt-10 divide-y divide-white/10">
+        <div className="mt-10 space-y-8">
           {publications.map((paper, index) => (
             <article
               key={paper.doi}
-              className="grid gap-5 py-5 md:grid-cols-[3rem_1fr]"
+              className="grid gap-5 md:grid-cols-[3rem_1fr]"
             >
               <p className="font-mono text-sm text-cyan-200/65">
                 {String(index + 1).padStart(2, '0')}

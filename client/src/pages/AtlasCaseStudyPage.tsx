@@ -285,6 +285,22 @@ export function AtlasCaseStudyPage() {
             >
               Demo
             </a>
+            <a
+              href="https://github.com/JunzheShi0702/atlas-course-assistant"
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-cyan-50"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://github.com/JunzheShi0702/atlas-course-assistant/blob/master/CREDITS.md"
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-cyan-50"
+            >
+              Credits
+            </a>
           </div>
         </div>
       </section>

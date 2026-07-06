@@ -1,394 +1,442 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowUpRight, Download, Mail } from 'lucide-react'
-import { BentoCard } from '../components/ui/BentoCard'
-import { SectionTitle } from '../components/ui/SectionTitle'
-import { flagshipProjects, homepagePathways, publications, researchTracks } from '../content/siteContent'
+import type { ReactNode } from 'react'
+import {
+  flagshipProjects,
+  homepagePathways,
+  publications,
+  researchTracks,
+} from '../content/siteContent'
 import type { ProjectLink } from '../content/siteContent'
-import universityShield from '../assets/university.shield.rgb.white.svg'
 
 const resumePath = '/resume.pdf'
 
-function LinkedInIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M20.447 20.452H17.21v-5.569c0-1.328-.024-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.984V9h3.102v1.561h.044c.432-.816 1.487-1.676 3.059-1.676 3.273 0 3.876 2.154 3.876 4.955v6.612zM5.337 7.433a1.8 1.8 0 1 1 0-3.601 1.8 1.8 0 0 1 0 3.601zM6.95 20.452H3.722V9H6.95v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-    </svg>
-  )
-}
-
-function GitHubIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-    </svg>
-  )
-}
-
-const stagger = {
-  hidden: { opacity: 0, y: 12 },
-  visible: (index: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: index * 0.08, duration: 0.45 },
-  }),
-}
-
 const evidenceSnapshot = [
   {
-    stat: '1',
-    title: 'Research Vision',
+    stat: '01',
+    title: 'Research vision',
     detail: 'Inspectable AI for evidence-heavy decisions',
   },
   {
-    stat: '3',
-    title: 'Representative Systems',
+    stat: '02',
+    title: 'Three representative systems',
     detail: 'Atlas · LaunchStack · REACH',
   },
   {
-    stat: '4',
-    title: 'Published Papers',
+    stat: '03',
+    title: 'Four published papers',
     detail: 'DOI-linked outputs',
   },
   {
-    stat: '4',
-    title: 'Research Themes',
+    stat: '04',
+    title: 'Four research themes',
     detail: 'AI · Healthcare · Physics · Materials',
   },
 ]
 
-function ProjectAction({ link }: { link: ProjectLink }) {
-  const className =
-    'inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-200/10 hover:text-white'
+const researchView = [
+  {
+    title: 'Clinical AI',
+    description:
+      'REACH frames cohort planning around evidence quality and patient safety.',
+    to: '/projects/reach',
+  },
+  {
+    title: 'AI planning systems',
+    description:
+      'Atlas studies grounded advising, constraints, and auditability.',
+    to: '/projects/atlas',
+  },
+  {
+    title: 'Human-AI collaboration',
+    description:
+      'LaunchStack keeps generated work source-aware and reviewable.',
+    to: '/projects/pdr-ai',
+  },
+]
 
-  if (link.external) {
+function SectionLabel({ children }: { children: string }) {
+  return (
+    <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/85">
+      {children}
+    </p>
+  )
+}
+
+function TextLink({
+  children,
+  href,
+  to,
+  external,
+  download,
+}: {
+  children: string
+  href?: string
+  to?: string
+  external?: boolean
+  download?: boolean
+}) {
+  const className =
+    'text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-cyan-50'
+
+  if (to) {
     return (
-      <a href={link.href} target="_blank" rel="noreferrer" className={className}>
-        {link.label}
-        <ArrowUpRight className="h-3.5 w-3.5" />
-      </a>
+      <Link to={to} className={className}>
+        {children}
+      </Link>
     )
   }
 
   return (
-    <Link to={link.href} className={className}>
-      {link.label}
-    </Link>
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noreferrer' : undefined}
+      download={download}
+      className={className}
+    >
+      {children}
+    </a>
+  )
+}
+
+function ProjectAction({ link }: { link: ProjectLink }) {
+  if (link.external) {
+    return (
+      <TextLink href={link.href} external>
+        {link.label}
+      </TextLink>
+    )
+  }
+
+  return <TextLink to={link.href}>{link.label}</TextLink>
+}
+
+function SectionHeader({
+  label,
+  title,
+  children,
+  maxWidth = 'max-w-4xl',
+}: {
+  label: string
+  title: string
+  children?: ReactNode
+  maxWidth?: string
+}) {
+  return (
+    <div className={maxWidth}>
+      <SectionLabel>{label}</SectionLabel>
+      <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+        {title}
+      </h2>
+      {children ? (
+        <div className="mt-6 text-lg leading-relaxed text-slate-300">{children}</div>
+      ) : null}
+    </div>
   )
 }
 
 export function HomePage() {
   return (
-    <div className="space-y-10">
-      <section className="relative isolate px-2 py-6 md:py-10">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-1 top-0 -z-10 select-none opacity-[0.12] md:-top-6 md:right-4"
-        >
-          <img src={universityShield} alt="" className="h-56 w-auto md:h-80" />
-        </div>
-        <div className="relative z-10 grid items-stretch gap-6 lg:grid-cols-[1.12fr_0.88fr]">
-          <div className="flex flex-col justify-between gap-7">
-            <div className="space-y-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/85">
-                Academic Personal Website
-              </p>
-              <h1 className="max-w-3xl text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                Junzhe Shi studies AI systems for evidence-heavy decisions.
-              </h1>
-              <p className="max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
-                I am a Johns Hopkins student in Computer Science and Applied
-                Mathematics and Statistics, preparing for AI PhD research. My work asks
-                how models, retrieval systems, and human-facing tools can make uncertain
-                evidence inspectable before it becomes a recommendation.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  to="/research"
-                  className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
-                >
-                  Read Research Vision
-                </Link>
-                <Link
-                  to="/publications"
-                  className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-200/60 hover:text-white"
-                >
-                  View Publications
-                </Link>
-                <a
-                  href={resumePath}
-                  className="inline-flex items-center gap-2 px-1 py-2 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
-                >
-                  <Download className="h-4 w-4" />
-                  CV
-                </a>
-              </div>
-            </div>
-
-            <div className="border-t border-white/10 pt-5">
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
-                  Academic Snapshot
-                </p>
-                <Link
-                  to="/projects"
-                  className="text-xs font-semibold text-cyan-200 transition hover:text-cyan-100"
-                >
-                  Representative systems
-                </Link>
-              </div>
-              <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-                {evidenceSnapshot.map((item) => (
-                  <article
-                    key={item.title}
-                    className="rounded-2xl border border-white/15 bg-slate-900/65 p-3"
-                  >
-                    <p className="font-display text-2xl font-semibold leading-none text-cyan-100">
-                      {item.stat}
-                    </p>
-                    <p className="mt-1 text-xs font-semibold text-white">{item.title}</p>
-                    <p className="mt-0.5 text-[11px] leading-snug text-slate-400">
-                      {item.detail}
-                    </p>
-                  </article>
-                ))}
-              </div>
+    <div className="space-y-20">
+      <section className="relative pb-20 pt-4 md:pb-28 md:pt-6">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.18fr)_minmax(20rem,0.82fr)] lg:items-stretch lg:gap-14">
+          <div className="flex max-w-[1120px] flex-col justify-end">
+            <SectionLabel>Academic Personal Website</SectionLabel>
+            <h1 className="mt-8 max-w-[1100px] text-[clamp(3rem,5.5vw,5.75rem)] font-semibold leading-[1.01] tracking-tight text-slate-100">
+              Junzhe Shi studies AI systems for evidence-heavy decisions.
+            </h1>
+            <p className="mt-7 max-w-[900px] text-lg leading-[1.6] text-slate-300 md:text-[1.25rem]">
+              I am a Johns Hopkins student in Computer Science and Applied
+              Mathematics and Statistics, preparing for AI PhD research. My work
+              asks how models, retrieval systems, and human-facing tools can make
+              uncertain evidence inspectable before it becomes a recommendation.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-5">
+              <TextLink to="/research">Research</TextLink>
+              <TextLink to="/publications">Publications</TextLink>
+              <TextLink href={resumePath} download>
+                CV
+              </TextLink>
             </div>
           </div>
-          <div className="self-stretch">
-            <BentoCard className="flex h-full flex-col justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-[0.15em] text-cyan-200/70">
-                  Research Vision
-                </p>
-                <p className="mt-3 text-lg font-medium leading-relaxed text-slate-100">
-                  I want to build AI systems that are useful precisely because their
-                  assumptions, sources, constraints, and failure modes remain visible to
-                  the people using them.
-                </p>
-                <div className="mt-5 grid gap-3">
-                  {[
-                    ['Clinical AI', 'REACH frames cohort planning around evidence quality and patient safety.', '/projects/reach'],
-                    ['AI planning systems', 'Atlas studies grounded advising, constraints, and auditability.', '/projects/atlas'],
-                    ['Human-AI collaboration', 'LaunchStack keeps generated work source-aware and reviewable.', '/projects/pdr-ai'],
-                  ].map(([title, description, href]) => (
-                    <Link
-                      key={title}
-                      to={href}
-                      className="rounded-2xl border border-white/10 bg-slate-950/45 p-4 transition hover:border-cyan-200/40 hover:bg-slate-950/70"
-                    >
-                      <p className="text-sm font-semibold text-cyan-100">{title}</p>
-                      <p className="mt-1 text-sm leading-relaxed text-slate-300">
-                        {description}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
 
-              <div className="mt-5 border-t border-white/10 pt-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-violet-200/75">
-                  Research Progression
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                  Physics and materials taught me to model uncertainty; AI systems and
-                  clinical AI are where I now apply that discipline.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {['Physics', 'Materials', 'AI systems', 'Clinical AI'].map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-violet-200/15 bg-violet-300/5 px-3 py-1 text-xs text-violet-100/80"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+          <aside className="lg:flex lg:h-full lg:border-l lg:border-white/10 lg:pl-14">
+            <div className="lg:flex lg:flex-col lg:justify-end">
+              <SectionLabel>Research View</SectionLabel>
+              <p className="mt-4 text-xl font-medium leading-relaxed text-slate-100">
+                I want to build AI systems that are useful precisely because their
+                assumptions, sources, constraints, and failure modes remain visible
+                to the people using them.
+              </p>
+              <div className="mt-7 divide-y divide-white/5">
+                {researchView.map((item) => (
+                  <Link
+                    key={item.title}
+                    to={item.to}
+                    className="grid gap-2 py-4 transition hover:text-cyan-100 sm:grid-cols-[11rem_1fr]"
+                  >
+                    <p className="text-base font-semibold text-cyan-100">
+                      {item.title}
+                    </p>
+                    <p className="text-sm leading-relaxed text-slate-400">
+                      {item.description}
+                    </p>
+                  </Link>
+                ))}
               </div>
-            </BentoCard>
+              <p className="mt-5 text-sm leading-relaxed text-slate-400">
+                Research progression: physics and materials taught me to model
+                uncertainty; AI systems and clinical AI are where I now apply that
+                discipline.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section aria-labelledby="snapshot-heading" className="scroll-mt-28">
+        <div className="border-t border-white/10 py-7">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <SectionLabel>Academic Snapshot</SectionLabel>
+              <h2
+                id="snapshot-heading"
+                className="mt-3 text-2xl font-semibold tracking-tight text-white md:text-3xl"
+              >
+                Evidence at a glance
+              </h2>
+            </div>
+            <TextLink to="/projects">Representative systems</TextLink>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {evidenceSnapshot.map((item) => (
+              <article key={item.title} className="grid gap-3 sm:grid-cols-[3rem_1fr]">
+                <p className="font-mono text-sm text-cyan-200/55">{item.stat}</p>
+                <div>
+                  <p className="text-lg font-semibold text-slate-100">{item.title}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                    {item.detail}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="space-y-5">
-        <SectionTitle
-          eyebrow="Click Into Evidence"
+      <section className="scroll-mt-28">
+        <SectionHeader
+          label="Click Into Evidence"
           title="Representative Systems"
-          subtitle="These systems are evidence for the research agenda, not the agenda itself."
-        />
-        <div className="grid gap-4">
+        >
+          <p>
+            These systems are evidence for the research agenda, not the agenda
+            itself.
+          </p>
+        </SectionHeader>
+
+        <div className="mt-12 space-y-16">
           {flagshipProjects.map((project) => (
-            <BentoCard
+            <article
               key={project.title}
-              className="grid overflow-hidden p-0 lg:grid-cols-[minmax(0,1.85fr)_minmax(17rem,0.62fr)]"
+              className="grid gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(20rem,0.85fr)] lg:items-center"
             >
-              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-slate-950 lg:aspect-[16/9]">
+              <Link
+                to={project.links[0].href}
+                className="group relative block aspect-[16/10] overflow-hidden rounded-[1.35rem] bg-slate-950/70 shadow-[0_24px_70px_-48px_rgba(34,211,238,0.42)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 lg:aspect-[16/9]"
+              >
                 <img
                   src={project.heroImage}
                   alt=""
-                  className="h-full w-full object-cover object-top opacity-90 transition duration-500 group-hover:scale-[1.02] group-hover:opacity-100"
+                  className="h-full w-full object-cover object-top opacity-90 transition duration-500 group-hover:scale-[1.015] group-hover:opacity-100"
                 />
-                <div className="absolute left-3 top-3 rounded-full border border-cyan-200/30 bg-slate-950/85 px-3 py-1 text-xs font-semibold text-cyan-100">
+                <span className="absolute left-4 top-4 rounded-full bg-slate-950/75 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-cyan-100 shadow-lg backdrop-blur">
                   {project.heroLabel}
-                </div>
-              </div>
-              <div className="flex flex-col justify-between gap-5 p-5 md:p-6">
-                <p className="text-xs uppercase tracking-[0.16em] text-cyan-200/80">
+                </span>
+              </Link>
+
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/85">
                   {project.eyebrow}
                 </p>
-                <div>
-                  <h3 className="mt-2 text-2xl font-semibold text-white">
-                    {project.title}
-                  </h3>
-                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300">
-                    {project.summary}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2.5">
-                  {project.links.slice(0, 4).map((link) => (
+                <h3 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+                  {project.title}
+                </h3>
+                <p className="mt-6 text-lg leading-relaxed text-slate-300">
+                  {project.summary}
+                </p>
+                <p className="mt-4 text-base leading-relaxed text-slate-400">
+                  {project.researchRelevance}
+                </p>
+                <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3">
+                  {project.links.map((link) => (
                     <ProjectAction key={`${project.title}-${link.label}`} link={link} />
                   ))}
                 </div>
               </div>
-            </BentoCard>
-          ))}
-        </div>
-      </section>
-
-      <section className="space-y-5">
-        <SectionTitle
-          eyebrow="Start Here"
-          title="Academic entry points"
-          subtitle="Short paths for readers who want the research story, formal outputs, systems evidence, or contact details."
-        />
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {homepagePathways.map((path, index) => (
-            <motion.div
-              key={path.to}
-              custom={index}
-              initial="hidden"
-              animate="visible"
-              variants={stagger}
-            >
-              <Link to={path.to} className="block">
-                <BentoCard className="h-full">
-                  <h3 className="text-lg font-semibold text-white">{path.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                    {path.description}
-                  </p>
-                  <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/80">
-                    Open section
-                  </p>
-                </BentoCard>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      <section className="space-y-5">
-        <SectionTitle
-          eyebrow="Recent Publications"
-          title="Formal research outputs"
-          subtitle="Selected DOI-linked publications that ground the research trajectory."
-        />
-        <div className="divide-y divide-white/10 overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70">
-          {publications.slice(0, 2).map((paper) => (
-            <article key={paper.doi} className="p-5 md:p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200/70">
-                {paper.venue} · {paper.year}
-              </p>
-              <h3 className="mt-2 text-lg font-semibold text-white">{paper.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                {paper.authors}
-              </p>
             </article>
           ))}
         </div>
-        <Link
-          to="/publications"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
-        >
-          View all publications
-          <ArrowUpRight className="h-4 w-4" />
-        </Link>
       </section>
 
-      <section className="space-y-5">
-        <SectionTitle
-          eyebrow="Current Research"
-          title={researchTracks[0].title}
-          subtitle={researchTracks[0].question}
-        />
-        <BentoCard>
-          <p className="text-sm leading-relaxed text-slate-300">
-            {researchTracks[0].contribution}
+      <section className="scroll-mt-28">
+        <SectionHeader
+          label="Start Here"
+          title="Academic entry points"
+        >
+          <p>
+            Short paths for readers who want the research story, formal outputs,
+            systems evidence, or contact details.
           </p>
-          <Link
-            to="/projects/reach"
-            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
-          >
-            Open REACH project page
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </BentoCard>
-      </section>
+        </SectionHeader>
 
-      <section id="cv" className="space-y-5 scroll-mt-24">
-        <SectionTitle
-          eyebrow="CV"
-          title="Download my CV"
-          subtitle="Get the latest PDF copy of my education, research, publications, and project work."
-        />
-
-        <a
-          href={resumePath}
-          download
-          className="group inline-flex items-center gap-2 border-b border-cyan-300/35 pb-1 text-sm font-semibold text-cyan-200 transition hover:border-cyan-200 hover:text-cyan-100"
-        >
-          <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-          Download CV
-          <span className="font-normal text-slate-400">PDF</span>
-        </a>
-      </section>
-
-      <section id="contact" className="rounded-3xl border border-white/15 bg-slate-900/75 p-6 md:p-8">
-        <SectionTitle
-          eyebrow="Contact"
-          title="Let us connect"
-          subtitle="Open to research collaborations, AI product engineering roles, and technically rigorous build opportunities."
-        />
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          <a
-            href="mailto:jshi70@jh.edu"
-            className="rounded-2xl border border-white/15 bg-slate-900/60 p-5 transition hover:-translate-y-1 hover:border-cyan-200/55"
-          >
-            <Mail className="h-5 w-5 text-cyan-200/75" />
-            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.15em] text-cyan-200/75">Email</p>
-            <p className="mt-1 text-base font-semibold text-white">jshi70@jh.edu</p>
-          </a>
-          <a
-            href="https://linkedin.com/in/junzheshi"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-white/15 bg-slate-900/60 p-5 transition hover:-translate-y-1 hover:border-cyan-200/55"
-          >
-            <LinkedInIcon className="h-5 w-5 text-cyan-200/75" />
-            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.15em] text-cyan-200/75">LinkedIn</p>
-            <p className="mt-1 text-base font-semibold text-white">linkedin.com/in/junzheshi</p>
-          </a>
-          <a
-            href="https://github.com/JunzheShi0702"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-white/15 bg-slate-900/60 p-5 transition hover:-translate-y-1 hover:border-cyan-200/55"
-          >
-            <GitHubIcon className="h-5 w-5 text-cyan-200/75" />
-            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.15em] text-cyan-200/75">GitHub</p>
-            <p className="mt-1 text-base font-semibold text-white">github.com/JunzheShi0702</p>
-          </a>
+        <div className="mt-10 divide-y divide-white/5">
+          {homepagePathways.map((path, index) => (
+            <Link
+              key={path.to}
+              to={path.to}
+              className="grid gap-3 py-5 transition hover:text-cyan-100 md:grid-cols-[5rem_minmax(10rem,0.35fr)_1fr_auto] md:items-center"
+            >
+              <p className="font-mono text-sm text-cyan-200/55">
+                {String(index + 1).padStart(2, '0')}
+              </p>
+              <h3 className="text-xl font-semibold text-white">{path.title}</h3>
+              <p className="text-base leading-relaxed text-slate-400">
+                {path.description}
+              </p>
+              <p className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4">
+                Open
+              </p>
+            </Link>
+          ))}
         </div>
       </section>
+
+      <section className="scroll-mt-28">
+        <SectionHeader
+          label="Recent Publications"
+          title="Formal research outputs"
+        >
+          <p>Selected DOI-linked publications that ground the research trajectory.</p>
+        </SectionHeader>
+
+        <div className="mt-10 space-y-12">
+          {publications.slice(0, 2).map((paper) => (
+            <article
+              key={paper.doi}
+              className="grid gap-4 md:grid-cols-[12rem_1fr]"
+            >
+              <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                {paper.venue} · {paper.year}
+              </p>
+              <div>
+                <h3 className="text-2xl font-semibold tracking-tight text-white">
+                  {paper.title}
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-slate-400">
+                  {paper.authors}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3">
+                  {paper.link ? (
+                    <TextLink href={paper.link} external>
+                      DOI
+                    </TextLink>
+                  ) : null}
+                  <TextLink to="/publications">Publication details</TextLink>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="mt-6">
+          <TextLink to="/publications">View all publications</TextLink>
+        </div>
+      </section>
+
+      <section className="scroll-mt-28">
+        <SectionHeader
+          label="Current Research"
+          title={researchTracks[0].title}
+        >
+          <p>{researchTracks[0].question}</p>
+        </SectionHeader>
+
+        <div className="mt-8 max-w-4xl">
+          <p className="text-lg leading-relaxed text-slate-300">
+            {researchTracks[0].contribution}
+          </p>
+          <div className="mt-6 flex flex-wrap gap-5">
+            <TextLink to="/projects/reach">Project Page</TextLink>
+            <TextLink to="/research#healthcare-ai">Research Context</TextLink>
+          </div>
+        </div>
+      </section>
+
+      <div className="grid gap-12 pb-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-14">
+        <section id="cv" className="scroll-mt-24">
+          <SectionHeader label="CV" title="Download my CV.">
+            <p>
+              Get the latest PDF copy of my education, research, publications, and
+              project work.
+            </p>
+          </SectionHeader>
+
+          <div className="mt-6">
+            <TextLink href={resumePath} download>
+              Download CV
+            </TextLink>
+          </div>
+        </section>
+
+        <section
+          id="contact"
+          className="scroll-mt-28 lg:border-l lg:border-white/10 lg:pl-14"
+        >
+          <SectionHeader label="Contact" title="Let's connect.">
+            <p>
+              Open to research collaborations, AI product engineering roles, and
+              technically rigorous build opportunities.
+            </p>
+          </SectionHeader>
+
+          <div className="mt-8 grid gap-5 sm:grid-cols-3 lg:grid-cols-1">
+            <a href="mailto:jshi70@jh.edu" className="group">
+              <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                Email
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white transition group-hover:text-cyan-100">
+                jshi70@jh.edu
+              </p>
+            </a>
+            <a
+              href="https://linkedin.com/in/junzheshi"
+              target="_blank"
+              rel="noreferrer"
+              className="group"
+            >
+              <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                LinkedIn
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white transition group-hover:text-cyan-100">
+                linkedin.com/in/junzheshi
+              </p>
+            </a>
+            <a
+              href="https://github.com/JunzheShi0702"
+              target="_blank"
+              rel="noreferrer"
+              className="group"
+            >
+              <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                GitHub
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white transition group-hover:text-cyan-100">
+                github.com/JunzheShi0702
+              </p>
+            </a>
+          </div>
+        </section>
+      </div>
     </div>
   )
 }

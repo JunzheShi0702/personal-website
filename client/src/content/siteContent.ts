@@ -104,6 +104,16 @@ export const flagshipProjects: FlagshipProject[] = [
     links: [
       { label: 'Case Study', href: '/projects/atlas' },
       { label: 'Live Demo', href: 'https://atlas.junzheshi.com', external: true },
+      {
+        label: 'GitHub',
+        href: 'https://github.com/JunzheShi0702/atlas-course-assistant',
+        external: true,
+      },
+      {
+        label: 'Credits',
+        href: 'https://github.com/JunzheShi0702/atlas-course-assistant/blob/master/CREDITS.md',
+        external: true,
+      },
       { label: 'Screenshots', href: '/projects/atlas#evidence' },
       {
         label: 'Presentation',

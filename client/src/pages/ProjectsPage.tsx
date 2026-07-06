@@ -1,196 +1,263 @@
-import { ArrowUpRight, FileText, FlaskConical, Image, Layers3 } from 'lucide-react'
+import {
+  BadgeCheck,
+  Code,
+  ExternalLink,
+  FileText,
+  GitCommitHorizontal,
+  Images,
+  type LucideIcon,
+  MonitorPlay,
+  Presentation,
+  Search,
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { BentoCard } from '../components/ui/BentoCard'
-import { SectionTitle } from '../components/ui/SectionTitle'
 import { engineeringExperience, flagshipProjects } from '../content/siteContent'
 import type { ProjectLink } from '../content/siteContent'
 
+function SectionLabel({ children }: { children: string }) {
+  return (
+    <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/85">
+      {children}
+    </p>
+  )
+}
+
+function TextAnchor({ href, children }: { href: string; children: string }) {
+  return (
+    <a
+      href={href}
+      className="group inline-flex items-center text-base font-semibold text-cyan-100 underline decoration-cyan-200/55 decoration-2 underline-offset-[7px] transition hover:text-white hover:decoration-cyan-100"
+    >
+      {children}
+      <span className="ml-2 transition group-hover:translate-x-1">→</span>
+    </a>
+  )
+}
+
+function getProjectActionIcon(label: string): LucideIcon {
+  const normalizedLabel = label.toLowerCase()
+
+  if (normalizedLabel.includes('demo')) {
+    return MonitorPlay
+  }
+
+  if (normalizedLabel.includes('github')) {
+    return Code
+  }
+
+  if (normalizedLabel.includes('screenshot')) {
+    return Images
+  }
+
+  if (normalizedLabel.includes('commit')) {
+    return GitCommitHorizontal
+  }
+
+  if (normalizedLabel.includes('credit')) {
+    return BadgeCheck
+  }
+
+  if (normalizedLabel.includes('presentation')) {
+    return Presentation
+  }
+
+  if (normalizedLabel.includes('research')) {
+    return Search
+  }
+
+  return FileText
+}
+
 function ProjectAction({ link }: { link: ProjectLink }) {
+  const Icon = getProjectActionIcon(link.label)
   const className =
-    'inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-200/10 hover:text-white'
+    'group inline-flex h-10 items-center gap-2 rounded-full border border-cyan-100/20 bg-slate-950/35 px-3.5 text-sm font-semibold text-cyan-100 transition hover:border-cyan-100/45 hover:bg-cyan-100/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950'
 
   if (link.external) {
     return (
       <a href={link.href} target="_blank" rel="noreferrer" className={className}>
+        <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
         {link.label}
-        <ArrowUpRight className="h-3.5 w-3.5" />
+        <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-70 transition group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden="true" />
       </a>
     )
   }
 
   return (
     <Link to={link.href} className={className}>
+      <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
       {link.label}
     </Link>
   )
 }
 
+function ProjectEvidence({ items }: { items: string[] }) {
+  return (
+    <p className="text-sm leading-relaxed text-slate-400">
+      {items.join(' · ')}
+    </p>
+  )
+}
+
 export function ProjectsPage() {
   return (
-    <div className="space-y-10">
-      <section className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80 p-6 md:p-8 lg:p-10">
-        <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/55 to-transparent" />
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200/75">
-          Projects
-        </p>
-        <h1 className="mt-4 max-w-4xl text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
-          AI systems, engineering judgment, and evidence you can inspect.
-        </h1>
-        <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
-          Start with the featured systems, then scan selected engineering
-          experience that demonstrates implementation maturity and systems judgment.
-        </p>
-        <div className="mt-7 flex flex-wrap gap-3">
-          <a
-            href="#flagship"
-            className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
-          >
-            Featured projects
-          </a>
-          <a
-            href="#experience"
-            className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-200/60 hover:text-white"
-          >
-            Engineering experience
-          </a>
+    <div className="space-y-24">
+      <section className="pb-4 pt-4 md:pb-10 md:pt-8">
+        <div className="max-w-[1120px]">
+          <SectionLabel>Projects</SectionLabel>
+          <h1 className="mt-8 max-w-[1080px] text-balance text-[clamp(3.1rem,6.2vw,6.6rem)] font-semibold leading-[0.98] tracking-tight text-white">
+            AI systems, engineering judgment, and evidence you can inspect.
+          </h1>
+          <p className="mt-8 max-w-[880px] text-lg leading-[1.65] text-slate-300 md:text-[1.25rem]">
+            Start with the featured systems, then scan selected engineering
+            experience that demonstrates implementation maturity and systems judgment.
+          </p>
+          <div className="mt-9 flex flex-wrap gap-x-7 gap-y-4">
+            <TextAnchor href="#flagship">Featured projects</TextAnchor>
+            <TextAnchor href="#experience">Engineering experience</TextAnchor>
+          </div>
         </div>
       </section>
 
-      <section id="flagship" className="space-y-5 scroll-mt-28">
-        <SectionTitle
-          eyebrow="Featured Projects"
-          title="Built systems with visible evidence"
-          subtitle="These are the strongest inspectable projects. Each card gives several ways to inspect the system before opening the full case study."
-        />
+      <section id="flagship" className="scroll-mt-28">
+        <div className="max-w-[900px]">
+          <SectionLabel>Featured Projects</SectionLabel>
+          <h2 className="mt-5 text-4xl font-semibold tracking-tight text-white md:text-6xl">
+            Built systems with visible evidence.
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-slate-300">
+            Each project keeps the evidence close to the claim: demos, case studies,
+            screenshots, source links, or research context where those artifacts are public.
+          </p>
+        </div>
 
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="mt-14 space-y-20">
           {flagshipProjects.map((project) => (
-            <BentoCard key={project.title} className="overflow-hidden p-0">
-              <div className="relative m-3 mb-0 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 bg-slate-950">
+            <article
+              key={project.title}
+              className="grid gap-9 lg:grid-cols-[minmax(0,1.38fr)_minmax(20rem,0.92fr)] lg:items-center lg:gap-12"
+            >
+              <Link
+                to={project.links[0]?.href ?? '#'}
+                className="group relative block aspect-[16/10] overflow-hidden rounded-[1.35rem] bg-slate-950/70 shadow-[0_28px_90px_-62px_rgba(34,211,238,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 lg:aspect-[16/9]"
+                aria-label={`Open ${project.title} case study`}
+              >
                 <img
                   src={project.heroImage}
                   alt=""
-                  className="h-full w-full object-cover object-top opacity-90 transition duration-500 group-hover:scale-[1.02] group-hover:opacity-100"
+                  className="h-full w-full object-cover object-top opacity-90 transition duration-500 group-hover:scale-[1.015] group-hover:opacity-100"
                 />
-                <div className="absolute left-4 top-4 rounded-full border border-cyan-200/30 bg-slate-950/85 px-3 py-1 text-xs font-semibold text-cyan-100">
+                <span className="absolute left-4 top-4 rounded-full bg-slate-950/75 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-cyan-100 shadow-lg backdrop-blur">
                   {project.heroLabel}
-                </div>
-              </div>
-              <div className="p-5 md:p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
+                </span>
+              </Link>
+
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/80">
                   {project.eyebrow}
                 </p>
-                <h2 className="mt-3 text-2xl font-semibold text-white">
+                <h3 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-5xl">
                   {project.title}
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-slate-300">
+                </h3>
+                <p className="mt-6 text-lg leading-relaxed text-slate-300">
                   {project.summary}
                 </p>
+                <p className="mt-5 text-base leading-relaxed text-slate-400">
+                  {project.researchRelevance}
+                </p>
 
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-white/10 bg-slate-950/55 p-4">
-                    <div className="flex items-center gap-2 text-cyan-100">
-                      <Layers3 className="h-4 w-4" />
-                      <p className="text-xs font-semibold uppercase tracking-[0.14em]">
-                        Stack
-                      </p>
-                    </div>
-                    <p className="mt-2 text-xs leading-relaxed text-slate-400">
+                <div className="mt-8 grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(13rem,0.78fr)]">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                      Technical frame
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-400">
                       {project.stack.join(' · ')}
                     </p>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-slate-950/55 p-4">
-                    <div className="flex items-center gap-2 text-violet-100">
-                      <FlaskConical className="h-4 w-4" />
-                      <p className="text-xs font-semibold uppercase tracking-[0.14em]">
-                        Research lens
-                      </p>
-                    </div>
-                    <p className="mt-2 text-xs leading-relaxed text-slate-400">
-                      {project.researchRelevance}
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                      Evidence surface
                     </p>
+                    <div className="mt-3">
+                      <ProjectEvidence items={project.evidence} />
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {project.evidence.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-cyan-200/15 bg-cyan-300/5 px-3 py-1 text-xs text-cyan-100/80"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-2">
+                <div className="mt-8 flex flex-wrap gap-x-5 gap-y-3">
                   {project.links.map((link) => (
                     <ProjectAction key={`${project.title}-${link.label}`} link={link} />
                   ))}
                 </div>
               </div>
-            </BentoCard>
+            </article>
           ))}
         </div>
       </section>
 
-      <section id="experience" className="space-y-5 scroll-mt-28">
-        <SectionTitle
-          eyebrow="Selected Engineering Experience"
-          title="Engineering maturity with clear evidence boundaries"
-          subtitle="These entries are framed as engineering experience: context, architecture, contributions, and skills demonstrated."
-        />
+      <section id="experience" className="scroll-mt-28 pb-8">
+        <div className="max-w-[900px]">
+          <SectionLabel>Selected Engineering Experience</SectionLabel>
+          <h2 className="mt-5 text-4xl font-semibold tracking-tight text-white md:text-6xl">
+            Implementation work with clear evidence boundaries.
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-slate-300">
+            These entries are framed as engineering experience: context, focus,
+            contribution surfaces, and skills demonstrated.
+          </p>
+        </div>
 
-        <div className="grid gap-4 lg:grid-cols-2">
-          {engineeringExperience.map((project) => (
+        <div className="mt-14 space-y-14">
+          {engineeringExperience.map((project, index) => (
             <article
               key={project.title}
-              className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6"
+              className="grid gap-6 md:grid-cols-[4.5rem_minmax(0,1fr)] md:gap-8"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/75">
-                Engineering experience
+              <p className="font-mono text-sm font-semibold text-cyan-100/65">
+                {String(index + 1).padStart(2, '0')}
               </p>
-              <h2 className="mt-3 text-2xl font-semibold text-white">
-                {project.title}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                {project.context}
-              </p>
+              <div className="max-w-[1040px]">
+                <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                  Engineering experience
+                </p>
+                <h3 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+                  {project.title}
+                </h3>
+                <p className="mt-5 max-w-[820px] text-lg leading-relaxed text-slate-300">
+                  {project.context}
+                </p>
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                <div>
-                  <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
-                    <FileText className="h-4 w-4" />
-                    Focus
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm text-slate-300">
-                    {project.focus.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
+                <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,0.9fr)_minmax(0,1fr)]">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                      Focus
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm leading-relaxed text-slate-400">
+                      {project.focus.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                      Review lens
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm leading-relaxed text-slate-400">
+                      {project.nextDetails.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.13em] text-cyan-100/75">
+                      Skills
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                      {project.skills.join(' · ')}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
-                    <Image className="h-4 w-4" />
-                    Review lens
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm text-slate-300">
-                    {project.nextDetails.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mt-5 flex flex-wrap gap-2">
-                {project.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full border border-white/10 bg-slate-950/55 px-3 py-1 text-xs text-slate-300"
-                  >
-                    {skill}
-                  </span>
-                ))}
               </div>
             </article>
           ))}
