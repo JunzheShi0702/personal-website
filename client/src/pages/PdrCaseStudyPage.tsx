@@ -1,302 +1,245 @@
-import { useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import type { PanInfo } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import launchstackLogo from '../assets/launchstack-logo.png'
 
-const architectureLayers = [
-  {
-    title: 'Connected knowledge',
-    items: ['Documents', 'Calls & recordings', 'Messages', 'Product repositories'],
-  },
-  {
-    title: 'Shared intelligence',
-    items: ['Semantic retrieval', 'Knowledge graph', 'Source-aware answers', 'Reusable context'],
-  },
-  {
-    title: 'Founder workflows',
-    items: ['Research', 'Document rewriting', 'Legal review', 'Marketing generation'],
-  },
-]
+type CaseStudyImage = {
+  src: string
+  alt: string
+  label: string
+  caption: string
+  interpretation: string
+}
 
-const atAGlance = [
-  {
-    label: 'Problem',
-    value:
-      'Founder knowledge is scattered across documents, calls, messages, and repositories.',
-  },
-  {
-    label: 'Stack',
-    value:
-      'React, TypeScript, AI workflows, knowledge graph patterns, document automation.',
-  },
-  {
-    label: 'My role',
-    value:
-      'Human-in-the-loop document workflows, research-to-campaign flow, and DOCX redlining integration.',
-  },
-  {
-    label: 'Evaluation',
-    value:
-      'Diff review, source references, authenticated API validation, and automated tests for the DOCX path.',
-  },
-  {
-    label: 'Research significance',
-    value:
-      'A human-AI collaboration system focused on grounding, approval, provenance, and reusable context.',
-  },
-]
+const systemImage: CaseStudyImage = {
+  src: '/screenshots/pdr-proof-1-diff.app.jpeg',
+  alt: 'LaunchStack section-level original and proposed rewrite diff',
+  label: 'System evidence',
+  caption: 'Diff-first rewrite review keeps generated edits inspectable before approval.',
+  interpretation:
+    'LaunchStack exposes the original section, proposed rewrite, change rationale, and accept/reject decision in one review surface.',
+}
 
-const workflowSteps = [
-  { step: '01', label: 'Connect', description: 'Bring scattered founder knowledge into one workspace' },
-  { step: '02', label: 'Understand', description: 'Parse content, relationships, and source context' },
-  { step: '03', label: 'Index', description: 'Make meaning searchable across every connected source' },
-  { step: '04', label: 'Ask', description: 'Query company knowledge in plain language' },
-  { step: '05', label: 'Verify', description: 'Trace answers back to their supporting sources' },
-  { step: '06', label: 'Apply', description: 'Reuse grounded context across product workflows' },
-]
-
-const controlledRewriteSlides = [
+const evidenceImages: CaseStudyImage[] = [
   {
-    src: '/screenshots/pdr-proof-1-input.app.jpeg',
-    alt: 'LaunchStack Rewrite workflow entry screen',
-    title: 'Choose how to begin',
-    description:
-      'Start from an imported document, clipboard content, a blank editor, or a guided rewrite workflow.',
-  },
-  {
-    src: '/screenshots/pdr-proof-1-options.app.jpeg',
-    alt: 'LaunchStack rewrite scope, instructions, presets, and guardrails',
-    title: 'Define the rewrite boundaries',
-    description:
-      'Select the source section, give a clear instruction, apply writing presets, and preserve structure, voice, and unresolved conflicts.',
-  },
-  {
-    src: '/screenshots/pdr-proof-1-diff.app.jpeg',
-    alt: 'LaunchStack section-level original and proposed rewrite diff',
-    title: 'Review every proposed change',
-    description:
-      'A section-level diff highlights removals and additions, explains the transformation, and requires an explicit accept or reject decision.',
+    src: '/screenshots/pdr-proof-2-results.app.jpeg',
+    alt: 'LaunchStack research-to-campaign process with claim-source verification',
+    label: 'Grounding evidence',
+    caption: 'The campaign workflow shows its research steps before a draft moves forward.',
+    interpretation:
+      'Company context, competitor analysis, trend research, campaign history, and claim checks remain visible instead of disappearing behind a generated post.',
   },
   {
     src: '/screenshots/pdr-proof-1-editor.app.jpeg',
-    alt: 'LaunchStack document editor containing an accepted rewrite',
-    title: 'Continue with the approved version',
-    description:
-      'Accepted content moves into a full editor where users can format, extend, and save the result without losing editorial control.',
+    alt: 'LaunchStack editor containing an accepted rewrite',
+    label: 'Approval evidence',
+    caption: 'Approved text moves into an editor where the user still controls the document.',
+    interpretation:
+      'The AI workflow ends with reviewable writing state, not an automatic overwrite of the source document.',
   },
 ]
 
-const researchToCampaignSlides = [
+const lightboxImages = [systemImage, ...evidenceImages]
+
+const mechanisms = [
   {
-    src: '/screenshots/pdr-proof-2-platforms.app.jpeg',
-    alt: 'LaunchStack Marketing Pipeline platform selection',
-    title: 'Choose the right channel',
-    description:
-      'Select Reddit, X, LinkedIn, or Bluesky before shaping the campaign.',
+    title: 'Inspectable sources',
+    body:
+      'Generated answers and campaign drafts are framed around visible source context, research steps, and claim checks.',
   },
   {
-    src: '/screenshots/pdr-proof-2-configs.app.jpeg',
-    alt: 'LaunchStack Reddit campaign configuration',
-    title: 'Define the campaign context',
-    description:
-      'Configure the destination, tone, audience, and content format around a specific campaign goal.',
+    title: 'Reviewable transformations',
+    body:
+      'Rewrite suggestions are shown as section-level diffs so users can inspect the exact change before accepting it.',
   },
   {
-    src: '/screenshots/pdr-proof-2-process.app.jpeg',
-    alt: 'LaunchStack Marketing Pipeline research and generation process',
-    title: 'Make the research process visible',
-    description:
-      'LaunchStack gathers company context, analyzes competitors and trends, and checks campaign history before drafting.',
-  },
-  {
-    src: '/screenshots/pdr-proof-2-results.app.jpeg',
-    alt: 'LaunchStack grounded Reddit campaign draft and trend references',
-    title: 'Turn research into an editable draft',
-    description:
-      'Users receive a platform-ready draft, alternative strategies, claim checks, source references, and a direct handoff into AI refinement.',
+    title: 'Human approval',
+    body:
+      'Content only moves forward after explicit accept, reject, edit, or export actions by the user.',
   },
 ]
 
-type ProofSlide = {
-  src: string
-  alt: string
-  title: string
-  description: string
-}
+const reliabilityPoints = [
+  'Diff review makes edits auditable before they enter the document.',
+  'Source references and visible process keep generated work tied to company context.',
+  'The DOCX redlining path has a public commit showing authenticated API validation, request handling, export behavior, and automated test coverage.',
+]
 
-type ProofCarouselProps = {
-  eyebrow: string
-  title: string
-  summary: string
-  slides: ProofSlide[]
-  controlsLabel: string
-}
+const contributionPoints = [
+  'Built human-in-the-loop document workflows for configuring, previewing, regenerating, and accepting AI-generated rewrites.',
+  'Developed the research-to-campaign flow that surfaces platform context, trend research, claim checks, and draft handoff.',
+  'Integrated the legal editor with the Adeu DOCX redlining service so approved edits can export as native Track Changes.',
+]
 
-function ProofCarousel({
-  eyebrow,
-  title,
-  summary,
-  slides,
-  controlsLabel,
-}: ProofCarouselProps) {
-  const [activeSlide, setActiveSlide] = useState(0)
-  const [direction, setDirection] = useState(1)
-  const prefersReducedMotion = useReducedMotion()
-  const slide = slides[activeSlide]
+const lessons = [
+  'Generation is easier than reviewable generation.',
+  'Source grounding only matters when reviewers can inspect it.',
+  'Rewrite workflows need visible diffs, not hidden transformations.',
+  'Human approval should be part of the system boundary, not an afterthought.',
+]
 
-  const navigateTo = (nextSlide: number, nextDirection: number) => {
-    setDirection(nextDirection)
-    setActiveSlide(nextSlide)
-  }
-
-  const showPrevious = () => {
-    navigateTo(
-      activeSlide === 0 ? slides.length - 1 : activeSlide - 1,
-      -1,
-    )
-  }
-
-  const showNext = () => {
-    navigateTo((activeSlide + 1) % slides.length, 1)
-  }
-
-  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    const swipeStrength = Math.abs(info.offset.x) + Math.abs(info.velocity.x) * 0.15
-    if (swipeStrength < 90) return
-    if (info.offset.x < 0) {
-      showNext()
-    } else {
-      showPrevious()
-    }
-  }
-
+function SectionLabel({ children }: { children: string }) {
   return (
-    <section className="overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80">
-      <div className="flex flex-col gap-4 border-b border-white/10 p-5 md:flex-row md:items-end md:justify-between md:p-6">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/80">
-            {eyebrow}
-          </p>
-          <h3 className="mt-2 text-xl font-semibold text-white">
-            {title}
-          </h3>
-        </div>
-        <p className="max-w-xl text-sm leading-relaxed text-slate-400">
-          {summary}
+    <p className="text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-cyan-200/75">
+      {children}
+    </p>
+  )
+}
+
+function TextLink({
+  href,
+  children,
+  external = false,
+}: {
+  href: string
+  children: string
+  external?: boolean
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noreferrer' : undefined}
+      className="inline-flex rounded-full border border-cyan-200/25 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:border-cyan-100/70 hover:bg-cyan-200/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+    >
+      {children}
+    </a>
+  )
+}
+
+function ScreenshotFigure({
+  image,
+  onOpen,
+  priority = false,
+}: {
+  image: CaseStudyImage
+  onOpen: () => void
+  priority?: boolean
+}) {
+  return (
+    <figure className="group flex h-full flex-col">
+      <button
+        type="button"
+        onClick={onOpen}
+        className={`block w-full overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-950/45 shadow-[0_24px_80px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-1 hover:border-cyan-200/35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 ${
+          priority ? '' : 'flex aspect-[16/13] items-center justify-center'
+        }`}
+        aria-label={`Enlarge ${image.caption}`}
+      >
+        <img
+          src={image.src}
+          alt={image.alt}
+          className={
+            priority
+              ? 'block h-auto w-full object-contain'
+              : 'block max-h-full max-w-full object-contain'
+          }
+        />
+      </button>
+      <figcaption className="mt-5 flex flex-1 flex-col space-y-2">
+        <SectionLabel>{image.label}</SectionLabel>
+        <p className="text-xl font-semibold leading-snug text-slate-50">
+          {image.caption}
         </p>
-      </div>
+        <p className="max-w-3xl text-base leading-relaxed text-slate-400">
+          {image.interpretation}
+        </p>
+      </figcaption>
+    </figure>
+  )
+}
 
-      <div className="relative h-[28rem] overflow-hidden bg-slate-950 sm:h-[36rem] lg:h-[44rem]">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
-          <motion.div
-            key={slide.src}
-            custom={direction}
-            initial={
-              prefersReducedMotion
-                ? { opacity: 0 }
-                : { x: direction > 0 ? '18%' : '-18%', opacity: 0 }
-            }
-            animate={{ x: 0, opacity: 1 }}
-            exit={
-              prefersReducedMotion
-                ? { opacity: 0 }
-                : { x: direction > 0 ? '-18%' : '18%', opacity: 0 }
-            }
-            transition={{ duration: prefersReducedMotion ? 0.12 : 0.34, ease: 'easeOut' }}
-            drag="x"
-            dragDirectionLock
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.12}
-            onDragEnd={handleDragEnd}
-            className="absolute inset-0 cursor-grab overflow-y-auto overscroll-contain [scrollbar-width:none] active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
-            style={{ touchAction: 'pan-y' }}
-          >
-            <img
-              src={slide.src}
-              alt={slide.alt}
-              draggable={false}
-              className="block h-auto w-full select-none object-contain"
-            />
-          </motion.div>
-        </AnimatePresence>
-        <button
-          type="button"
-          onClick={showPrevious}
-          aria-label="Show previous rewrite proof"
-          className="absolute left-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/85 text-white shadow-lg backdrop-blur transition hover:border-cyan-200/70 hover:text-cyan-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 md:left-5"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
-          type="button"
-          onClick={showNext}
-          aria-label="Show next rewrite proof"
-          className="absolute right-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/85 text-white shadow-lg backdrop-blur transition hover:border-cyan-200/70 hover:text-cyan-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 md:right-5"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      </div>
+function Lightbox({
+  activeIndex,
+  setActiveIndex,
+}: {
+  activeIndex: number | null
+  setActiveIndex: (index: number | null) => void
+}) {
+  useEffect(() => {
+    if (activeIndex === null) return
 
-      <div className="flex flex-col gap-4 border-t border-white/10 p-5 md:flex-row md:items-center md:justify-between md:p-6">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-[0.14em] text-cyan-200/75">
-            Step {activeSlide + 1} of {slides.length}
-          </p>
-          <p className="mt-1 font-semibold text-white">{slide.title}</p>
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setActiveIndex(null)
+      }
+      if (event.key === 'ArrowRight') {
+        setActiveIndex((activeIndex + 1) % lightboxImages.length)
+      }
+      if (event.key === 'ArrowLeft') {
+        setActiveIndex(
+          activeIndex === 0 ? lightboxImages.length - 1 : activeIndex - 1,
+        )
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [activeIndex, setActiveIndex])
+
+  if (activeIndex === null) return null
+
+  const image = lightboxImages[activeIndex]
+  const showPrevious = () => {
+    setActiveIndex(activeIndex === 0 ? lightboxImages.length - 1 : activeIndex - 1)
+  }
+  const showNext = () => {
+    setActiveIndex((activeIndex + 1) % lightboxImages.length)
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/92 p-4 backdrop-blur-md"
+      role="dialog"
+      aria-modal="true"
+      aria-label={image.caption}
+    >
+      <button
+        type="button"
+        onClick={() => setActiveIndex(null)}
+        className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-slate-900/85 text-white transition hover:border-cyan-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+        aria-label="Close screenshot"
+      >
+        <X className="h-5 w-5" />
+      </button>
+      <button
+        type="button"
+        onClick={showPrevious}
+        className="absolute left-4 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-slate-900/85 text-white transition hover:border-cyan-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 md:inline-flex"
+        aria-label="Previous screenshot"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <div className="max-h-[86vh] w-full max-w-7xl overflow-hidden rounded-[2rem] border border-white/15 bg-slate-950 shadow-2xl">
+        <img
+          src={image.src}
+          alt={image.alt}
+          className="max-h-[76vh] w-full object-contain"
+        />
+        <div className="border-t border-white/10 p-4 md:p-5">
+          <p className="text-sm font-semibold text-white">{image.caption}</p>
           <p className="mt-1 text-sm leading-relaxed text-slate-400">
-            {slide.description}
+            {image.interpretation}
           </p>
         </div>
-        <div className="flex items-center gap-2" aria-label={controlsLabel}>
-          {slides.map((item, index) => (
-            <button
-              key={item.src}
-              type="button"
-              onClick={() => navigateTo(index, index >= activeSlide ? 1 : -1)}
-              aria-label={`Show ${item.title}`}
-              aria-current={index === activeSlide ? 'true' : undefined}
-              className={`h-2.5 rounded-full transition-all ${
-                index === activeSlide
-                  ? 'w-8 bg-cyan-300'
-                  : 'w-2.5 bg-slate-600 hover:bg-slate-400'
-              }`}
-            />
-          ))}
-        </div>
       </div>
-    </section>
-  )
-}
-
-function ControlledRewriteProof() {
-  return (
-    <ProofCarousel
-      eyebrow="Contribution 01 · Diff-first rewrite"
-      title="AI proposes. Users decide what moves forward."
-      summary="Users define the scope and guardrails, inspect every change, and decide what enters the final document."
-      slides={controlledRewriteSlides}
-      controlsLabel="Rewrite proof slides"
-    />
-  )
-}
-
-function ResearchToCampaignProof() {
-  return (
-    <ProofCarousel
-      eyebrow="Contribution 02 · Research-to-campaign pipeline"
-      title="Research current conversations. Turn them into editable drafts."
-      summary="LaunchStack grounds campaign drafts in platform-specific research, preserves working context, and carries selected content into refinement."
-      slides={researchToCampaignSlides}
-      controlsLabel="Marketing research proof slides"
-    />
+      <button
+        type="button"
+        onClick={showNext}
+        className="absolute right-4 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-slate-900/85 text-white transition hover:border-cyan-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 md:inline-flex"
+        aria-label="Next screenshot"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+    </div>
   )
 }
 
 export function PdrCaseStudyPage() {
+  const [activeImage, setActiveImage] = useState<number | null>(null)
+
   return (
-    <div className="space-y-8">
-      <section className="rounded-3xl p-6 md:p-8">
+    <div className="mx-auto max-w-7xl space-y-24 px-4 pb-24 pt-4 sm:px-6 lg:px-8">
+      <section className="pt-10 md:pt-16">
         <a
           href="/"
           className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400 transition hover:text-cyan-100"
@@ -304,250 +247,180 @@ export function PdrCaseStudyPage() {
           <span aria-hidden="true">&lt;</span>
           Back to Homepage
         </a>
-        <div className="mt-5">
-          <div className="space-y-5 md:space-y-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300/80 md:text-base">
-              Featured Case Study
-            </p>
-            <div className="inline-flex w-fit items-center overflow-hidden rounded-2xl">
-              <img
-                src={launchstackLogo}
-                alt="LaunchStack"
-                className="h-16 w-auto md:h-24"
-              />
-            </div>
-            <p className="text-balance text-3xl font-semibold tracking-tight text-slate-50 md:text-5xl">
-              The open-source knowledge graph for founders
-            </p>
-            <p className="max-w-4xl text-lg leading-relaxed text-slate-300 md:text-xl">
-              LaunchStack turns scattered documents, calls, messages, and product
-              knowledge into one searchable graph—giving founders cited answers and
-              reusable context across AI workflows.
-            </p>
+
+        <div className="mt-14 max-w-[1180px]">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+            <img
+              src={launchstackLogo}
+              alt="LaunchStack"
+              className="h-14 w-auto md:h-16"
+            />
+            <SectionLabel>Technical Case Study</SectionLabel>
           </div>
-        </div>
-        <div className="mt-7 flex flex-wrap items-center gap-4">
-          <a
-            href="https://launch-stack-web.vercel.app/"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-200"
-          >
-            View Deployed Website
-          </a>
-          <a
-            href="https://github.com/JunzheShi0702/LaunchStack"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm font-semibold text-cyan-100/90 transition hover:text-cyan-50"
-          >
-            View Repository
-          </a>
-          <a
-            href="/projects/atlas"
-            className="text-sm font-semibold text-cyan-100/90 transition hover:text-cyan-50"
-          >
-            Explore Atlas Project
-          </a>
-        </div>
-      </section>
-
-      <section id="research-significance" className="scroll-mt-28 rounded-3xl border border-white/15 bg-slate-950/80 p-5 md:p-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/75">
-          At a Glance
-        </p>
-        <div className="mt-4 grid gap-3 md:grid-cols-5">
-          {atAGlance.map((item) => (
-            <div
-              key={item.label}
-              className="rounded-2xl border border-white/10 bg-slate-900/70 p-4"
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
-                {item.label}
-              </p>
-              <p className="mt-2 text-xs leading-relaxed text-slate-300">
-                {item.value}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
-          Inspect this case study
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {[
-            ['Architecture', '#architecture'],
-            ['Evaluation / testing', '#technical-notes'],
-            ['Design rationale', '#design-rationale'],
-            ['Lessons learned', '#lessons'],
-            ['Technical notes', '#technical-notes'],
-            ['Research significance', '#research-significance'],
-          ].map(([label, href]) => (
-            <a
-              key={label}
-              href={href}
-              className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:bg-cyan-200/10 hover:text-white"
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section id="design-rationale" className="grid scroll-mt-28 gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
-          <h3 className="text-xl font-semibold text-white">Why LaunchStack</h3>
-          <p className="mt-3 text-sm leading-relaxed text-slate-300">
-            A founder&apos;s most useful context is usually stranded across meeting notes,
-            customer calls, product documents, inboxes, and repositories. LaunchStack
-            connects those sources into a shared knowledge layer that can answer questions
-            with citations and carry trusted context into everyday work.
+          <p className="mt-10 text-lg font-semibold text-cyan-100/85 md:text-xl">
+            LaunchStack
           </p>
-          <h4 className="mt-5 text-lg font-semibold text-slate-100">Core capabilities</h4>
-          <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-slate-300">
-            <li>Connect documents, messages, recordings, and repositories</li>
-            <li>Build a shared knowledge graph with semantic retrieval</li>
-            <li>Generate cited answers from trusted company context</li>
-            <li>Carry grounded knowledge into document, legal, and marketing workflows</li>
-            <li>Self-host with your own infrastructure and API keys</li>
-          </ul>
-        </article>
-        <article className="rounded-2xl border border-white/15 bg-slate-900/75 p-5">
-          <h3 className="text-xl font-semibold text-white">From sources to action</h3>
-          <div className="mt-3 space-y-3">
-            {architectureLayers.map((layer) => (
-              <div
-                key={layer.title}
-                className="rounded-xl border border-white/10 bg-slate-950/55 p-3"
-              >
-                <h4 className="text-sm font-semibold text-cyan-100">{layer.title}</h4>
-                <p className="mt-1 text-xs text-slate-400">{layer.items.join(' · ')}</p>
-              </div>
-            ))}
+          <h1 className="mt-4 max-w-[1180px] text-balance text-[clamp(2.85rem,5.15vw,5.35rem)] font-semibold leading-[1.03] tracking-tight text-slate-50">
+            Source-grounded AI drafting through inspectable human approval.
+          </h1>
+          <p className="mt-8 max-w-4xl text-lg leading-relaxed text-slate-300 md:text-xl">
+            LaunchStack turns scattered founder knowledge into cited answers,
+            reviewable rewrites, and campaign drafts that preserve source context,
+            visible process, and explicit user approval.
+          </p>
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <TextLink href="#system">Case Study</TextLink>
+            <TextLink href="https://launch-stack-web.vercel.app/" external>
+              Demo
+            </TextLink>
+            <TextLink href="https://github.com/JunzheShi0702/LaunchStack" external>
+              GitHub
+            </TextLink>
+            <TextLink
+              href="https://github.com/JunzheShi0702/LaunchStack/commit/ce08f6e"
+              external
+            >
+              Commit Proof
+            </TextLink>
           </div>
-        </article>
+        </div>
       </section>
 
-      <section className="rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-5 md:p-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">
-          My role
-        </p>
-        <h3 className="mt-3 text-xl font-semibold text-white">
-          Product and full-stack engineering
-        </h3>
-        <p className="mt-3 max-w-4xl text-sm leading-relaxed text-slate-200">
-          I built human-in-the-loop document workflows that let users configure,
-          preview, regenerate, and carry AI-generated drafts into a dedicated editor.
-          I also developed multi-platform trend research with API-first fallback and
-          integrated the legal editor with an Adeu service that exports approved edits
-          as native DOCX Track Changes, backed by authenticated API validation and
-          automated tests.
+      <section className="max-w-4xl">
+        <SectionLabel>Problem</SectionLabel>
+        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+          Drafting is not the same as generation.
+        </h2>
+        <p className="mt-6 text-lg leading-relaxed text-slate-300">
+          Founder knowledge often lives across documents, calls, messages, and
+          repositories. A drafting system can produce text quickly, but useful
+          professional workflows also need provenance, visible transformation, and a
+          person who decides what becomes final.
         </p>
       </section>
 
-      <section id="architecture" className="scroll-mt-28 rounded-2xl border border-white/15 bg-slate-900/75 p-5">
-        <h3 className="text-xl font-semibold text-white">End-to-end workflow</h3>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-          {workflowSteps.map((item) => (
-            <div key={item.step} className="rounded-lg border border-white/10 bg-slate-950/55 p-3 text-center">
-              <p className="text-lg font-bold text-cyan-300">{item.step}</p>
-              <p className="mt-1 text-sm font-semibold text-white">{item.label}</p>
-              <p className="mt-1 text-xs leading-tight text-slate-400">{item.description}</p>
+      <section id="system" className="scroll-mt-28 space-y-10">
+        <div className="max-w-4xl">
+          <SectionLabel>System</SectionLabel>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+            LaunchStack turns AI output into reviewable writing state.
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-slate-300">
+            The rewrite interface is the main system surface: users choose a source
+            section, set boundaries, inspect the proposed diff, and approve only the
+            changes they want to carry forward.
+          </p>
+        </div>
+        <ScreenshotFigure
+          image={systemImage}
+          onOpen={() => setActiveImage(0)}
+          priority
+        />
+      </section>
+
+      <section className="grid gap-10 border-y border-white/10 py-14 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <SectionLabel>Trust mechanisms</SectionLabel>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+            What makes the workflow inspectable?
+          </h2>
+        </div>
+        <div className="space-y-8">
+          {mechanisms.map((mechanism) => (
+            <div key={mechanism.title}>
+              <h3 className="text-xl font-semibold text-slate-50">
+                {mechanism.title}
+              </h3>
+              <p className="mt-2 text-base leading-relaxed text-slate-400">
+                {mechanism.body}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="evidence" data-jump-highlight="frame" className="space-y-4 scroll-mt-28">
-        <ControlledRewriteProof />
-        <ResearchToCampaignProof />
-      </section>
-
-      <section id="lessons" className="scroll-mt-28 rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/75">
-          Lessons and trade-offs
-        </p>
-        <div className="mt-4 grid gap-3 md:grid-cols-3">
-          {[
-            ['Review before automation', 'Diff review and explicit approval keep AI-generated edits under user control.'],
-            ['Grounding needs provenance', 'Source references and visible research steps make generated outputs easier to trust.'],
-            ['Interfaces keep evolving', 'LaunchStack 2.0 has since evolved its legal drafting interface, so this case study documents a specific implemented path.'],
-          ].map(([title, detail]) => (
-            <article
-              key={title}
-              className="rounded-2xl border border-white/10 bg-slate-950/45 p-4"
-            >
-              <p className="text-sm font-semibold text-cyan-100">{title}</p>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400">{detail}</p>
-            </article>
+      <section id="evidence" data-jump-highlight="frame" className="scroll-mt-28 space-y-10">
+        <div className="max-w-4xl">
+          <SectionLabel>Evidence</SectionLabel>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+            The proof is visible process, not hidden automation.
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-slate-300">
+            Two supporting views show the same principle outside the main diff screen:
+            generated work should remain traceable before it becomes user-facing work.
+          </p>
+        </div>
+        <div className="grid items-start gap-10 lg:grid-cols-2">
+          {evidenceImages.map((image, index) => (
+            <ScreenshotFigure
+              key={image.src}
+              image={image}
+              onOpen={() => setActiveImage(index + 1)}
+            />
           ))}
         </div>
       </section>
 
-      <section id="technical-notes" className="scroll-mt-28 overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80">
-        <div className="grid gap-0 lg:grid-cols-[0.72fr_1.28fr]">
-          <div className="border-b border-white/10 bg-gradient-to-br from-violet-400/15 via-cyan-300/5 to-transparent p-6 lg:border-b-0 lg:border-r lg:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/80">
-              Contribution 03 · Code-backed integration
-            </p>
-            <p className="mt-5 font-mono text-sm text-cyan-100/75">ce08f6e</p>
-            <h3 className="mt-2 text-2xl font-semibold text-white">
-              Adeu DOCX redlining integration
-            </h3>
-            <p className="mt-4 text-sm leading-relaxed text-slate-300">
-              A code-backed contribution to the legal document workflow, even as
-              the surrounding LaunchStack interface continues to evolve.
-            </p>
+      <section id="technical-notes" className="scroll-mt-28 border-y border-white/10 py-14">
+        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <SectionLabel>Reliability</SectionLabel>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+              AI output is treated as a draft that must survive review.
+            </h2>
+          </div>
+          <div className="space-y-5">
+            {reliabilityPoints.map((point) => (
+              <p key={point} className="text-lg leading-relaxed text-slate-300">
+                {point}
+              </p>
+            ))}
             <a
               href="https://github.com/JunzheShi0702/LaunchStack/commit/ce08f6e"
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex items-center rounded-full border border-violet-300/35 px-4 py-2 text-sm font-semibold text-violet-100 transition hover:border-violet-200 hover:text-white"
+              className="inline-flex text-sm font-semibold text-cyan-100 underline decoration-cyan-200/40 underline-offset-4 transition hover:text-white hover:decoration-cyan-100"
             >
-              Inspect the commit
+              Inspect the public DOCX redlining commit
             </a>
-          </div>
-
-          <div className="p-6 lg:p-8">
-            <p className="max-w-3xl text-base leading-relaxed text-slate-200">
-              I connected the legal document editor to the Adeu service so approved
-              field updates could be exported as native DOCX Track Changes. The
-              implementation covered the authenticated API boundary, request
-              validation, edit batching, progress and error feedback, and download
-              handling for the modified document.
-            </p>
-
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {[
-                ['Authenticated API', 'Clerk-protected endpoint with Zod request validation'],
-                ['Native review output', 'Insertions and deletions preserved as DOCX Track Changes'],
-                ['Resilient feedback', 'Multi-step progress states and actionable service errors'],
-                ['Automated tests', 'Auth, validation, integration, failures, and edge cases'],
-              ].map(([title, description]) => (
-                <div
-                  key={title}
-                  className="rounded-2xl border border-white/10 bg-slate-900/70 p-4"
-                >
-                  <p className="text-sm font-semibold text-cyan-100">{title}</p>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-400">
-                    {description}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <p className="mt-6 border-t border-white/10 pt-5 text-xs leading-relaxed text-slate-500">
-              LaunchStack 2.0 has since evolved its legal drafting interface. This
-              contribution documents the earlier Track Changes export path implemented
-              within the legal editor.
-            </p>
           </div>
         </div>
       </section>
 
+      <section className="grid gap-12 pt-4 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16">
+        <div>
+          <SectionLabel>My Role</SectionLabel>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+            Product and full-stack engineering across review surfaces.
+          </h2>
+          <div className="mt-8 space-y-5">
+            {contributionPoints.map((point) => (
+              <p key={point} className="text-lg leading-relaxed text-slate-300">
+                {point}
+              </p>
+            ))}
+          </div>
+        </div>
+
+        <div id="lessons" className="scroll-mt-28">
+          <SectionLabel>Lessons</SectionLabel>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+            What the case study clarified.
+          </h2>
+          <ol className="mt-8 space-y-6">
+            {lessons.map((lesson, index) => (
+              <li key={lesson} className="grid grid-cols-[2.5rem_1fr] gap-4">
+                <span className="font-mono text-sm font-semibold text-cyan-200/70">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <p className="text-lg leading-relaxed text-slate-300">{lesson}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <Lightbox activeIndex={activeImage} setActiveIndex={setActiveImage} />
     </div>
   )
 }

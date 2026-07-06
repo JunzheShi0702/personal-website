@@ -2,9 +2,11 @@ import { Link, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
 
 const navItems = [
-  { label: 'Projects', to: '/projects' },
+  { label: 'Home', to: '/' },
   { label: 'Research', to: '/research' },
-  { label: 'Resume', to: '/#resume' },
+  { label: 'Publications', to: '/publications' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'CV', to: '/cv' },
   { label: 'Contact', to: '/#contact' },
 ]
 
@@ -23,7 +25,7 @@ export function Header() {
               Junzhe Shi
             </p>
             <p className="text-xs text-slate-400">
-              AI Research Engineer in Training
+              AI PhD-bound Research Engineer
             </p>
           </div>
         </Link>

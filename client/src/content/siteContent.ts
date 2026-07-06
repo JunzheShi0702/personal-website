@@ -10,9 +10,12 @@ export type ResearchTrack = {
 
 export type Publication = {
   title: string
+  authors: string
   venue: string
   year: string
   doi: string
+  pages?: string
+  citation: string
   context: string
   contribution: string
   researchTrack: string
@@ -50,16 +53,28 @@ export type EngineeringExperience = {
 
 export const homepagePathways = [
   {
+    title: 'Research',
+    description:
+      'Trace the progression from physics and materials to AI systems and clinical AI.',
+    to: '/research',
+  },
+  {
+    title: 'Publications',
+    description:
+      'Read formal DOI-linked citations with venues, years, authors, and contribution notes.',
+    to: '/publications',
+  },
+  {
     title: 'Projects',
     description:
-      'Inspect featured AI systems, public evidence, and selected engineering experience.',
+      'Inspect representative systems that support the research agenda: Atlas, LaunchStack, and REACH.',
     to: '/projects',
   },
   {
-    title: 'Research',
+    title: 'CV',
     description:
-      'Scientific work across healthcare AI, materials science, astronomy, and nuclear physics—with methods, contributions, and publications.',
-    to: '/research',
+      'Download the current academic CV as a PDF.',
+    to: '/cv',
   },
   {
     title: 'Contact',
@@ -88,13 +103,8 @@ export const flagshipProjects: FlagshipProject[] = [
     ],
     links: [
       { label: 'Case Study', href: '/projects/atlas' },
-      { label: 'Live Demo', href: 'https://team-02-frontend.onrender.com/', external: true },
+      { label: 'Live Demo', href: 'https://atlas.junzheshi.com', external: true },
       { label: 'Screenshots', href: '/projects/atlas#evidence' },
-      {
-        label: 'Code Sample',
-        href: 'https://github.com/JunzheShi0702/atlas-custom-schedule-events',
-        external: true,
-      },
       {
         label: 'Presentation',
         href: '/ppt/AI%20Enabled%20SWE%20Final%20Presentation.pptx',
@@ -144,6 +154,30 @@ export const flagshipProjects: FlagshipProject[] = [
     heroImage: '/screenshots/pdr-proof-1-diff.app.jpeg',
     heroLabel: 'Diff review + human approval',
   },
+  {
+    title: 'REACH',
+    eyebrow: 'Current research · Clinical AI',
+    summary:
+      'Research support for cohort planning and evidence review around thyroid hormone prescribing patterns in psychiatric contexts.',
+    researchRelevance:
+      'The clinical direction of the research agenda: careful cohort definition, patient-safety framing, and responsible use of EHR-scale evidence.',
+    stack: ['Clinical literature review', 'Cohort planning', 'Evidence mapping', 'Responsible AI framing'],
+    evidence: [
+      'Research question framing',
+      'Cohort planning',
+      'Clinical evidence review',
+      'Patient-safety lens',
+      'Ongoing work boundary',
+      'Future EHR analysis direction',
+    ],
+    links: [
+      { label: 'Project Page', href: '/projects/reach' },
+      { label: 'Research Context', href: '/research#healthcare-ai' },
+    ],
+    previewImages: [],
+    heroImage: '/screenshots/atlas-proof-3-eval-raw-data.png',
+    heroLabel: 'Clinical AI research support',
+  },
 ]
 
 export const engineeringExperience: EngineeringExperience[] = [
@@ -168,19 +202,19 @@ export const engineeringExperience: EngineeringExperience[] = [
 export const researchTracks: ResearchTrack[] = [
   {
     id: 'healthcare-ai',
-    title: 'Healthcare AI Research Support',
+    title: 'REACH Clinical AI Research Support',
     period: 'Current research support',
     question:
-      'REACH-oriented cohort planning for thyroid hormone prescribing patterns in psychiatric contexts.',
+      'How can EHR-based cohort planning help study thyroid hormone prescribing patterns in psychiatric contexts while preserving patient-safety and evidence-quality constraints?',
     contribution:
-      'Supported cohort planning and evidence review, with attention to patient safety, confounding factors, and responsible clinical AI use.',
+      'Supported research-question refinement, cohort planning, and evidence review for REACH-oriented clinical AI work, with attention to confounding, safety, and responsible interpretation.',
     methods: [
       'Clinical and AI literature synthesis',
       'Comparative evidence mapping',
       'Patient-safety and governance framing',
     ],
     outcome:
-      'Contributed research planning and evidence quality review for real clinical decision-support questions.',
+      'Completed research planning and evidence-quality review tasks; EHR analysis and stronger empirical claims remain ongoing or future work.',
   },
   {
     id: 'perovskite',
@@ -236,9 +270,14 @@ export const publications: Publication[] = [
   {
     title:
       'Trap Engineering Using Oxygen-Doped Graphitic Carbon Nitride for High-Performance Perovskite Solar Cells',
-    venue: 'Materials Chemistry C',
+    authors:
+      'Yaling Lei, Xiaoyan Li, Jingying Liang, Junzhe Shi, Yunhao Wei, Pingli Qin, Hong Tao, Jianjun Chen, Zuojun Tan, and Hongwei Lei',
+    venue: 'Journal of Materials Chemistry C',
     year: '2023',
     doi: '10.1039/D3TC01711G',
+    pages: '9860-9870',
+    citation:
+      'Lei, Y., Li, X., Liang, J., Shi, J., Wei, Y., Qin, P., Tao, H., Chen, J., Tan, Z., & Lei, H. (2023). Trap engineering using oxygen-doped graphitic carbon nitride for high-performance perovskite solar cells. Journal of Materials Chemistry C, 11(29), 9860-9870. https://doi.org/10.1039/D3TC01711G',
     context:
       'Perovskite materials engineering study improving carrier dynamics and device performance.',
     contribution:
@@ -248,9 +287,13 @@ export const publications: Publication[] = [
   },
   {
     title: 'The Relationship Between and Eccentricities Based on Glauber Model',
+    authors: 'Junzhe Shi',
     venue: 'Theoretical and Natural Science',
     year: '2023',
     doi: '10.54254/2753-8818/11/20230390',
+    pages: '121-127',
+    citation:
+      'Shi, J. (2023). The relationship between and eccentricities based on Glauber model. Theoretical and Natural Science, 11(1), 121-127. https://doi.org/10.54254/2753-8818/11/20230390',
     context:
       'Extended analysis on geometric eccentricity relationships in heavy-ion collision simulations.',
     contribution:
@@ -261,9 +304,13 @@ export const publications: Publication[] = [
   {
     title:
       'Optimization of Asymmetry of Pb-Pb Nucleus Collision Based on Glauber Model Simulation',
+    authors: 'Haotian Xu, Junzhe Shi, and Ziyan Song',
     venue: 'Theoretical and Natural Science',
     year: '2023',
     doi: '10.54254/2753-8818/28/20230428',
+    pages: '206-217',
+    citation:
+      'Xu, H., Shi, J., & Song, Z. (2023). Optimization of asymmetry of Pb-Pb nucleus collision based on Glauber model simulation. Theoretical and Natural Science, 28(1), 206-217. https://doi.org/10.54254/2753-8818/28/20230428',
     context:
       'Simulation-driven study on asymmetry behavior under different collision conditions.',
     contribution:
@@ -274,9 +321,13 @@ export const publications: Publication[] = [
   {
     title:
       'Hyperbolic-Tangent-Function-Modeled Transit Light Curve and Planet Radius Calculation',
+    authors: 'Junzhe Shi',
     venue: 'Theoretical and Natural Science',
-    year: '2023',
+    year: '2024',
     doi: '10.54254/2753-8818/34/20240704',
+    pages: '134-140',
+    citation:
+      'Shi, J. (2024). Hyperbolic-tangent-function-modeled transit light curve and planet radius calculation. Theoretical and Natural Science, 34(1), 134-140. https://doi.org/10.54254/2753-8818/34/20240704',
     context:
       'Exoplanet transit modeling paper on robust light-curve fitting and radius estimation.',
     contribution:

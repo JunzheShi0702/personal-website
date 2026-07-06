@@ -6,11 +6,17 @@ export function Footer() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p>Copyright {year} Junzhe Shi</p>
         <nav className="flex flex-wrap gap-3" aria-label="Footer">
+          <a href="/research" className="transition hover:text-cyan-100">
+            Research
+          </a>
+          <a href="/publications" className="transition hover:text-cyan-100">
+            Publications
+          </a>
           <a href="/projects" className="transition hover:text-cyan-100">
             Projects
           </a>
-          <a href="/research" className="transition hover:text-cyan-100">
-            Research
+          <a href="/cv" className="transition hover:text-cyan-100">
+            CV
           </a>
           <a href="/#contact" className="transition hover:text-cyan-100">
             Contact

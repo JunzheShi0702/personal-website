@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight, Download, Mail } from 'lucide-react'
 import { BentoCard } from '../components/ui/BentoCard'
 import { SectionTitle } from '../components/ui/SectionTitle'
-import { flagshipProjects, homepagePathways } from '../content/siteContent'
+import { flagshipProjects, homepagePathways, publications, researchTracks } from '../content/siteContent'
 import type { ProjectLink } from '../content/siteContent'
 import universityShield from '../assets/university.shield.rgb.white.svg'
 
@@ -36,14 +36,14 @@ const stagger = {
 
 const evidenceSnapshot = [
   {
-    stat: '2',
-    title: 'Featured AI Systems',
-    detail: 'Atlas · LaunchStack',
+    stat: '1',
+    title: 'Research Vision',
+    detail: 'Inspectable AI for evidence-heavy decisions',
   },
   {
-    stat: '2',
-    title: 'Technical Case Studies',
-    detail: 'Architecture · Evaluation',
+    stat: '3',
+    title: 'Representative Systems',
+    detail: 'Atlas · LaunchStack · REACH',
   },
   {
     stat: '4',
@@ -52,7 +52,7 @@ const evidenceSnapshot = [
   },
   {
     stat: '4',
-    title: 'Research Domains',
+    title: 'Research Themes',
     detail: 'AI · Healthcare · Physics · Materials',
   },
 ]
@@ -91,36 +91,36 @@ export function HomePage() {
           <div className="flex flex-col justify-between gap-7">
             <div className="space-y-6">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/85">
-                Research Engineering Portfolio
+                Academic Personal Website
               </p>
               <h1 className="max-w-3xl text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                Junzhe Shi builds AI systems that make messy evidence inspectable.
+                Junzhe Shi studies AI systems for evidence-heavy decisions.
               </h1>
               <p className="max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
-                I am a Johns Hopkins student studying Computer Science and Applied
-                Mathematics and Statistics. My work connects quantitative modeling,
-                human-AI interaction, and systems engineering through projects you can
-                inspect: Atlas and LaunchStack.
+                I am a Johns Hopkins student in Computer Science and Applied
+                Mathematics and Statistics, preparing for AI PhD research. My work asks
+                how models, retrieval systems, and human-facing tools can make uncertain
+                evidence inspectable before it becomes a recommendation.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
-                  to="/projects"
+                  to="/research"
                   className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
                 >
-                  Explore Projects
+                  Read Research Vision
                 </Link>
                 <Link
-                  to="/research"
+                  to="/publications"
                   className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-200/60 hover:text-white"
                 >
-                  View Research
+                  View Publications
                 </Link>
                 <a
                   href={resumePath}
                   className="inline-flex items-center gap-2 px-1 py-2 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
                 >
                   <Download className="h-4 w-4" />
-                  Resume
+                  CV
                 </a>
               </div>
             </div>
@@ -128,13 +128,13 @@ export function HomePage() {
             <div className="border-t border-white/10 pt-5">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/70">
-                  Evidence Snapshot
+                  Academic Snapshot
                 </p>
                 <Link
                   to="/projects"
                   className="text-xs font-semibold text-cyan-200 transition hover:text-cyan-100"
                 >
-                  Inspect projects
+                  Representative systems
                 </Link>
               </div>
               <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
@@ -159,16 +159,18 @@ export function HomePage() {
             <BentoCard className="flex h-full flex-col justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.15em] text-cyan-200/70">
-                  What I Build
+                  Research Vision
                 </p>
                 <p className="mt-3 text-lg font-medium leading-relaxed text-slate-100">
-                  Decision-support tools where retrieval, evaluation, and human review
-                  are part of the product, not hidden behind the prompt.
+                  I want to build AI systems that are useful precisely because their
+                  assumptions, sources, constraints, and failure modes remain visible to
+                  the people using them.
                 </p>
                 <div className="mt-5 grid gap-3">
                   {[
-                    ['Atlas', 'Course planning with schedule-aware AI advising and audit trails.', '/projects/atlas'],
-                    ['LaunchStack', 'Founder workflows where AI output stays source-aware and reviewable.', '/projects/pdr-ai'],
+                    ['Clinical AI', 'REACH frames cohort planning around evidence quality and patient safety.', '/projects/reach'],
+                    ['AI planning systems', 'Atlas studies grounded advising, constraints, and auditability.', '/projects/atlas'],
+                    ['Human-AI collaboration', 'LaunchStack keeps generated work source-aware and reviewable.', '/projects/pdr-ai'],
                   ].map(([title, description, href]) => (
                     <Link
                       key={title}
@@ -186,14 +188,14 @@ export function HomePage() {
 
               <div className="mt-5 border-t border-white/10 pt-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.15em] text-violet-200/75">
-                  Research Lens
+                  Research Progression
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                  A path from physics and materials modeling toward AI systems for
-                  evidence-heavy decisions.
+                  Physics and materials taught me to model uncertainty; AI systems and
+                  clinical AI are where I now apply that discipline.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {['Evidence-based reasoning', 'Agent reliability', 'High-stakes AI'].map((item) => (
+                  {['Physics', 'Materials', 'AI systems', 'Clinical AI'].map((item) => (
                     <span
                       key={item}
                       className="rounded-full border border-violet-200/15 bg-violet-300/5 px-3 py-1 text-xs text-violet-100/80"
@@ -211,8 +213,8 @@ export function HomePage() {
       <section className="space-y-5">
         <SectionTitle
           eyebrow="Click Into Evidence"
-          title="Featured AI Projects"
-          subtitle="The homepage stays light; each card exposes enough proof to invite inspection."
+          title="Representative Systems"
+          subtitle="These systems are evidence for the research agenda, not the agenda itself."
         />
         <div className="grid gap-4">
           {flagshipProjects.map((project) => (
@@ -256,10 +258,10 @@ export function HomePage() {
       <section className="space-y-5">
         <SectionTitle
           eyebrow="Start Here"
-          title="Choose a path into the work"
-          subtitle="Short entry points for visitors who want projects, research context, or a direct way to connect."
+          title="Academic entry points"
+          subtitle="Short paths for readers who want the research story, formal outputs, systems evidence, or contact details."
         />
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
           {homepagePathways.map((path, index) => (
             <motion.div
               key={path.to}
@@ -284,11 +286,59 @@ export function HomePage() {
         </div>
       </section>
 
-      <section id="resume" className="space-y-5 scroll-mt-24">
+      <section className="space-y-5">
         <SectionTitle
-          eyebrow="Resume"
-          title="Download my resume"
-          subtitle="Get the latest PDF copy of my education, experience, and project work."
+          eyebrow="Recent Publications"
+          title="Formal research outputs"
+          subtitle="Selected DOI-linked publications that ground the research trajectory."
+        />
+        <div className="divide-y divide-white/10 overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70">
+          {publications.slice(0, 2).map((paper) => (
+            <article key={paper.doi} className="p-5 md:p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200/70">
+                {paper.venue} · {paper.year}
+              </p>
+              <h3 className="mt-2 text-lg font-semibold text-white">{paper.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                {paper.authors}
+              </p>
+            </article>
+          ))}
+        </div>
+        <Link
+          to="/publications"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
+        >
+          View all publications
+          <ArrowUpRight className="h-4 w-4" />
+        </Link>
+      </section>
+
+      <section className="space-y-5">
+        <SectionTitle
+          eyebrow="Current Research"
+          title={researchTracks[0].title}
+          subtitle={researchTracks[0].question}
+        />
+        <BentoCard>
+          <p className="text-sm leading-relaxed text-slate-300">
+            {researchTracks[0].contribution}
+          </p>
+          <Link
+            to="/projects/reach"
+            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
+          >
+            Open REACH project page
+            <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </BentoCard>
+      </section>
+
+      <section id="cv" className="space-y-5 scroll-mt-24">
+        <SectionTitle
+          eyebrow="CV"
+          title="Download my CV"
+          subtitle="Get the latest PDF copy of my education, research, publications, and project work."
         />
 
         <a
@@ -297,7 +347,7 @@ export function HomePage() {
           className="group inline-flex items-center gap-2 border-b border-cyan-300/35 pb-1 text-sm font-semibold text-cyan-200 transition hover:border-cyan-200 hover:text-cyan-100"
         >
           <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-          Download resume
+          Download CV
           <span className="font-normal text-slate-400">PDF</span>
         </a>
       </section>

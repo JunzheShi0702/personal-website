@@ -1,380 +1,257 @@
 import { ArrowUpRight } from 'lucide-react'
-import { motion, useReducedMotion, type Transition } from 'framer-motion'
-import {
-  publications,
-  publishedPaperCount,
-  researchTracks,
-} from '../content/siteContent'
+import { publications, researchTracks } from '../content/siteContent'
 
-const methodThreads = [
+const researchFocus = [
   {
-    label: 'Model',
-    description: 'Turn a scientific question into measurable variables and assumptions.',
+    title: 'Evidence-grounded AI for decisions',
+    description:
+      'Current work centers on clinical AI research support, cohort planning, evidence quality, and patient-safety framing.',
+    lens: 'Clinical AI · evidence review · responsible interpretation',
   },
   {
-    label: 'Interrogate',
-    description: 'Test results against noise, confounders, and limitations in the evidence.',
+    title: 'Quantitative modeling under uncertainty',
+    description:
+      'Earlier research used physical simulation, transit light-curve fitting, and materials characterization to reason from noisy measurements.',
+    lens: 'Physics · astronomy · materials science',
   },
   {
-    label: 'Communicate',
-    description: 'Make the method and conclusion inspectable through figures, prose, and provenance.',
+    title: 'Inspectable research communication',
+    description:
+      'Across domains, the recurring goal is to make assumptions, methods, limitations, and source evidence easier to inspect.',
+    lens: 'Methods · provenance · scientific communication',
   },
 ]
 
-const researchSnapshot = [
-  {
-    label: 'Current research context',
-    value:
-      'Healthcare AI research support focused on evidence review, cohort planning, patient safety, and responsible clinical AI framing.',
-  },
-  {
-    label: 'Completed outputs',
-    value:
-      `${publishedPaperCount} published papers are listed with DOI links, venue, year, context, and contribution notes.`,
-  },
-  {
-    label: 'AI systems direction',
-    value:
-      'Current portfolio projects connect research thinking to grounding, decision support, human review, and evaluation.',
-  },
-  {
-    label: 'Quantitative foundation',
-    value:
-      'Earlier research work spans materials science, exoplanet transit modeling, and subatomic physics simulation.',
-  },
-]
+const selectedResearchIds = ['healthcare-ai', 'perovskite', 'subatomic']
+const selectedResearch = researchTracks.filter((track) =>
+  selectedResearchIds.includes(track.id),
+)
 
-const researchArc = [
-  {
-    label: 'Physics',
-    detail: 'Simulation and uncertainty',
-  },
-  {
-    label: 'Materials',
-    detail: 'Experimental evidence',
-  },
-  {
-    label: 'AI Systems',
-    detail: 'Grounded decisions',
-  },
-  {
-    label: 'Clinical AI',
-    detail: 'Safety and governance',
-  },
-]
+function SectionLabel({ children }: { children: string }) {
+  return (
+    <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/85">
+      {children}
+    </p>
+  )
+}
 
 export function ResearchPage() {
-  const prefersReducedMotion = useReducedMotion()
-  const hoverLift = prefersReducedMotion ? undefined : { y: -4 }
-  const cardTransition: Transition = { duration: 0.18, ease: [0.22, 1, 0.36, 1] }
-
   return (
-    <div className="space-y-10">
-      <section className="overflow-hidden rounded-3xl border border-white/15 bg-slate-950/80">
-        <div className="grid lg:grid-cols-[1.25fr_0.75fr]">
-          <div className="p-6 md:p-8 lg:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200/75">
-              Research
-            </p>
-            <h1 className="mt-4 max-w-4xl text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
-              Scientific modeling for decisions under uncertainty
-            </h1>
-            <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
-              My research spans computational physics, astronomy, materials science,
-              and healthcare. Across those domains, I return to the same problem:
-              turning incomplete or complex evidence into conclusions people can
-              inspect and use.
-            </p>
-            <nav className="mt-7 flex flex-wrap gap-3" aria-label="Research page sections">
-              <a
-                href="#research-tracks"
-                className="rounded-full bg-cyan-300 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
-              >
-                Research tracks
-              </a>
-              <a
-                href="#publications"
-                className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-200/60 hover:text-white"
-              >
-                Research outputs
-              </a>
-            </nav>
-          </div>
-
-          <div className="border-t border-white/10 bg-gradient-to-br from-cyan-300/10 via-violet-400/10 to-transparent p-6 md:p-8 lg:border-l lg:border-t-0">
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-slate-400">
-              Method transfer
-            </p>
-            <div className="mt-5 space-y-5">
-              {methodThreads.map((thread, index) => (
-                <div key={thread.label} className="grid grid-cols-[2rem_1fr] gap-3">
-                  <span className="font-mono text-sm text-cyan-200/70">
-                    0{index + 1}
-                  </span>
-                  <div>
-                    <p className="font-semibold text-white">{thread.label}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-slate-400">
-                      {thread.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+    <div className="space-y-24">
+      <section className="pb-10 pt-6 md:pb-16 md:pt-10">
+        <div className="max-w-5xl">
+          <SectionLabel>Research</SectionLabel>
+          <h1 className="mt-6 max-w-5xl text-[clamp(3rem,5.2vw,5.5rem)] font-semibold leading-[1.02] tracking-tight text-slate-100">
+            Scientific modeling for decisions under uncertainty.
+          </h1>
+          <p className="mt-7 max-w-3xl text-lg leading-[1.65] text-slate-300 md:text-xl">
+            My research spans computational physics, astronomy, materials science,
+            and healthcare. Across those domains, I return to the same problem:
+            turning incomplete or complex evidence into conclusions people can
+            inspect and use.
+          </p>
+          <nav className="mt-8 flex flex-wrap gap-x-6 gap-y-3" aria-label="Research page sections">
+            <a
+              href="#research-focus"
+              className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-cyan-50"
+            >
+              Research Focus
+            </a>
+            <a
+              href="#research-trajectory"
+              className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-cyan-50"
+            >
+              Research Trajectory
+            </a>
+            <a
+              href="#research-outputs"
+              className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-cyan-50"
+            >
+              DOI Outputs
+            </a>
+          </nav>
         </div>
       </section>
 
-      <section className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 md:p-6">
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
-              Research arc
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold text-white">
-              From quantitative models to human-facing AI systems
-            </h2>
-          </div>
-          <p className="max-w-xl text-sm leading-relaxed text-slate-400">
-            The common thread is not one domain; it is making uncertain evidence
-            structured enough for people to inspect and use.
-          </p>
+      <section id="research-focus" className="scroll-mt-28">
+        <div className="max-w-4xl">
+          <SectionLabel>Research Focus</SectionLabel>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+            Methods move across domains; the evidence problem stays constant.
+          </h2>
         </div>
-        <div className="mt-5 grid gap-3 md:grid-cols-4">
-          {researchArc.map((item, index) => (
-            <motion.article
-              key={item.label}
-              whileHover={hoverLift}
-              transition={cardTransition}
-              className="rounded-2xl border border-white/10 bg-slate-950/45 p-4 transition-colors hover:border-cyan-200/30 hover:bg-slate-950/70"
-            >
-              <p className="font-mono text-xs text-cyan-200/65">
-                {String(index + 1).padStart(2, '0')}
+
+        <div className="mt-10 grid gap-10 lg:grid-cols-3">
+          {researchFocus.map((item) => (
+            <article key={item.title} className="border-t border-white/10 pt-5">
+              <h3 className="text-xl font-semibold text-slate-50">{item.title}</h3>
+              <p className="mt-3 text-base leading-relaxed text-slate-300">
+                {item.description}
               </p>
-              <p className="mt-2 font-semibold text-white">{item.label}</p>
-              <p className="mt-1 text-sm leading-relaxed text-slate-400">
-                {item.detail}
+              <p className="mt-4 font-mono text-xs uppercase tracking-[0.12em] text-slate-500">
+                {item.lens}
               </p>
-            </motion.article>
+            </article>
           ))}
         </div>
       </section>
 
-      <section className="space-y-5">
-        <div className="flex flex-col gap-3 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
-              Research snapshot
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold text-white">
-              Evidence behind the research direction
-            </h2>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <a
-              href="#research-tracks"
-              className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:text-white"
-            >
-              Tracks
-            </a>
-            <a
-              href="#publications"
-              className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200/60 hover:text-white"
-            >
-              DOI-linked outputs
-            </a>
-          </div>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {researchSnapshot.map((item) => (
-            <motion.article
-              key={item.label}
-              whileHover={hoverLift}
-              transition={cardTransition}
-              className="rounded-2xl border border-white/15 bg-slate-900/70 p-5 transition-colors hover:border-cyan-200/35 hover:bg-slate-900/90"
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100">
-                {item.label}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                {item.value}
-              </p>
-            </motion.article>
-          ))}
-        </div>
-
-        <div className="rounded-3xl border border-white/15 bg-slate-950/70 p-5 md:p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/70">
-            Research domains
-          </p>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
-            The timeline separates current research support from completed
-            research experiences and research outputs already present on this site.
-          </p>
-          <div className="mt-4 grid gap-3 md:grid-cols-2">
-            {researchTracks.map((track) => (
-              <motion.a
-                key={track.id}
-                href={`#${track.id}`}
-                whileHover={hoverLift}
-                transition={cardTransition}
-                className="rounded-2xl border border-white/10 bg-slate-900/70 p-4 transition-colors hover:border-cyan-200/35 hover:bg-slate-900"
-              >
-                <p className="font-semibold text-white">{track.title}</p>
-                <p className="mt-1 font-mono text-xs text-slate-500">{track.period}</p>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  {track.outcome}
-                </p>
-              </motion.a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="research-tracks" className="scroll-mt-28">
-        <div className="flex flex-col gap-3 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
-              Research timeline
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold text-white">
-              Questions, contributions, and outcomes
-            </h2>
-          </div>
-          <p className="max-w-xl text-sm leading-relaxed text-slate-400">
-            Ordered from current work backward to show how evidence review,
-            quantitative modeling, and scientific communication developed over time.
+      <section id="research-trajectory" className="scroll-mt-28">
+        <div className="max-w-4xl">
+          <SectionLabel>Research Trajectory</SectionLabel>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+            From physical models to human-facing AI.
+          </h2>
+          <p className="mt-5 text-lg leading-relaxed text-slate-300">
+            The sequence below preserves the current and completed research tracks
+            already represented on the site, ordered from current clinical AI work
+            back through earlier quantitative research.
           </p>
         </div>
 
-        <div className="relative mt-6 space-y-5 before:absolute before:bottom-8 before:left-[1.05rem] before:top-8 before:w-px before:bg-gradient-to-b before:from-cyan-300/50 before:via-violet-300/30 before:to-transparent md:before:left-[8.45rem]">
+        <div className="mt-12 divide-y divide-white/10">
           {researchTracks.map((track, index) => (
-            <motion.article
+            <article
               key={track.id}
               id={track.id}
-              whileHover={hoverLift}
-              transition={cardTransition}
-              className="relative grid gap-4 pl-12 md:grid-cols-[7rem_1fr] md:pl-0"
+              className="grid gap-5 py-6 scroll-mt-28 md:grid-cols-[9rem_1fr]"
             >
-              <div className="md:pt-6">
-                <p className="font-mono text-xs text-slate-500">{track.period}</p>
-                <span className="absolute left-2 top-6 grid h-6 w-6 place-items-center rounded-full border border-cyan-200/45 bg-slate-950 font-mono text-[10px] text-cyan-100 md:left-[7.7rem]">
-                  {index + 1}
-                </span>
+              <div>
+                <p className="font-mono text-sm text-cyan-200/70">
+                  {String(index + 1).padStart(2, '0')}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                  {track.period}
+                </p>
               </div>
 
-              <div
-                className="rounded-3xl border border-white/15 bg-slate-900/70 p-5 transition-colors hover:border-cyan-200/30 hover:bg-slate-900/90 md:p-6"
-              >
-                <h3 className="text-xl font-semibold text-white">{track.title}</h3>
-                <div className="mt-5 grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-200/65">
-                      Research question
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                      {track.question}
-                    </p>
-
-                    <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-violet-200/70">
-                      My contribution
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-200">
-                      {track.contribution}
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-slate-950/55 p-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-                      Methods
-                    </p>
-                    <ul className="mt-3 space-y-2 text-sm text-slate-300">
-                      {track.methods.map((method) => (
-                        <li key={method} className="flex gap-2">
-                          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-cyan-300" />
-                          <span>{method}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-5 border-t border-white/10 pt-4">
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-                        Outcome
-                      </p>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                        {track.outcome}
-                      </p>
-                    </div>
-                  </div>
+              <div className="max-w-5xl rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 md:p-6">
+                <h3 className="text-2xl font-semibold tracking-tight text-white">
+                  {track.title}
+                </h3>
+                <p className="mt-4 text-base leading-relaxed text-slate-300">
+                  {track.question}
+                </p>
+                <p className="mt-4 text-base leading-relaxed text-slate-300">
+                  <span className="font-semibold text-cyan-100">Contribution: </span>
+                  {track.contribution}
+                </p>
+                <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_1.1fr]">
+                  <p className="text-sm leading-relaxed text-slate-400">
+                    <span className="font-semibold text-slate-200">Methods: </span>
+                    {track.methods.join('; ')}.
+                  </p>
+                  <p className="text-sm leading-relaxed text-slate-400">
+                    <span className="font-semibold text-slate-200">Outcome: </span>
+                    {track.outcome}
+                  </p>
                 </div>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </section>
 
-      <section id="publications" className="scroll-mt-28">
-        <div className="border-b border-white/10 pb-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-200/70">
-            Selected research outputs
-          </p>
-          <h2 className="mt-2 text-2xl font-semibold text-white">
-            {publishedPaperCount} DOI-linked published papers
+      <section id="selected-research" className="scroll-mt-28">
+        <div className="max-w-4xl">
+          <SectionLabel>Selected Research</SectionLabel>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+            Three places where the research questions become concrete.
           </h2>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-400">
-            Work across materials science, computational physics, and astronomy,
-            presented with DOI links, research context, and contribution notes.
+          <p className="mt-5 text-lg leading-relaxed text-slate-300">
+            These examples have enough existing site content to support a more
+            specific explanation of the question, method, and contribution without
+            inventing new results.
           </p>
         </div>
 
-        <div className="mt-6 divide-y divide-white/10 overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70">
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          {selectedResearch.map((track) => (
+            <article
+              key={track.id}
+              className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 md:p-6"
+            >
+              <p className="font-mono text-xs uppercase tracking-[0.12em] text-slate-500">
+                {track.period}
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white md:text-3xl">
+                {track.title}
+              </h3>
+              <p className="mt-4 text-base leading-relaxed text-slate-300">
+                {track.question}
+              </p>
+              <p className="mt-4 text-base leading-relaxed text-slate-300">
+                {track.contribution}
+              </p>
+              <p className="mt-4 max-w-4xl text-sm leading-relaxed text-slate-400">
+                <span className="font-semibold text-slate-200">Approach: </span>
+                {track.methods.join('; ')}.
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="research-outputs" className="scroll-mt-28 pb-8">
+        <div className="max-w-4xl">
+          <SectionLabel>Research Outputs</SectionLabel>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+            DOI-linked research outputs.
+          </h2>
+          <p className="mt-5 text-lg leading-relaxed text-slate-300">
+            Formal records already present on the site, shown as citation evidence
+            rather than impact metrics.
+          </p>
+        </div>
+
+        <div className="mt-10 divide-y divide-white/10">
           {publications.map((paper, index) => (
             <article
               key={paper.doi}
-              className="grid gap-5 p-5 transition hover:bg-white/[0.025] md:grid-cols-[3rem_1fr_auto] md:items-start md:p-6"
+              className="grid gap-5 py-5 md:grid-cols-[3rem_1fr]"
             >
               <p className="font-mono text-sm text-cyan-200/65">
                 {String(index + 1).padStart(2, '0')}
               </p>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+              <div className="rounded-[1.5rem] border border-white/10 bg-slate-950/40 p-5 md:p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
                   {paper.venue} · {paper.year}
                 </p>
-                <h3 className="mt-2 max-w-4xl text-lg font-semibold leading-snug text-white">
+                <h3 className="mt-2 max-w-4xl text-xl font-semibold leading-snug text-white">
                   {paper.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                  {paper.context}
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                  {paper.authors}
                 </p>
-                <div className="mt-4 grid gap-3 lg:grid-cols-2">
-                  <div className="rounded-xl border border-white/10 bg-slate-950/45 p-3">
-                    <p className="text-xs font-semibold text-violet-100">My contribution</p>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
-                      {paper.contribution}
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-slate-950/45 p-3">
-                    <p className="text-xs font-semibold text-cyan-100">Research track</p>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
-                      {paper.researchTrack}
-                    </p>
-                  </div>
+                <p className="mt-4 max-w-4xl text-sm leading-relaxed text-slate-300">
+                  {paper.contribution}
+                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                  <a
+                    href={`https://doi.org/${paper.doi}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-white hover:decoration-cyan-100"
+                  >
+                    DOI
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
+                  {paper.link ? (
+                    <a
+                      href={paper.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white/60"
+                    >
+                      Publisher
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
+                  ) : null}
+                  <span className="text-xs text-slate-500">
+                    {paper.researchTrack}
+                  </span>
                 </div>
-                <p className="mt-4 font-mono text-xs text-slate-500">
-                  DOI {paper.doi}
-                </p>
               </div>
-              {paper.link ? (
-                <a
-                  href={paper.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Open ${paper.title}`}
-                  className="inline-flex items-center gap-1 text-sm font-semibold text-cyan-100 transition hover:text-white"
-                >
-                  Open DOI
-                  <ArrowUpRight className="h-4 w-4" />
-                </a>
-              ) : null}
             </article>
           ))}
         </div>
