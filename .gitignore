@@ -32,3 +32,7 @@ pnpm-debug.log*
 
 #reports
 *.md
+
+# research files
+REACH-EHR-kb
+REACH-EHR-kb/*

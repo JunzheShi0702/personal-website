@@ -67,7 +67,7 @@ export const homepagePathways = [
   {
     title: 'Projects',
     description:
-      'Inspect representative systems that support the research agenda: Atlas, LaunchStack, and REACH.',
+      'Inspect featured AI systems with demos, case studies, source links, and implementation evidence.',
     to: '/projects',
   },
   {
@@ -164,30 +164,6 @@ export const flagshipProjects: FlagshipProject[] = [
     heroImage: '/screenshots/pdr-proof-1-diff.app.jpeg',
     heroLabel: 'Diff review + human approval',
   },
-  {
-    title: 'REACH',
-    eyebrow: 'Current research · Clinical AI',
-    summary:
-      'Research support for cohort planning and evidence review around thyroid hormone prescribing patterns in psychiatric contexts.',
-    researchRelevance:
-      'The clinical direction of the research agenda: careful cohort definition, patient-safety framing, and responsible use of EHR-scale evidence.',
-    stack: ['Clinical literature review', 'Cohort planning', 'Evidence mapping', 'Responsible AI framing'],
-    evidence: [
-      'Research question framing',
-      'Cohort planning',
-      'Clinical evidence review',
-      'Patient-safety lens',
-      'Ongoing work boundary',
-      'Future EHR analysis direction',
-    ],
-    links: [
-      { label: 'Project Page', href: '/projects/reach' },
-      { label: 'Research Context', href: '/research#healthcare-ai' },
-    ],
-    previewImages: [],
-    heroImage: '/screenshots/atlas-proof-3-eval-raw-data.png',
-    heroLabel: 'Clinical AI research support',
-  },
 ]
 
 export const engineeringExperience: EngineeringExperience[] = [
@@ -215,16 +191,16 @@ export const researchTracks: ResearchTrack[] = [
     title: 'REACH Clinical AI Research Support',
     period: 'Current research support',
     question:
-      'How can EHR-based cohort planning help study thyroid hormone prescribing patterns in psychiatric contexts while preserving patient-safety and evidence-quality constraints?',
+      'How do thyroid hormone prescribing patterns differ between psychiatry and primary care for adults with anxiety or depression and no known thyroid dysfunction?',
     contribution:
-      'Supported research-question refinement, cohort planning, and evidence review for REACH-oriented clinical AI work, with attention to confounding, safety, and responsible interpretation.',
+      'Support research-question and methodology framing for an active REACH EHR study, including thyroid-dose representation, cohort boundaries, literature context, and claims that should wait for validation.',
     methods: [
-      'Clinical and AI literature synthesis',
-      'Comparative evidence mapping',
-      'Patient-safety and governance framing',
+      'De-identified REACH EHR protocol review',
+      'Thyroid-dose methodology framing',
+      'Clinical and AI literature review',
     ],
     outcome:
-      'Completed research planning and evidence-quality review tasks; EHR analysis and stronger empirical claims remain ongoing or future work.',
+      'Active research-support work; no preliminary clinical findings, validated LLM accuracy, or completed downstream statistical analysis are claimed publicly.',
   },
   {
     id: 'perovskite',

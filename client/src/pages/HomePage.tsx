@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import {
+  ArrowUpRight,
+  Brain,
+  Cpu,
+  FileText,
+  Network,
+  type LucideIcon,
+} from 'lucide-react'
+import {
   flagshipProjects,
   homepagePathways,
   publications,
@@ -12,33 +20,47 @@ const resumePath = '/resume.pdf'
 
 const evidenceSnapshot = [
   {
-    stat: '01',
+    stat: '1',
     title: 'Research vision',
     detail: 'Inspectable AI for evidence-heavy decisions',
+    to: '/research',
+    icon: Brain,
   },
   {
-    stat: '02',
-    title: 'Three representative systems',
-    detail: 'Atlas · LaunchStack · REACH',
+    stat: '2',
+    title: 'Featured AI systems',
+    detail: 'Atlas · LaunchStack',
+    to: '/projects',
+    icon: Cpu,
   },
   {
-    stat: '03',
-    title: 'Four published papers',
+    stat: '4',
+    title: 'Published papers',
     detail: 'DOI-linked outputs',
+    to: '/publications',
+    icon: FileText,
   },
   {
-    stat: '04',
-    title: 'Four research themes',
+    stat: '4',
+    title: 'Research themes',
     detail: 'AI · Healthcare · Physics · Materials',
+    to: '/research#research-focus',
+    icon: Network,
   },
-]
+] satisfies Array<{
+  stat: string
+  title: string
+  detail: string
+  to: string
+  icon: LucideIcon
+}>
 
 const researchView = [
   {
     title: 'Clinical AI',
     description:
-      'REACH frames cohort planning around evidence quality and patient safety.',
-    to: '/projects/reach',
+      'REACH studies thyroid-prescribing questions through EHR methodology.',
+    to: '/research/reach',
   },
   {
     title: 'AI planning systems',
@@ -206,19 +228,36 @@ export function HomePage() {
                 Evidence at a glance
               </h2>
             </div>
-            <TextLink to="/projects">Representative systems</TextLink>
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {evidenceSnapshot.map((item) => (
-              <article key={item.title} className="grid gap-3 sm:grid-cols-[3rem_1fr]">
-                <p className="font-mono text-sm text-cyan-200/55">{item.stat}</p>
+              <Link
+                key={item.title}
+                to={item.to}
+                className="group grid gap-3 rounded-[1rem] py-2 transition hover:text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:grid-cols-[3.5rem_1fr]"
+              >
+                <div className="flex items-start gap-2">
+                  <p className="font-mono text-2xl leading-none text-cyan-200/65">
+                    {item.stat}
+                  </p>
+                  <item.icon
+                    className="mt-0.5 h-4 w-4 text-cyan-100/65 transition group-hover:text-cyan-50"
+                    aria-hidden="true"
+                  />
+                </div>
                 <div>
-                  <p className="text-lg font-semibold text-slate-100">{item.title}</p>
+                  <p className="inline-flex items-center gap-2 text-lg font-semibold text-slate-100 transition group-hover:text-cyan-50">
+                    {item.title}
+                    <ArrowUpRight
+                      className="h-4 w-4 opacity-45 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-90"
+                      aria-hidden="true"
+                    />
+                  </p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-400">
                     {item.detail}
                   </p>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
@@ -226,12 +265,31 @@ export function HomePage() {
 
       <section className="scroll-mt-28">
         <SectionHeader
+          label="Current Research"
+          title={researchTracks[0].title}
+        >
+          <p>{researchTracks[0].question}</p>
+        </SectionHeader>
+
+        <div className="mt-8 max-w-4xl">
+          <p className="text-lg leading-relaxed text-slate-300">
+            {researchTracks[0].contribution}
+          </p>
+          <div className="mt-6 flex flex-wrap gap-5">
+            <TextLink to="/research/reach">Research Note</TextLink>
+            <TextLink to="/research#healthcare-ai">Research Context</TextLink>
+          </div>
+        </div>
+      </section>
+
+      <section className="scroll-mt-28">
+        <SectionHeader
           label="Click Into Evidence"
-          title="Representative Systems"
+          title="Featured AI Systems"
         >
           <p>
-            These systems are evidence for the research agenda, not the agenda
-            itself.
+            Atlas and LaunchStack provide implementation evidence; REACH is
+            presented separately as active clinical research.
           </p>
         </SectionHeader>
 
@@ -350,25 +408,6 @@ export function HomePage() {
         </div>
         <div className="mt-6">
           <TextLink to="/publications">View all publications</TextLink>
-        </div>
-      </section>
-
-      <section className="scroll-mt-28">
-        <SectionHeader
-          label="Current Research"
-          title={researchTracks[0].title}
-        >
-          <p>{researchTracks[0].question}</p>
-        </SectionHeader>
-
-        <div className="mt-8 max-w-4xl">
-          <p className="text-lg leading-relaxed text-slate-300">
-            {researchTracks[0].contribution}
-          </p>
-          <div className="mt-6 flex flex-wrap gap-5">
-            <TextLink to="/projects/reach">Project Page</TextLink>
-            <TextLink to="/research#healthcare-ai">Research Context</TextLink>
-          </div>
         </div>
       </section>
 

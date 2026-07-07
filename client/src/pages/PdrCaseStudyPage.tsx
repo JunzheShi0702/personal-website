@@ -1,80 +1,100 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import launchstackLogo from '../assets/launchstack-logo.png'
 
-type CaseStudyImage = {
+type CaseStudyMedia = {
   src: string
   alt: string
   label: string
   caption: string
   interpretation: string
+  mediaType: 'video'
 }
 
-const systemImage: CaseStudyImage = {
-  src: '/screenshots/pdr-proof-1-diff.app.jpeg',
-  alt: 'LaunchStack section-level original and proposed rewrite diff',
+const systemMedia: CaseStudyMedia = {
+  src: '/demos/launchstack/legal-track-changes-handoff.mp4',
+  alt: 'LaunchStack legal review handoff demo showing validation, Send for review, Track Changes processing, and tracked DOCX download',
   label: 'System evidence',
-  caption: 'Diff-first rewrite review keeps generated edits inspectable before approval.',
+  caption: 'Legal review handoff turns validated edits into a tracked DOCX response.',
   interpretation:
-    'LaunchStack exposes the original section, proposed rewrite, change rationale, and accept/reject decision in one review surface.',
+    'Junzhe contributed the apply-edits request flow, tracked DOCX response handling, and download path for the legal review handoff.',
+  mediaType: 'video',
 }
 
-const evidenceImages: CaseStudyImage[] = [
+const evidenceMedia: CaseStudyMedia[] = [
   {
-    src: '/screenshots/pdr-proof-2-results.app.jpeg',
-    alt: 'LaunchStack research-to-campaign process with claim-source verification',
+    src: '/demos/launchstack/bluesky-api-first-trend-research.mp4',
+    alt: 'LaunchStack Bluesky marketing pipeline demo showing platform selection, API-first trend research, and campaign draft rendering',
     label: 'Grounding evidence',
-    caption: 'The campaign workflow shows its research steps before a draft moves forward.',
+    caption: 'Bluesky trend research demonstrates the API-first platform path.',
     interpretation:
-      'Company context, competitor analysis, trend research, campaign history, and claim checks remain visible instead of disappearing behind a generated post.',
+      'Junzhe built the platform-specific API-first clients for Reddit, X, LinkedIn, and Bluesky; this demo shows the Bluesky path feeding a campaign draft.',
+    mediaType: 'video',
   },
   {
-    src: '/screenshots/pdr-proof-1-editor.app.jpeg',
-    alt: 'LaunchStack editor containing an accepted rewrite',
+    src: '/demos/launchstack/rewrite-workflow-handoff.mp4',
+    alt: 'LaunchStack rewrite workflow demo showing pasted source text, rewrite workflow completion, accepted output, and a Rewritten Text editor document',
     label: 'Approval evidence',
-    caption: 'Approved text moves into an editor where the user still controls the document.',
+    caption: 'Rewrite output becomes editable document state after acceptance.',
     interpretation:
-      'The AI workflow ends with reviewable writing state, not an automatic overwrite of the source document.',
+      'Junzhe contributed the workflow-to-editor handoff where completed rewrite output becomes a temporary Rewritten Text editor document.',
+    mediaType: 'video',
   },
 ]
 
-const lightboxImages = [systemImage, ...evidenceImages]
+const lightboxMedia = [systemMedia, ...evidenceMedia]
 
 const mechanisms = [
   {
     title: 'Inspectable sources',
     body:
-      'Generated answers and campaign drafts are framed around visible source context, research steps, and claim checks.',
+      'The reference app keeps source context, research steps, and claim checks visible around generated work instead of treating the model answer as the artifact.',
   },
   {
     title: 'Reviewable transformations',
     body:
-      'Rewrite suggestions are shown as section-level diffs so users can inspect the exact change before accepting it.',
+      'Rewrite output stays separate from document mutation until a user accepts the handoff into editor state.',
   },
   {
     title: 'Human approval',
     body:
-      'Content only moves forward after explicit accept, reject, edit, or export actions by the user.',
+      'Legal review, rewrite, and campaign workflows depend on explicit handoff points rather than silent overwrites.',
   },
 ]
 
 const reliabilityPoints = [
-  'Diff review makes edits auditable before they enter the document.',
-  'Source references and visible process keep generated work tied to company context.',
-  'The DOCX redlining path has a public commit showing authenticated API validation, request handling, export behavior, and automated test coverage.',
+  'LaunchStack separates generated output from mutation boundaries: preview, accept, export, and download are distinct product states.',
+  'The README describes a ports-based TypeScript engine where the host owns routing, auth, env, storage, jobs, and retrieval wiring.',
+  'The DOCX redlining path has public commit evidence for authenticated API validation, request handling, export behavior, and automated test coverage.',
 ]
 
 const contributionPoints = [
-  'Built human-in-the-loop document workflows for configuring, previewing, regenerating, and accepting AI-generated rewrites.',
-  'Developed the research-to-campaign flow that surfaces platform context, trend research, claim checks, and draft handoff.',
-  'Integrated the legal editor with the Adeu DOCX redlining service so approved edits can export as native Track Changes.',
+  'Contributed the rewrite workflow handoff where completed AI output becomes a temporary Rewritten Text editor document.',
+  'Built platform-specific API-first clients for Reddit, X, LinkedIn, and Bluesky; the current portfolio demo shows the Bluesky path.',
+  'Contributed the legal review handoff after validation: apply-edits request flow, tracked DOCX response handling, and download path.',
 ]
 
 const lessons = [
-  'Generation is easier than reviewable generation.',
-  'Source grounding only matters when reviewers can inspect it.',
-  'Rewrite workflows need visible diffs, not hidden transformations.',
-  'Human approval should be part of the system boundary, not an afterthought.',
+  {
+    title: 'AI output is only useful when it crosses a workflow boundary.',
+    body:
+      'A rewrite trapped inside an AI workflow is still temporary output. The implementation lesson is that handoff into editable document state is part of the system, not a final UI detail.',
+  },
+  {
+    title: 'Human review needs an artifact, not just an approval button.',
+    body:
+      'For legal and document workflows, review often has to leave the application. Track Changes made the legal review handoff portable and inspectable without claiming ownership of the full legal template system.',
+  },
+  {
+    title: 'External APIs should fail without collapsing the workflow.',
+    body:
+      'Building API-first clients for Reddit, X, LinkedIn, and Bluesky showed that platform access can be inconsistent. The provider boundary and fallback path matter because a campaign workflow should keep its state even when one research path fails.',
+  },
+  {
+    title: 'Code ownership and runtime behavior can diverge over time.',
+    body:
+      'A feature can remain in Git history while the current runtime moves to a different execution path. The Marketing Pipeline work taught me to trace the UI action to the provider call instead of trusting filenames, comments, or assumptions.',
+  },
 ]
 
 function SectionLabel({ children }: { children: string }) {
@@ -106,42 +126,116 @@ function TextLink({
   )
 }
 
-function ScreenshotFigure({
-  image,
-  onOpen,
-  priority = false,
+function InlineDemoVideo({
+  src,
+  ariaLabel,
+  className,
 }: {
-  image: CaseStudyImage
+  src: string
+  ariaLabel: string
+  className: string
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return undefined
+
+    video.muted = true
+    video.defaultMuted = true
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const playIfAllowed = () => {
+      if (motionQuery.matches) {
+        video.pause()
+        return
+      }
+
+      void video.play().catch(() => {
+        // Browsers may defer playback until visibility or tab focus changes.
+      })
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+          playIfAllowed()
+          return
+        }
+
+        video.pause()
+      },
+      { threshold: [0, 0.25, 0.55, 0.8, 1] },
+    )
+
+    const handleMotionChange = () => {
+      if (motionQuery.matches) {
+        video.pause()
+      } else {
+        const rect = video.getBoundingClientRect()
+        const viewportHeight =
+          window.innerHeight || document.documentElement.clientHeight
+        const visibleHeight =
+          Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0)
+
+        if (visibleHeight / rect.height >= 0.55) {
+          playIfAllowed()
+        }
+      }
+    }
+
+    observer.observe(video)
+    motionQuery.addEventListener('change', handleMotionChange)
+
+    return () => {
+      observer.disconnect()
+      motionQuery.removeEventListener('change', handleMotionChange)
+    }
+  }, [src])
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      aria-label={ariaLabel}
+      className={className}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+    />
+  )
+}
+
+function DemoFigure({
+  media,
+  onOpen,
+}: {
+  media: CaseStudyMedia
   onOpen: () => void
-  priority?: boolean
 }) {
   return (
     <figure className="group flex h-full flex-col">
       <button
         type="button"
         onClick={onOpen}
-        className={`block w-full overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-950/45 shadow-[0_24px_80px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-1 hover:border-cyan-200/35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 ${
-          priority ? '' : 'flex aspect-[16/13] items-center justify-center'
-        }`}
-        aria-label={`Enlarge ${image.caption}`}
+        className="block w-full overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-950/45 shadow-[0_24px_80px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-1 hover:border-cyan-200/35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+        aria-label={`Enlarge ${media.caption}`}
       >
-        <img
-          src={image.src}
-          alt={image.alt}
-          className={
-            priority
-              ? 'block h-auto w-full object-contain'
-              : 'block max-h-full max-w-full object-contain'
-          }
+        <InlineDemoVideo
+          src={media.src}
+          ariaLabel={media.alt}
+          className="block h-auto w-full object-contain"
         />
       </button>
       <figcaption className="mt-5 flex flex-1 flex-col space-y-2">
-        <SectionLabel>{image.label}</SectionLabel>
+        <SectionLabel>{media.label}</SectionLabel>
         <p className="text-xl font-semibold leading-snug text-slate-50">
-          {image.caption}
+          {media.caption}
         </p>
         <p className="max-w-3xl text-base leading-relaxed text-slate-400">
-          {image.interpretation}
+          {media.interpretation}
         </p>
       </figcaption>
     </figure>
@@ -163,11 +257,11 @@ function Lightbox({
         setActiveIndex(null)
       }
       if (event.key === 'ArrowRight') {
-        setActiveIndex((activeIndex + 1) % lightboxImages.length)
+        setActiveIndex((activeIndex + 1) % lightboxMedia.length)
       }
       if (event.key === 'ArrowLeft') {
         setActiveIndex(
-          activeIndex === 0 ? lightboxImages.length - 1 : activeIndex - 1,
+          activeIndex === 0 ? lightboxMedia.length - 1 : activeIndex - 1,
         )
       }
     }
@@ -178,12 +272,12 @@ function Lightbox({
 
   if (activeIndex === null) return null
 
-  const image = lightboxImages[activeIndex]
+  const media = lightboxMedia[activeIndex]
   const showPrevious = () => {
-    setActiveIndex(activeIndex === 0 ? lightboxImages.length - 1 : activeIndex - 1)
+    setActiveIndex(activeIndex === 0 ? lightboxMedia.length - 1 : activeIndex - 1)
   }
   const showNext = () => {
-    setActiveIndex((activeIndex + 1) % lightboxImages.length)
+    setActiveIndex((activeIndex + 1) % lightboxMedia.length)
   }
 
   return (
@@ -191,13 +285,13 @@ function Lightbox({
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/92 p-4 backdrop-blur-md"
       role="dialog"
       aria-modal="true"
-      aria-label={image.caption}
+      aria-label={media.caption}
     >
       <button
         type="button"
         onClick={() => setActiveIndex(null)}
         className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-slate-900/85 text-white transition hover:border-cyan-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
-        aria-label="Close screenshot"
+        aria-label="Close demo video"
       >
         <X className="h-5 w-5" />
       </button>
@@ -205,20 +299,20 @@ function Lightbox({
         type="button"
         onClick={showPrevious}
         className="absolute left-4 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-slate-900/85 text-white transition hover:border-cyan-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 md:inline-flex"
-        aria-label="Previous screenshot"
+        aria-label="Previous demo video"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
       <div className="max-h-[86vh] w-full max-w-7xl overflow-hidden rounded-[2rem] border border-white/15 bg-slate-950 shadow-2xl">
-        <img
-          src={image.src}
-          alt={image.alt}
+        <InlineDemoVideo
+          src={media.src}
+          ariaLabel={media.alt}
           className="max-h-[76vh] w-full object-contain"
         />
         <div className="border-t border-white/10 p-4 md:p-5">
-          <p className="text-sm font-semibold text-white">{image.caption}</p>
+          <p className="text-sm font-semibold text-white">{media.caption}</p>
           <p className="mt-1 text-sm leading-relaxed text-slate-400">
-            {image.interpretation}
+            {media.interpretation}
           </p>
         </div>
       </div>
@@ -226,7 +320,7 @@ function Lightbox({
         type="button"
         onClick={showNext}
         className="absolute right-4 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-slate-900/85 text-white transition hover:border-cyan-200/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 md:inline-flex"
-        aria-label="Next screenshot"
+        aria-label="Next demo video"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
@@ -253,7 +347,7 @@ export function PdrCaseStudyPage() {
             <img
               src={launchstackLogo}
               alt="LaunchStack"
-              className="h-14 w-auto md:h-16"
+              className="h-14 w-auto rounded-xl md:h-16"
             />
             <SectionLabel>Technical Case Study</SectionLabel>
           </div>
@@ -261,12 +355,12 @@ export function PdrCaseStudyPage() {
             LaunchStack
           </p>
           <h1 className="mt-4 max-w-[1180px] text-balance text-[clamp(2.85rem,5.15vw,5.35rem)] font-semibold leading-[1.03] tracking-tight text-slate-50">
-            Source-grounded AI drafting through inspectable human approval.
+            Source-aware AI workflows through inspectable human approval.
           </h1>
           <p className="mt-8 max-w-4xl text-lg leading-relaxed text-slate-300 md:text-xl">
-            LaunchStack turns scattered founder knowledge into cited answers,
-            reviewable rewrites, and campaign drafts that preserve source context,
-            visible process, and explicit user approval.
+            LaunchStack is a TypeScript engine and reference app for AI-native
+            workflows: document review, retrieval context, marketing research, and
+            handoff points where generated work becomes something a person can inspect.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <TextLink href="#system">Case Study</TextLink>
@@ -303,18 +397,17 @@ export function PdrCaseStudyPage() {
         <div className="max-w-4xl">
           <SectionLabel>System</SectionLabel>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-5xl">
-            LaunchStack turns AI output into reviewable writing state.
+            LaunchStack turns generated edits into reviewable handoff artifacts.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-slate-300">
-            The rewrite interface is the main system surface: users choose a source
-            section, set boundaries, inspect the proposed diff, and approve only the
-            changes they want to carry forward.
+            The legal review path shows the system boundary clearly: validated edits
+            become an apply-edits request, the tracked DOCX response is handled, and
+            the result leaves the app as a portable review artifact.
           </p>
         </div>
-        <ScreenshotFigure
-          image={systemImage}
+        <DemoFigure
+          media={systemMedia}
           onOpen={() => setActiveImage(0)}
-          priority
         />
       </section>
 
@@ -346,15 +439,16 @@ export function PdrCaseStudyPage() {
             The proof is visible process, not hidden automation.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-slate-300">
-            Two supporting views show the same principle outside the main diff screen:
-            generated work should remain traceable before it becomes user-facing work.
+            Two supporting views show the same principle in other workflows: platform
+            research and rewrite output both need explicit handoff points before they
+            become user-facing work.
           </p>
         </div>
         <div className="grid items-start gap-10 lg:grid-cols-2">
-          {evidenceImages.map((image, index) => (
-            <ScreenshotFigure
-              key={image.src}
-              image={image}
+          {evidenceMedia.map((media, index) => (
+            <DemoFigure
+              key={media.src}
+              media={media}
               onOpen={() => setActiveImage(index + 1)}
             />
           ))}
@@ -387,8 +481,8 @@ export function PdrCaseStudyPage() {
         </div>
       </section>
 
-      <section className="grid gap-12 pt-4 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16">
-        <div>
+      <section className="pt-4">
+        <div className="max-w-4xl">
           <SectionLabel>My Role</SectionLabel>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
             Product and full-stack engineering across review surfaces.
@@ -401,23 +495,31 @@ export function PdrCaseStudyPage() {
             ))}
           </div>
         </div>
+      </section>
 
-        <div id="lessons" className="scroll-mt-28">
+      <section id="lessons" className="scroll-mt-28 pb-4">
+        <div className="max-w-4xl">
           <SectionLabel>Lessons</SectionLabel>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-            What the case study clarified.
+            What I learned building LaunchStack
           </h2>
-          <ol className="mt-8 space-y-6">
-            {lessons.map((lesson, index) => (
-              <li key={lesson} className="grid grid-cols-[2.5rem_1fr] gap-4">
-                <span className="font-mono text-sm font-semibold text-cyan-200/70">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <p className="text-lg leading-relaxed text-slate-300">{lesson}</p>
-              </li>
-            ))}
-          </ol>
         </div>
+
+        <ol className="mt-10 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+          {lessons.map((lesson, index) => (
+            <li key={lesson.title}>
+              <span className="font-mono text-sm font-semibold text-cyan-200/70">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 className="mt-4 text-lg font-semibold leading-snug text-slate-50">
+                {lesson.title}
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-slate-400">
+                {lesson.body}
+              </p>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <Lightbox activeIndex={activeImage} setActiveIndex={setActiveImage} />

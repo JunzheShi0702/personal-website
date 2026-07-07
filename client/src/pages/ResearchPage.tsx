@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { publications, researchTracks } from '../content/siteContent'
 
 const researchFocus = [
@@ -63,6 +64,12 @@ export function ResearchPage() {
             >
               Research Trajectory
             </a>
+            <Link
+              to="/research/reach"
+              className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-cyan-50"
+            >
+              REACH Note
+            </Link>
             <a
               href="#research-outputs"
               className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-cyan-50"
@@ -146,6 +153,16 @@ export function ResearchPage() {
                     {track.outcome}
                   </p>
                 </div>
+                {track.id === 'healthcare-ai' ? (
+                  <div className="mt-6">
+                    <Link
+                      to="/research/reach"
+                      className="text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-white"
+                    >
+                      Open REACH research note
+                    </Link>
+                  </div>
+                ) : null}
               </div>
             </article>
           ))}
@@ -187,6 +204,14 @@ export function ResearchPage() {
                 <span className="font-semibold text-slate-200">Approach: </span>
                 {track.methods.join('; ')}.
               </p>
+              {track.id === 'healthcare-ai' ? (
+                <Link
+                  to="/research/reach"
+                  className="mt-5 inline-flex text-sm font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-white"
+                >
+                  Read the REACH note
+                </Link>
+              ) : null}
             </article>
           ))}
         </div>
