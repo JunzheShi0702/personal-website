@@ -96,7 +96,7 @@ export function SiteLayout() {
     <div className="relative min-h-screen bg-[radial-gradient(circle_at_top_right,#11213f_0,#070b16_35%,#05070f_70%)] text-slate-100">
       <div className="pointer-events-none fixed -right-28 -top-28 h-[32rem] w-[32rem] rounded-full bg-cyan-400/10 blur-3xl" />
       <div className="pointer-events-none fixed -bottom-32 left-10 h-[32rem] w-[32rem] rounded-full bg-violet-400/10 blur-3xl" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-10 pt-5 md:px-8">
+      <div className="relative mx-auto flex min-h-screen w-full max-w-[92rem] flex-col px-4 pb-10 pt-5 md:px-8">
         <Header />
         <AnimatePresence mode="wait" initial={false}>
           <motion.main
