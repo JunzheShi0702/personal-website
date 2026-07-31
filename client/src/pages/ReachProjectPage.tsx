@@ -88,6 +88,45 @@ export function ReachProjectPage() {
           medication instructions, while keeping the model role inspectable and
           the public claims inside the evidence currently supported.
         </p>
+        <div className="mt-8 flex max-w-3xl flex-col gap-5 border-l border-cyan-100/20 pl-5 sm:flex-row sm:items-center">
+          <a
+            href="https://github.com/datapsych-lab"
+            target="_blank"
+            rel="noreferrer"
+            className="shrink-0 overflow-hidden rounded-2xl bg-white/95 p-2 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            aria-label="Data Science for Psychiatry Lab GitHub"
+          >
+            <img
+              src="https://github.com/datapsych-lab.png"
+              alt=""
+              className="h-16 w-16 rounded-xl object-contain"
+            />
+          </a>
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.13em] text-cyan-100/85">
+              Affiliation
+            </p>
+            <p className="mt-2 text-base leading-relaxed text-slate-300 md:text-lg">
+              Research support in the{' '}
+              <a
+                href="https://github.com/datapsych-lab"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-white"
+              >
+                Data Science for Psychiatry Lab
+              </a>
+              , advised by{' '}
+              <a
+                href="mailto:radams@jhu.edu"
+                className="font-semibold text-cyan-100 underline decoration-cyan-200/45 underline-offset-4 transition hover:text-white"
+              >
+                Roy Adams
+              </a>
+              .
+            </p>
+          </div>
+        </div>
       </section>
 
       <section className="grid gap-10 border-t border-white/10 pt-12 lg:grid-cols-[0.85fr_1.15fr]">
