@@ -191,16 +191,16 @@ export const researchTracks: ResearchTrack[] = [
     title: 'REACH Clinical AI Research Support',
     period: 'Current research support',
     question:
-      'How do thyroid hormone prescribing patterns differ between psychiatry and primary care for adults with anxiety or depression and no known thyroid dysfunction?',
+      'How can noisy EHR levothyroxine instructions be converted into inspectable, normalized average daily dose estimates without asking a model to perform the final arithmetic?',
     contribution:
-      'Support research-question and methodology framing for an active REACH EHR study, including thyroid-dose representation, cohort boundaries, literature context, and claims that should wait for validation.',
+      'Support an active clinical NLP pipeline iteration for levothyroxine-dose extraction, including SIG-centered model inputs, Llama/Qwen routing, deterministic Python normalization, and validation boundaries.',
     methods: [
-      'De-identified REACH EHR protocol review',
-      'Thyroid-dose methodology framing',
-      'Clinical and AI literature review',
+      'Llama 8B SIG preprocessing',
+      'Qwen3.5-9B JSON extraction',
+      'Deterministic Python dose normalization',
     ],
     outcome:
-      'Active research-support work; no preliminary clinical findings, validated LLM accuracy, or completed downstream statistical analysis are claimed publicly.',
+      'Active research-support work; no preliminary clinical findings, validated LLM accuracy, production-readiness claim, or completed downstream statistical analysis are claimed publicly.',
   },
   {
     id: 'perovskite',

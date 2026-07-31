@@ -1,13 +1,11 @@
-const dosageFlowImage = '/research/reach/levothyroxine-dosage-flow.png'
-
 const researchQuestion =
-  'How do thyroid hormone prescribing patterns differ between psychiatry and primary care for adults with anxiety or depression and no known thyroid dysfunction?'
+  'How can noisy EHR levothyroxine instructions be converted into inspectable, normalized average daily dose estimates without asking a model to perform the final arithmetic?'
 
 const contributionItems = [
-  'Frame the protocol-defined research question for a public portfolio without turning ongoing work into claimed findings.',
-  'Map the dose-representation problem around structured medication fields, SIG text, TSH context, medication type, and cohort exclusions.',
-  'Review relevant clinical and AI literature around thyroid hormone prescribing, psychiatric augmentation, EHR methodology, and LLM validation risk.',
-  'Help define what should remain bounded: cohort size, dosage parsing accuracy, patient-level data, and clinical conclusions before validation.',
+  'Narrowed the SIG_LLM route so model-facing Databricks inputs center on row_id, medication name fields, and SIG text rather than structured dose/unit/frequency fields.',
+  'Separated model responsibilities: Llama 8B supports relevance preprocessing and SIG cleaning; Qwen3.5-9B handles structured JSON extraction with its own prompt profile.',
+  'Shifted the extraction prompt toward evidence-grounded raw structure, leaving schedule normalization and average_daily_dose_mcg arithmetic to deterministic Python logic.',
+  'Improved debugging and failure visibility across Databricks read, model loading, preprocessing, extraction, JSON repair, parser status, and deterministic calculation status.',
 ]
 
 const literatureLenses = [
@@ -19,20 +17,43 @@ const literatureLenses = [
   {
     title: 'EHR-derived evidence',
     body:
-      'Frames why medication history, orders, labs, demographics, and encounter context have to be interpreted as research data rather than raw truth.',
+      'Frames why medication history, SIG text, medication names, labs, demographics, and encounter context have to be interpreted as research data rather than raw truth.',
   },
   {
     title: 'Clinical AI boundaries',
     body:
-      'Keeps the LLM role narrow: medication-instruction interpretation support that still needs validation before any clinical conclusion.',
+      'Keeps the LLM role narrow: relevance preprocessing, SIG cleaning, and structured extraction support that still needs validation before any clinical conclusion.',
+  },
+]
+
+const architectureSteps = [
+  {
+    title: 'Input boundary',
+    body:
+      'The SIG route sends row_id, med_display_name, med_name, and sig to the model-facing path. Structured Databricks dose, unit, and frequency fields are intentionally kept outside the extraction prompt.',
+  },
+  {
+    title: 'Model routing',
+    body:
+      'Llama 8B handles relevance preprocessing and SIG cleaning. Qwen3.5-9B uses a separate extraction prompt profile for evidence-grounded JSON structure.',
+  },
+  {
+    title: 'Deterministic dose math',
+    body:
+      'The model extracts raw dosage events and evidence. Python then normalizes schedules and calculates average_daily_dose_mcg deterministically.',
+  },
+  {
+    title: 'Traceable failures',
+    body:
+      'The runner includes invalid JSON repair, Qwen think-wrapper handling, non-thinking inference support, model-cache flags, and progress logs for each major stage.',
   },
 ]
 
 const boundaryItems = [
   'No preliminary results or psychiatry-versus-primary-care conclusions are claimed.',
-  'No patient-level data, raw notes, or identifiable clinical examples are shown.',
-  'No validated LLM accuracy, benchmark, or model-performance number is claimed.',
-  'The six-figure working-set estimate is not described as patients, final cohort size, or completed analysis.',
+  'No patient-level data, raw notes, real row IDs, table names, or internal debug payloads are shown.',
+  'No validated LLM accuracy, production-readiness, benchmark, or clinical model-performance number is claimed.',
+  'The internal baseline review is treated as a debugging signal, not as a validated accuracy result.',
 ]
 
 function SectionLabel({ children }: { children: string }) {
@@ -63,9 +84,9 @@ export function ReachProjectPage() {
         </h1>
         <p className="mt-7 max-w-4xl text-lg leading-[1.6] text-slate-300 md:text-[1.2rem]">
           REACH is research support, not a product case study. The work centers on
-          defining a clinical question, representing thyroid dosage from EHR
-          medication data, and keeping public claims inside the evidence currently
-          supported by the protocol and local methodology artifacts.
+          extracting normalized average daily levothyroxine dose from noisy EHR
+          medication instructions, while keeping the model role inspectable and
+          the public claims inside the evidence currently supported.
         </p>
       </section>
 
@@ -91,10 +112,9 @@ export function ReachProjectPage() {
           {researchQuestion}
         </h2>
         <p className="mt-7 max-w-4xl text-base leading-8 text-slate-300 md:text-lg">
-          The portfolio-safe version adds the measurement problem: how
-          EHR-derived dose, TSH, medication type, and cohort logic can characterize
-          prescribing intensity and safety risk without overstating results before
-          analysis and validation are complete.
+          This pipeline supports the broader thyroid-prescribing study by making
+          dose representation inspectable. It does not claim completed clinical
+          results, validated extraction accuracy, or production readiness.
         </p>
       </section>
 
@@ -113,10 +133,9 @@ export function ReachProjectPage() {
             approved secure systems such as Databricks or SAFER applications.
           </p>
           <p>
-            Roy Adams / the project PI estimated that the thyroid-dosage workflow
-            may involve a six-figure working set: roughly 100K-300K EHR-derived
-            entries or records, pending exact public unit wording. This is not a
-            patient count, final analytic cohort size, or completed analysis claim.
+            Public wording avoids unsourced working-set counts. The page does not
+            state a final analytic cohort size, patient count, or completed
+            analysis volume for the levothyroxine-dose pipeline.
           </p>
         </div>
       </section>
@@ -125,42 +144,49 @@ export function ReachProjectPage() {
         <div>
           <SectionLabel>Dosage Methodology</SectionLabel>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-            Daily dose is a representation problem, not just a database field.
+            Daily dose is extracted by models, then normalized by deterministic code.
           </h2>
           <p className="mt-5 text-base leading-8 text-slate-300 md:text-lg">
-            The local methodology flow separates direct calculation, invalid
-            missing-field cases, conflict handling, and an LLM-assisted branch for
-            interpreting levothyroxine instructions when SIG text and structured
-            medication fields require interpretation.
+            Recent work moved the pipeline away from an early SIG-only,
+            single-model flow. The current architecture separates model-assisted
+            interpretation from final arithmetic so dosage estimates remain
+            easier to inspect and debug.
           </p>
           <p className="mt-5 text-base leading-8 text-slate-300 md:text-lg">
-            That LLM role is bounded to medication-instruction support. The page
-            does not claim validated accuracy, clinical recommendation ability, or
-            completed downstream statistical results.
+            The model-facing route uses SIG-centered inputs; row_id acts as a
+            provenance anchor. Structured dose fields are not silently mixed into
+            the extraction prompt, and the final daily-dose calculation belongs to
+            Python rather than the LLM.
           </p>
         </div>
 
-        <figure className="overflow-hidden rounded-[1.4rem] border border-white/10 bg-slate-950/45 p-3">
-          <div className="overflow-hidden rounded-[1rem] bg-white">
-            <img
-              src={dosageFlowImage}
-              alt="Levothyroxine daily dose calculation flowchart showing structured-field calculation, invalid missing-field cases, conflict handling, and LLM-assisted SIG parsing."
-              className="mx-auto block max-h-[720px] w-full object-contain"
-            />
-          </div>
-          <figcaption className="mt-3 border-t border-white/10 px-2 py-4 text-sm leading-relaxed text-slate-400">
-            Methodology artifact: levothyroxine daily-dose parsing flow. It is
-            shown as research-process evidence, not as proof of validated clinical
-            extraction.
-          </figcaption>
-        </figure>
+        <div className="space-y-7">
+          {architectureSteps.map((step, index) => (
+            <article
+              key={step.title}
+              className="grid gap-4 border-l border-cyan-100/20 pl-5 sm:grid-cols-[3rem_1fr]"
+            >
+              <p className="font-mono text-sm text-cyan-200/65">
+                {String(index + 1).padStart(2, '0')}
+              </p>
+              <div>
+                <h3 className="text-xl font-semibold text-slate-50">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-base leading-relaxed text-slate-400">
+                  {step.body}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="grid gap-10 border-t border-white/10 pt-12 lg:grid-cols-[0.75fr_1.25fr]">
         <div>
           <SectionLabel>My Contribution</SectionLabel>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-            Research framing, methodology boundaries, and literature context.
+            Clinical NLP pipeline iteration with explicit ownership boundaries.
           </h2>
         </div>
         <ol className="space-y-6">
@@ -198,19 +224,27 @@ export function ReachProjectPage() {
         <div>
           <SectionLabel>Current Boundary</SectionLabel>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-            The useful part is the restraint.
+            The current result is an inspectable iteration, not a solved clinical system.
           </h2>
         </div>
-        <ul className="space-y-5">
-          {boundaryItems.map((item) => (
-            <li
-              key={item}
-              className="border-l border-cyan-100/25 pl-5 text-base leading-8 text-slate-300 md:text-lg"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
+        <div className="space-y-7">
+          <p className="text-base leading-8 text-slate-300 md:text-lg">
+            A small internal baseline review before the multi-model branch found
+            that roughly 15 of 20 sampled examples were acceptable. The failures
+            clustered around invalid JSON, complex escalating or phased non-weekly
+            regimens, and supplemental daily-dose instructions.
+          </p>
+          <ul className="space-y-5">
+            {boundaryItems.map((item) => (
+              <li
+                key={item}
+                className="border-l border-cyan-100/25 pl-5 text-base leading-8 text-slate-300 md:text-lg"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section className="border-t border-white/10 pt-12">
@@ -222,9 +256,9 @@ export function ReachProjectPage() {
         <p className="mt-7 max-w-4xl text-base leading-8 text-slate-300 md:text-lg">
           REACH belongs in the research track because it shows the clinical side of
           the same portfolio theme: evidence has to stay interpretable before it
-          becomes a recommendation. Here, that means thyroid hormone prescribing,
-          psychiatry versus primary care, TSH, dose, medication type, and a clear
-          boundary between methodology support and completed clinical results.
+          becomes a recommendation. Here, that means levothyroxine SIG text,
+          normalized daily dose, TSH context, medication type, and a clear boundary
+          between methodology iteration and completed clinical results.
         </p>
       </section>
     </article>
