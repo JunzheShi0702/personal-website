@@ -1,120 +1,261 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 @import 'tailwindcss';
 
-@theme {
-  --font-sans: 'Outfit', 'Segoe UI', sans-serif;
-  --font-display: 'Space Grotesk', 'Outfit', sans-serif;
-}
-
+/*
+ * Research Site design tokens. Source of truth: the "Research Site Design System"
+ * artifact (tokens.json). Colors switch with prefers-color-scheme; components use
+ * the Tailwind utilities generated below (bg-paper, text-ink, border-rule, ...).
+ */
 :root {
-  font-size: 16px;
-  font-family: var(--font-sans);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
+  --paper: #ffffff;
+  --paper-raised: #ffffff;
+  --paper-sunken: #f4f5f7;
+  --ink: #16181c;
+  --ink-muted: #4a4f57;
+  --ink-subtle: #646a72;
+  --rule: #e2e4e8;
+  --rule-control: #81868e;
+  --accent: #1f4f8f;
+  --accent-strong: #163a6b;
+  --accent-tint: #eaf0f8;
+  --on-accent: #ffffff;
+  --marker: #2b6a3d;
+  --marker-tint: #e8f2ea;
+  --focus: var(--accent);
+  --shadow-overlay-value: 0 12px 32px rgb(22 24 28 / 0.14);
 }
 
-@media (min-width: 768px) {
+@media (prefers-color-scheme: dark) {
   :root {
-    font-size: 17px;
+    color-scheme: dark;
+    --paper: #131416;
+    --paper-raised: #1a1c1f;
+    --paper-sunken: #0d0e10;
+    --ink: #e8eaed;
+    --ink-muted: #b3b8bf;
+    --ink-subtle: #8f959d;
+    --rule: #2a2d31;
+    --rule-control: #6b7179;
+    --accent: #93b8ec;
+    --accent-strong: #bcd3f5;
+    --accent-tint: #1a2535;
+    --on-accent: #0f1a2b;
+    --marker: #82c895;
+    --marker-tint: #172419;
+    --shadow-overlay-value: 0 12px 32px rgb(0 0 0 / 0.55);
   }
 }
 
-* {
-  box-sizing: border-box;
+@theme {
+  --font-serif: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --container-measure: 42.5rem;
+  --container-page: 70rem;
 }
 
-body {
-  margin: 0;
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunken: var(--paper-sunken);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-rule: var(--rule);
+  --color-rule-control: var(--rule-control);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-tint: var(--accent-tint);
+  --color-on-accent: var(--on-accent);
+  --color-marker: var(--marker);
+  --color-marker-tint: var(--marker-tint);
+  --color-focus: var(--focus);
+  --shadow-overlay: var(--shadow-overlay-value);
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
+@layer base {
+  html {
+    background-color: var(--paper);
+    color: var(--ink);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.8125rem;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--accent-tint);
+    color: var(--ink);
+  }
+
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
 }
 
-::selection {
-  background: rgba(34, 211, 238, 0.28);
-  color: #f8fafc;
+/* Type styles from tokens.json (display, title-1 ... meta), prefixed t- in code. */
+@layer components {
+  .t-display {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+  .t-title-1 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    line-height: 2.375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .t-title-2 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  .t-title-3 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.6875rem;
+    font-weight: 600;
+  }
+  .t-lede {
+    font-family: var(--font-serif);
+    font-size: 1.1875rem;
+    line-height: 1.875rem;
+    font-weight: 400;
+  }
+  .t-body {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.8125rem;
+    font-weight: 400;
+  }
+  .t-body-sm {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    line-height: 1.5625rem;
+    font-weight: 400;
+  }
+  .t-nav {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+  }
+  .t-ui {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+  }
+  .t-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .t-caption {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.3125rem;
+    font-weight: 400;
+  }
+  .t-meta {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+  }
+
+  @media (min-width: 40rem) {
+    .t-display {
+      font-size: 3.25rem;
+      line-height: 3.5rem;
+    }
+    .t-title-1 {
+      font-size: 2.5rem;
+      line-height: 2.875rem;
+    }
+    .t-title-2 {
+      font-size: 1.75rem;
+      line-height: 2.125rem;
+    }
+    .t-lede {
+      font-size: 1.3125rem;
+      line-height: 2.0625rem;
+    }
+  }
+
+  /* Long-form prose: research notes and project write-ups. */
+  .prose-body > * + * {
+    margin-top: 1rem;
+  }
+  .prose-body ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .prose-body ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+  }
+  .prose-body li + li {
+    margin-top: 0.5rem;
+  }
+  .prose-body li::marker {
+    color: var(--ink-subtle);
+  }
+  .prose-body code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    padding: 0.05em 0.3em;
+    border-radius: 0.25rem;
+    background-color: var(--paper-sunken);
+  }
 }
 
+/* Brief highlight when a hash link lands on a section heading. */
 .section-jump-title-highlight {
-  margin-inline: -0.14em;
-  border-radius: 0.65rem;
-  padding-inline: 0.14em;
-  animation: section-jump-title-highlight 1.8s ease-out;
+  border-radius: 0.25rem;
+  animation: section-jump-highlight 1.6s ease-out;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
 
-.section-jump-frame-highlight {
-  border-radius: 1.5rem;
-  animation: section-jump-frame-highlight 1.8s ease-out;
-}
-
-@keyframes section-jump-title-highlight {
+@keyframes section-jump-highlight {
   0%,
   100% {
     background-color: transparent;
-    text-shadow: none;
   }
-
-  18% {
-    background-color: rgba(34, 211, 238, 0.12);
-    color: #ecfeff;
-    text-shadow:
-      0 0 16px rgba(34, 211, 238, 0.42),
-      0 0 30px rgba(167, 139, 250, 0.18);
-  }
-
-  48% {
-    background-color: rgba(167, 139, 250, 0.1);
-    color: #f8fafc;
-    text-shadow:
-      0 0 14px rgba(167, 139, 250, 0.34),
-      0 0 24px rgba(34, 211, 238, 0.16);
-  }
-
-  72% {
-    background-color: rgba(34, 211, 238, 0.07);
-    color: #f8fafc;
-    text-shadow:
-      0 0 10px rgba(34, 211, 238, 0.24),
-      0 0 18px rgba(167, 139, 250, 0.1);
-  }
-}
-
-@keyframes section-jump-frame-highlight {
-  0%,
-  100% {
-    box-shadow: none;
-  }
-
-  18% {
-    box-shadow:
-      0 0 0 1px rgba(34, 211, 238, 0.7),
-      0 0 0 4px rgba(34, 211, 238, 0.08);
-  }
-
-  48% {
-    box-shadow:
-      0 0 0 1px rgba(167, 139, 250, 0.58),
-      0 0 0 4px rgba(167, 139, 250, 0.06);
-  }
-
-  72% {
-    box-shadow:
-      0 0 0 1px rgba(34, 211, 238, 0.42),
-      0 0 0 4px rgba(34, 211, 238, 0.04);
+  20% {
+    background-color: var(--accent-tint);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .section-jump-title-highlight,
-  .section-jump-frame-highlight {
+  .section-jump-title-highlight {
     animation: none;
   }
 }

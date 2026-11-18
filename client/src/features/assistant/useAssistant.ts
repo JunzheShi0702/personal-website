@@ -45,7 +45,7 @@ export function useAssistant() {
       const message =
         caughtError instanceof Error
           ? caughtError.message
-          : 'Ask Junzhe is unavailable right now.'
+          : 'The assistant is unavailable right now. Email works too: jshi70@jh.edu'
       setError(message)
     } finally {
       setIsLoading(false)

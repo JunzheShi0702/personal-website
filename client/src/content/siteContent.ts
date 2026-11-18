@@ -1,111 +1,316 @@
-export type ResearchTrack = {
-  id: string
-  title: string
-  period: string
-  question: string
-  contribution: string
-  methods: string[]
-  outcome: string
+// Site copy and records. Publication metadata matches the Crossref record for each DOI.
+
+export type ContentLink = {
+  label: string
+  to?: string
+  href?: string
+  external?: boolean
+  download?: boolean
 }
+
+export const profile = {
+  name: 'Junzhe Shi',
+  position: 'Computer Science, Johns Hopkins University · Class of 2028',
+  email: 'jshi70@jh.edu',
+  github: 'https://github.com/JunzheShi0702',
+  linkedin: 'https://linkedin.com/in/junzheshi',
+  cv: '/resume.pdf',
+}
+
+export const contactLinks: ContentLink[] = [
+  { label: 'Email', href: `mailto:${profile.email}` },
+  { label: 'CV (PDF)', href: profile.cv, external: true },
+  { label: 'GitHub', href: profile.github, external: true },
+  { label: 'LinkedIn', href: profile.linkedin, external: true },
+]
 
 export type Publication = {
   title: string
-  authors: string
+  authors: string[]
   venue: string
+  volume?: string
+  issue?: string
+  pages?: string
   year: string
   doi: string
-  pages?: string
   citation: string
-  context: string
-  contribution: string
-  researchTrack: string
-  link?: string
+  role: string
 }
 
-export const publishedPaperCount = 4
-
-export type ProjectLink = {
-  label: string
-  href: string
-  external?: boolean
-}
-
-export type FlagshipProject = {
-  title: string
-  eyebrow: string
-  summary: string
-  researchRelevance: string
-  stack: string[]
-  evidence: string[]
-  links: ProjectLink[]
-  heroImage: string
-  heroLabel: string
-  previewImages: string[]
-}
-
-export type EngineeringExperience = {
-  title: string
-  context: string
-  focus: string[]
-  skills: string[]
-  nextDetails: string[]
-}
-
-export const homepagePathways = [
+// Newest first.
+export const publications: Publication[] = [
   {
-    title: 'Research',
-    description:
-      'Trace the progression from physics and materials to AI systems and clinical AI.',
-    to: '/research',
+    title: 'Hyperbolic-Tangent-Function-Modeled Transit Light Curve and Planet Radius Calculation',
+    authors: ['Junzhe Shi'],
+    venue: 'Theoretical and Natural Science',
+    volume: '34',
+    issue: '1',
+    pages: '134–140',
+    year: '2024',
+    doi: '10.54254/2753-8818/34/20240704',
+    citation:
+      'Shi, J. (2024). Hyperbolic-tangent-function-modeled transit light curve and planet radius calculation. Theoretical and Natural Science, 34(1), 134-140. https://doi.org/10.54254/2753-8818/34/20240704',
+    role: 'the whole paper, including the light-curve processing code, the fits and the radius estimates.',
   },
   {
-    title: 'Publications',
-    description:
-      'Read formal DOI-linked citations with venues, years, authors, and contribution notes.',
-    to: '/publications',
+    title: 'Optimization of Asymmetry of Pb-Pb Nucleus Collision Based on Glauber Model Simulation',
+    authors: ['Haotian Xu', 'Junzhe Shi', 'Ziyan Song'],
+    venue: 'Theoretical and Natural Science',
+    volume: '28',
+    issue: '1',
+    pages: '206–217',
+    year: '2023',
+    doi: '10.54254/2753-8818/28/20230428',
+    citation:
+      'Xu, H., Shi, J., & Song, Z. (2023). Optimization of asymmetry of Pb-Pb nucleus collision based on Glauber model simulation. Theoretical and Natural Science, 28(1), 206-217. https://doi.org/10.54254/2753-8818/28/20230428',
+    role: 'the Glauber Monte Carlo runs, the asymmetry analysis across harmonics and the interpretation of the results.',
   },
   {
-    title: 'Projects',
-    description:
-      'Inspect featured AI systems with demos, case studies, source links, and implementation evidence.',
-    to: '/projects',
+    title: 'The Relationship Between and Eccentricities Based on Glauber Model',
+    authors: ['Junzhe Shi'],
+    venue: 'Theoretical and Natural Science',
+    volume: '11',
+    issue: '1',
+    pages: '121–127',
+    year: '2023',
+    doi: '10.54254/2753-8818/11/20230390',
+    citation:
+      'Shi, J. (2023). The relationship between and eccentricities based on Glauber model. Theoretical and Natural Science, 11(1), 121-127. https://doi.org/10.54254/2753-8818/11/20230390',
+    role: 'the whole paper, including the collision simulations and the analysis of eccentricity against the number of collisions.',
   },
   {
-    title: 'CV',
-    description:
-      'Download the current academic CV as a PDF.',
-    to: '/cv',
-  },
-  {
-    title: 'Contact',
-    description:
-      'For research collaborations, AI systems roles, and technical build opportunities.',
-    to: '/#contact',
+    title:
+      'Trap Engineering Using Oxygen-Doped Graphitic Carbon Nitride for High-Performance Perovskite Solar Cells',
+    authors: [
+      'Yaling Lei',
+      'Xiaoyan Li',
+      'Jingying Liang',
+      'Junzhe Shi',
+      'Yunhao Wei',
+      'Pingli Qin',
+      'Hong Tao',
+      'Jianjun Chen',
+      'Zuojun Tan',
+      'Hongwei Lei',
+    ],
+    venue: 'Journal of Materials Chemistry C',
+    volume: '11',
+    issue: '29',
+    pages: '9860–9870',
+    year: '2023',
+    doi: '10.1039/D3TC01711G',
+    citation:
+      'Lei, Y., Li, X., Liang, J., Shi, J., Wei, Y., Qin, P., Tao, H., Chen, J., Tan, Z., & Lei, H. (2023). Trap engineering using oxygen-doped graphitic carbon nitride for high-performance perovskite solar cells. Journal of Materials Chemistry C, 11(29), 9860-9870. https://doi.org/10.1039/D3TC01711G',
+    role: 'refining the setup and testing workflow, helping interpret device measurements, and working on the manuscript.',
   },
 ]
 
-export const flagshipProjects: FlagshipProject[] = [
+export type NewsItem = {
+  date: string
+  label: string
+  text: string
+}
+
+export const news: NewsItem[] = [
   {
-    title: 'Atlas',
-    eyebrow: 'Featured system · public demo and case study',
+    date: '2026-09',
+    label: 'Sep 2026',
+    text: "Started working with the ARCADE Lab's skin lesion team on auditing medical imaging datasets.",
+  },
+  {
+    date: '2026-05',
+    label: 'Spring 2026',
+    text: 'Built Atlas, a course planning assistant, with a team at Johns Hopkins, and contributed to LaunchStack, an open-source app for AI document work.',
+  },
+  {
+    date: '2026-02',
+    label: 'Feb 2026',
+    text: 'Joined the Data Science for Psychiatry Lab at Johns Hopkins as a research assistant.',
+  },
+  {
+    date: '2025-05',
+    label: 'Summer 2025',
+    text: 'Software engineering intern at EchoplusAI.',
+  },
+  {
+    date: '2024-05-31',
+    label: 'May 2024',
+    text: 'My paper on fitting exoplanet transit light curves came out in Theoretical and Natural Science.',
+  },
+  {
+    date: '2023-12-26',
+    label: 'Dec 2023',
+    text: 'Paper with Haotian Xu and Ziyan Song on Pb-Pb collision asymmetry in the Glauber model came out in Theoretical and Natural Science.',
+  },
+  {
+    date: '2023-11-17',
+    label: 'Nov 2023',
+    text: 'My paper on collision eccentricities in the Glauber model came out in Theoretical and Natural Science.',
+  },
+  {
+    date: '2023',
+    label: '2023',
+    text: 'Co-authored a perovskite solar cell paper in the Journal of Materials Chemistry C and presented the work at the 3rd Optoelectronic Materials and Devices Development Forum.',
+  },
+]
+
+export type ResearchItem = {
+  id: string
+  period: string
+  title: string
+  affiliation?: string
+  summary: string
+  description: string[]
+  note?: string
+  status?: 'progress'
+  methods?: string[]
+  links?: ContentLink[]
+  progress?: { label: string; text: string }[]
+}
+
+export const currentResearch: ResearchItem[] = [
+  {
+    id: 'reach',
+    period: 'Feb 2026 – present',
+    status: 'progress',
+    title: 'Dose extraction from EHR prescription text',
+    affiliation: 'Data Science for Psychiatry Lab, Johns Hopkins University · Advisor: Roy Adams',
     summary:
-      'AI-assisted course search and schedule planning with constraint-aware recommendations, auditability, and retrieval over JHU course data.',
-    researchRelevance:
-      'A concrete AI systems case study in high-stakes student planning: grounding, clarification, evaluation, and human-inspectable recommendations.',
-    stack: ['React', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'pgvector'],
-    evidence: [
-      'AI course planning',
-      'Retrieval-grounded advising',
-      'Schedule audit agent',
-      'Constraint-aware ranking',
-      'Custom event reasoning',
-      'pgvector semantic search',
+      'Language models read free-text levothyroxine instructions and pull out the dosing events. Python does the arithmetic, so each daily dose can be checked against the text it came from.',
+    description: [
+      "The lab is putting together an EHR cohort study, using Johns Hopkins' REACH data, on how thyroid hormone is prescribed to adults who take antidepressants and whether that differs between psychiatry and primary care. I started on the literature review and the study planning.",
+      'Most of my time now goes into the dose extraction pipeline, which I run end to end. Llama 8B screens and cleans each prescription instruction, Qwen3.5-9B returns the dosing events along with the words that support them, and plain Python normalizes the schedule and computes the average daily dose. At the moment I am testing whether showing the extractor a few similar instructions first lowers the dose error.',
     ],
-    links: [
-      { label: 'Case Study', href: '/projects/atlas' },
-      { label: 'Live Demo', href: 'https://atlas.junzheshi.com', external: true },
+    note: "The pipeline isn't clinically validated, and there's no human-labeled reference set yet (one is planned).",
+    methods: ['Llama 8B', 'Qwen3.5-9B', 'retrieval', 'Python dose normalization'],
+    links: [{ label: 'Research note', to: '/research/reach' }],
+  },
+  {
+    id: 'arcade',
+    period: 'Sep 2026 – present',
+    status: 'progress',
+    title: 'Synthetic images for auditing medical imaging datasets',
+    affiliation:
+      'ARCADE Lab, Johns Hopkins University · Project led by Mathias Unberath and Mitchell Pavlak',
+    summary:
+      'The project plants realistic biases in medical images and checks whether dataset audit methods find them. I render synthetic skin lesion images and train classifiers to see how the rendered artifacts compare with real ones.',
+    description: [
+      'ARCADE is building a benchmark for auditing large medical imaging datasets. The plan is to insert clinically relevant biases through realistic counterfactual images, then see which audit methods catch them.',
+      "I am on the skin lesion team. I generate synthetic dermoscopy images with the project's physics-based renderer, label artifacts such as hair from the render settings, train ResNet-18 classifiers on the synthetic images and test them on real ISIC images, then go through the mistakes by hand.",
+    ],
+    note: 'Results so far are internal and exploratory, so I am not posting numbers.',
+    progress: [
       {
-        label: 'GitHub',
+        label: 'Oct 2026',
+        text: 'Presented a literature review on medical image editing for model auditing.',
+      },
+      {
+        label: 'Oct 2026',
+        text: "Rendered a first batch of 300 synthetic images on the university's GPU cluster, built weak hair labels from the render settings and masks, and trained a first ResNet-18 hair classifier.",
+      },
+      {
+        label: 'Nov 2026',
+        text: 'Tested that classifier on a labeled set of real ISIC images to see how well training on synthetic images carries over.',
+      },
+      {
+        label: 'Nov 2026',
+        text: 'Checked a candidate fix for how the renderer draws short hair by re-rendering the same samples with one setting changed. Then rendered a second batch of 300 with the revised renderer and ran five-fold cross-validation across both batches, plus a small pilot on scale-bar labels.',
+      },
+      {
+        label: 'Next',
+        text: 'Confirm the hair fix with Mitchell, compare a model trained on real images against the synthetic-trained ones, then move on to rulers, scale bars and gentian violet ink marks.',
+      },
+    ],
+    methods: ['Mitsuba 3', 'ResNet-18', 'ISIC dermoscopy images', 'cross-validation'],
+  },
+]
+
+export const earlierResearch: ResearchItem[] = [
+  {
+    id: 'perovskite',
+    period: 'Jun 2023 – Jun 2024',
+    title: 'Trap engineering in perovskite solar cells',
+    affiliation: 'Research assistant, Huazhong Agricultural University, Wuhan',
+    summary: 'Co-author on a Journal of Materials Chemistry C paper.',
+    description: [
+      'I worked in a perovskite solar cell group of more than ten people. My part was refining the setup and testing workflow, helping interpret device measurements and working on the manuscript, which became a paper in the Journal of Materials Chemistry C. I presented the work at the 3rd Optoelectronic Materials and Devices Development Forum in 2023.',
+    ],
+    links: [{ label: 'Paper (DOI)', href: 'https://doi.org/10.1039/D3TC01711G', external: true }],
+  },
+  {
+    id: 'exoplanet',
+    period: 'Jun 2022 – Dec 2023',
+    title: 'Modeling exoplanet transit light curves',
+    affiliation: 'Independent project',
+    summary: 'One paper, sole author.',
+    description: [
+      'I fit TESS light curves of WASP transits with a hyperbolic-tangent model to estimate planet-to-star radius ratios. I wrote the processing and fitting code with Lightkurve and NumPy and spent a lot of time on the residuals. It became a single-author paper.',
+    ],
+    methods: ['Lightkurve', 'NumPy', 'Matplotlib', 'TESS photometry'],
+    links: [
+      {
+        label: 'Paper (DOI)',
+        href: 'https://doi.org/10.54254/2753-8818/34/20240704',
+        external: true,
+      },
+    ],
+  },
+  {
+    id: 'glauber',
+    period: 'Jun 2021 – Dec 2022',
+    title: 'Glauber Monte Carlo simulations of Pb-Pb collisions',
+    summary: 'Two papers on collision geometry.',
+    description: [
+      'Using ROOT and Glauber Monte Carlo simulations, I studied the geometry of lead-lead collisions: how eccentricity relates to the number of collisions, and how the asymmetry changes across harmonic orders. This led to a single-author paper and a paper with two co-authors.',
+    ],
+    methods: ['ROOT', 'Glauber Monte Carlo', 'Linux'],
+    links: [
+      {
+        label: 'Eccentricity paper (DOI)',
+        href: 'https://doi.org/10.54254/2753-8818/11/20230390',
+        external: true,
+      },
+      {
+        label: 'Asymmetry paper (DOI)',
+        href: 'https://doi.org/10.54254/2753-8818/28/20230428',
+        external: true,
+      },
+    ],
+  },
+]
+
+export type Project = {
+  id: string
+  title: string
+  period: string
+  context: string
+  summary: string
+  myPart: string
+  image?: { src: string; alt: string }
+  writeUp?: string
+  links: ContentLink[]
+}
+
+export const featuredProjects: Project[] = [
+  {
+    id: 'atlas',
+    title: 'Atlas',
+    period: 'Feb – May 2026',
+    context: 'Team project, Johns Hopkins',
+    summary:
+      'A course search and schedule planner for Johns Hopkins students. They can ask for courses in plain language, and each suggestion is tied to course records, evaluation data and a specific change to their schedule.',
+    myPart:
+      'the schedule data model and saving, the weekly events API behind the calendar, loading course evaluations with the raw rows visible, and tests and CI near the end.',
+    image: {
+      src: '/screenshots/atlas-schedule-audit.webp',
+      alt: 'Atlas schedule view with an AI schedule audit next to a weekly calendar',
+    },
+    writeUp: '/projects/atlas',
+    links: [
+      { label: 'Write-up', to: '/projects/atlas' },
+      { label: 'Demo', href: 'https://atlas.junzheshi.com', external: true },
+      {
+        label: 'Code',
         href: 'https://github.com/JunzheShi0702/atlas-course-assistant',
         external: true,
       },
@@ -114,211 +319,58 @@ export const flagshipProjects: FlagshipProject[] = [
         href: 'https://github.com/JunzheShi0702/atlas-course-assistant/blob/master/CREDITS.md',
         external: true,
       },
-      { label: 'Screenshots', href: '/projects/atlas#evidence' },
       {
-        label: 'Presentation',
+        label: 'Slides (PPTX)',
         href: '/ppt/AI%20Enabled%20SWE%20Final%20Presentation.pptx',
         external: true,
       },
     ],
-    previewImages: [
-      '/screenshots/atlas-proof-4-schedule-audit.jpeg',
-      '/screenshots/atlas-proof-3-eval-raw-data.png',
-      '/screenshots/atlas-proof-1-weekly-calendar.jpeg',
-    ],
-    heroImage: '/screenshots/atlas-proof-4-schedule-audit.jpeg',
-    heroLabel: 'AI planning + schedule audit',
   },
   {
+    id: 'launchstack',
     title: 'LaunchStack',
-    eyebrow: 'Featured system · Human-AI collaboration',
+    period: 'Feb – May 2026',
+    context: 'Open-source team project',
     summary:
-      'Open-source founder knowledge graph and AI workflow platform for grounded answers, controlled rewriting, and research-to-campaign generation.',
-    researchRelevance:
-      'Shows human-in-the-loop AI system design: source-aware generation, visible process, explicit approval, and implementation-backed reliability.',
-    stack: ['React', 'TypeScript', 'AI workflows', 'Knowledge graph', 'Document automation'],
-    evidence: [
-      'AI knowledge graph',
-      'Source-grounded generation',
-      'Human-in-the-loop review',
-      'Agentic workflow design',
-      'RAG answer synthesis',
-      'AI document automation',
-    ],
+      'An open-source TypeScript app for AI-assisted document work. Generated text has to be reviewed and accepted before it changes a document.',
+    myPart:
+      'the rewrite workflow (file import, step-by-step options, a preview with a diff view) and its handoff into the editor, trend research clients for the Reddit, X, LinkedIn and Bluesky APIs, and Track Changes (DOCX redlining) for legal review.',
+    image: {
+      src: '/screenshots/launchstack-diff-review.webp',
+      alt: 'LaunchStack diff view of AI-suggested edits waiting for review',
+    },
+    writeUp: '/projects/pdr-ai',
     links: [
-      { label: 'Case Study', href: '/projects/pdr-ai' },
-      { label: 'Live Demo', href: 'https://launch-stack-web.vercel.app/', external: true },
-      { label: 'GitHub', href: 'https://github.com/JunzheShi0702/LaunchStack', external: true },
-      { label: 'Screenshots', href: '/projects/pdr-ai#evidence' },
+      { label: 'Write-up', to: '/projects/pdr-ai' },
+      { label: 'Demo', href: 'https://launch-stack-web.vercel.app/', external: true },
+      { label: 'Code', href: 'https://github.com/JunzheShi0702/LaunchStack', external: true },
       {
-        label: 'Commit Proof',
+        label: 'Redlining commit',
         href: 'https://github.com/JunzheShi0702/LaunchStack/commit/ce08f6e',
         external: true,
       },
     ],
-    previewImages: [
-      '/screenshots/pdr-proof-1-diff.app.jpeg',
-      '/screenshots/pdr-proof-2-process.app.jpeg',
-      '/screenshots/pdr-proof-2-results.app.jpeg',
-    ],
-    heroImage: '/screenshots/pdr-proof-1-diff.app.jpeg',
-    heroLabel: 'Diff review + human approval',
   },
 ]
 
-export const engineeringExperience: EngineeringExperience[] = [
+export const otherProjects: Project[] = [
   {
+    id: 'referme',
     title: 'ReferMe',
-    context:
-      'Selected engineering experience focused on product workflow design and full-stack implementation.',
-    focus: ['Product engineering', 'User workflow design', 'Full-stack implementation'],
-    skills: ['System decomposition', 'User-facing flow design', 'Practical delivery'],
-    nextDetails: ['Context', 'Tech stack', 'My contributions', 'Engineering challenges'],
+    period: 'May – Aug 2025',
+    context: 'Internship, EchoplusAI',
+    summary: 'A web app where people can ask for referrals and offer them.',
+    myPart:
+      'sign-up, login and profile pages in Angular, plus the Node.js and Express services behind authentication and profiles.',
+    links: [],
   },
   {
-    title: 'Go Microservices',
-    context:
-      'Selected systems engineering experience focused on service boundaries, backend architecture, and operational thinking.',
-    focus: ['Service architecture', 'Backend systems', 'Operational thinking'],
-    skills: ['Go', 'Microservice boundaries', 'API design'],
-    nextDetails: ['Architecture', 'Tech stack', 'My contributions', 'Lessons learned'],
-  },
-]
-
-export const researchTracks: ResearchTrack[] = [
-  {
-    id: 'healthcare-ai',
-    title: 'REACH Clinical AI Research Support',
-    period: 'Current research support',
-    question:
-      'How can noisy EHR levothyroxine instructions be converted into inspectable, normalized average daily dose estimates without asking a model to perform the final arithmetic?',
-    contribution:
-      'Support an active clinical NLP pipeline iteration for levothyroxine-dose extraction, including SIG-centered model inputs, Llama/Qwen routing, deterministic Python normalization, and validation boundaries.',
-    methods: [
-      'Llama 8B SIG preprocessing',
-      'Qwen3.5-9B JSON extraction',
-      'Deterministic Python dose normalization',
-    ],
-    outcome:
-      'Active research-support work; no preliminary clinical findings, validated LLM accuracy, production-readiness claim, or completed downstream statistical analysis are claimed publicly.',
-  },
-  {
-    id: 'perovskite',
-    title: 'Perovskite Solar Cell Optimization',
-    period: '2023 - 2024',
-    question:
-      'Collaborated in a PVSC research team on trap engineering and workflow improvements for higher-performance perovskite devices.',
-    contribution:
-      'Supported experimental workflow refinement, interpretation of device-performance results, and manuscript development.',
-    methods: [
-      'Experimental setup optimization',
-      'Materials characterization interpretation',
-      'Manuscript and review co-authoring',
-    ],
-    outcome:
-      'Supported device-performance interpretation, workflow refinement, and publication output.',
-  },
-  {
-    id: 'exoplanet',
-    title: 'Exoplanet Transit Modeling',
-    period: '2022 - 2023',
-    question:
-      'Modeled WASP transit light curves using TESS observations to estimate planet-star radius ratios.',
-    contribution:
-      'Built the light-curve processing and fitting workflow, analyzed model behavior, and communicated the radius-estimation methodology.',
-    methods: [
-      'Lightkurve pipeline construction',
-      'Time-series fitting with NumPy',
-      'Visualization with Matplotlib',
-    ],
-    outcome:
-      'Built curve-fitting and residual-analysis workflows for published modeling methodology.',
-  },
-  {
-    id: 'subatomic',
-    title: 'Subatomic Physics / Glauber Monte Carlo',
-    period: '2021 - 2022',
-    question:
-      'Analyzed Pb-Pb nucleus collision asymmetry and eccentricity relationships using ROOT and Glauber Monte Carlo simulations.',
-    contribution:
-      'Implemented and evaluated simulation analyses across collision conditions, then translated the numerical findings into publication-ready results.',
-    methods: [
-      'ROOT on Ubuntu Linux',
-      'Harmonic-level asymmetry optimization',
-      'Large-scale collision simulation analysis',
-    ],
-    outcome:
-      'Quantified collision-eccentricity relationships with publication-backed numerical findings.',
-  },
-]
-
-export const publications: Publication[] = [
-  {
-    title:
-      'Trap Engineering Using Oxygen-Doped Graphitic Carbon Nitride for High-Performance Perovskite Solar Cells',
-    authors:
-      'Yaling Lei, Xiaoyan Li, Jingying Liang, Junzhe Shi, Yunhao Wei, Pingli Qin, Hong Tao, Jianjun Chen, Zuojun Tan, and Hongwei Lei',
-    venue: 'Journal of Materials Chemistry C',
-    year: '2023',
-    doi: '10.1039/D3TC01711G',
-    pages: '9860-9870',
-    citation:
-      'Lei, Y., Li, X., Liang, J., Shi, J., Wei, Y., Qin, P., Tao, H., Chen, J., Tan, Z., & Lei, H. (2023). Trap engineering using oxygen-doped graphitic carbon nitride for high-performance perovskite solar cells. Journal of Materials Chemistry C, 11(29), 9860-9870. https://doi.org/10.1039/D3TC01711G',
-    context:
-      'Perovskite materials engineering study improving carrier dynamics and device performance.',
-    contribution:
-      'Experimental workflow refinement, device-performance interpretation, and manuscript development.',
-    researchTrack: 'Perovskite Solar Cell Optimization',
-    link: 'https://doi.org/10.1039/D3TC01711G',
-  },
-  {
-    title: 'The Relationship Between and Eccentricities Based on Glauber Model',
-    authors: 'Junzhe Shi',
-    venue: 'Theoretical and Natural Science',
-    year: '2023',
-    doi: '10.54254/2753-8818/11/20230390',
-    pages: '121-127',
-    citation:
-      'Shi, J. (2023). The relationship between and eccentricities based on Glauber model. Theoretical and Natural Science, 11(1), 121-127. https://doi.org/10.54254/2753-8818/11/20230390',
-    context:
-      'Extended analysis on geometric eccentricity relationships in heavy-ion collision simulations.',
-    contribution:
-      'Collision simulation analysis and interpretation of geometric eccentricity relationships.',
-    researchTrack: 'Subatomic Physics / Glauber Monte Carlo',
-    link: 'https://doi.org/10.54254/2753-8818/11/20230390',
-  },
-  {
-    title:
-      'Optimization of Asymmetry of Pb-Pb Nucleus Collision Based on Glauber Model Simulation',
-    authors: 'Haotian Xu, Junzhe Shi, and Ziyan Song',
-    venue: 'Theoretical and Natural Science',
-    year: '2023',
-    doi: '10.54254/2753-8818/28/20230428',
-    pages: '206-217',
-    citation:
-      'Xu, H., Shi, J., & Song, Z. (2023). Optimization of asymmetry of Pb-Pb nucleus collision based on Glauber model simulation. Theoretical and Natural Science, 28(1), 206-217. https://doi.org/10.54254/2753-8818/28/20230428',
-    context:
-      'Simulation-driven study on asymmetry behavior under different collision conditions.',
-    contribution:
-      'Glauber Monte Carlo analysis, harmonic-level asymmetry evaluation, and numerical interpretation.',
-    researchTrack: 'Subatomic Physics / Glauber Monte Carlo',
-    link: 'https://doi.org/10.54254/2753-8818/28/20230428',
-  },
-  {
-    title:
-      'Hyperbolic-Tangent-Function-Modeled Transit Light Curve and Planet Radius Calculation',
-    authors: 'Junzhe Shi',
-    venue: 'Theoretical and Natural Science',
-    year: '2024',
-    doi: '10.54254/2753-8818/34/20240704',
-    pages: '134-140',
-    citation:
-      'Shi, J. (2024). Hyperbolic-tangent-function-modeled transit light curve and planet radius calculation. Theoretical and Natural Science, 34(1), 134-140. https://doi.org/10.54254/2753-8818/34/20240704',
-    context:
-      'Exoplanet transit modeling paper on robust light-curve fitting and radius estimation.',
-    contribution:
-      'Light-curve pipeline development, quantitative fitting, visualization, and radius estimation.',
-    researchTrack: 'Exoplanet Transit Modeling',
-    link: 'https://doi.org/10.54254/2753-8818/34/20240704',
+    id: 'go-microservices',
+    title: 'Go microservices',
+    period: 'May – Aug 2025',
+    context: 'Internship, EchoplusAI',
+    summary: 'Two backend services in Go: a broker that routes API calls and a central logging service.',
+    myPart: 'both services, plus deploying them with Docker and Kubernetes and a Makefile for the routine steps.',
+    links: [],
   },
 ]
