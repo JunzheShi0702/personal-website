@@ -1,30 +1,26 @@
-export function Footer() {
-  const year = new Date().getFullYear()
+import { contactLinks, profile } from '../../content/siteContent'
+import { TextLink } from '../ui/TextLink'
 
+const builtOn = new Date(`${__BUILD_DATE__}T12:00:00Z`).toLocaleDateString('en-US', {
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+
+export function Footer() {
   return (
-    <footer className="mt-8 border-t border-white/10 pt-5 text-xs text-slate-400">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p>Copyright {year} Junzhe Shi</p>
-        <nav className="flex flex-wrap gap-3" aria-label="Footer">
-          <a href="/research" className="transition hover:text-cyan-100">
-            Research
-          </a>
-          <a href="/publications" className="transition hover:text-cyan-100">
-            Publications
-          </a>
-          <a href="/projects" className="transition hover:text-cyan-100">
-            Projects
-          </a>
-          <a href="/cv" className="transition hover:text-cyan-100">
-            CV
-          </a>
-          <a href="/#contact" className="transition hover:text-cyan-100">
-            Contact
-          </a>
-          <a href="mailto:jshi70@jh.edu" className="transition hover:text-cyan-100">
-            Email
-          </a>
-        </nav>
+    <footer className="border-t border-rule">
+      <div className="t-caption mx-auto flex w-full max-w-page flex-col gap-3 px-5 py-6 text-ink-subtle sm:flex-row sm:items-center sm:justify-between md:px-8">
+        <p>
+          © {new Date().getFullYear()} {profile.name} · Updated {builtOn}
+        </p>
+        <p className="flex flex-wrap gap-x-4 gap-y-1">
+          {contactLinks.map((link) => (
+            <TextLink key={link.label} href={link.href} external={link.external}>
+              {link.label}
+            </TextLink>
+          ))}
+        </p>
       </div>
     </footer>
   )

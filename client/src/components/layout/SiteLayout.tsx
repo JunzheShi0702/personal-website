@@ -1,63 +1,49 @@
-import { useCallback, useEffect } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { useLocation, useNavigate, useOutlet } from 'react-router-dom'
+import { Suspense, useCallback, useEffect } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { ChatWidget } from '../../features/assistant/ChatWidget'
 import { Footer } from './Footer'
 import { Header } from './Header'
 
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
 export function SiteLayout() {
   const location = useLocation()
   const navigate = useNavigate()
-  const outlet = useOutlet()
-  const prefersReducedMotion = useReducedMotion()
 
   const scrollToHashTarget = useCallback((targetId: string) => {
     const target = document.getElementById(targetId)
     if (!target) return false
-    const titleTarget = target.matches('h1, h2, h3, h4, [data-section-title]')
+
+    const reduced = prefersReducedMotion()
+    target.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' })
+
+    const title = target.matches('h1, h2, h3')
       ? target
-      : target.querySelector<HTMLElement>('h1, h2, h3, h4, [data-section-title]')
-
-    target.scrollIntoView({
-      block: 'start',
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-    })
-
-    document
-      .querySelectorAll('.section-jump-title-highlight, .section-jump-frame-highlight')
-      .forEach((element) => {
-        element.classList.remove('section-jump-title-highlight')
-        element.classList.remove('section-jump-frame-highlight')
-      })
-
-    const highlightDelay = prefersReducedMotion ? 80 : 620
-    if (titleTarget) {
-      window.setTimeout(
-        () => titleTarget.classList.add('section-jump-title-highlight'),
-        highlightDelay,
-      )
-      window.setTimeout(
-        () => titleTarget.classList.remove('section-jump-title-highlight'),
-        highlightDelay + 1800,
-      )
+      : target.querySelector<HTMLElement>('h1, h2, h3')
+    if (title) {
+      document
+        .querySelectorAll('.section-jump-title-highlight')
+        .forEach((element) => element.classList.remove('section-jump-title-highlight'))
+      const delay = reduced ? 0 : 450
+      window.setTimeout(() => title.classList.add('section-jump-title-highlight'), delay)
+      window.setTimeout(() => title.classList.remove('section-jump-title-highlight'), delay + 1600)
     }
     return true
-  }, [prefersReducedMotion])
+  }, [])
 
   useEffect(() => {
     if (location.hash) {
-      const targetId = location.hash.slice(1)
-      const scrollToTarget = () => scrollToHashTarget(targetId)
-
-      if (scrollToTarget()) return
-
-      const retry = window.setTimeout(scrollToTarget, prefersReducedMotion ? 0 : 260)
+      const targetId = decodeURIComponent(location.hash.slice(1))
+      if (scrollToHashTarget(targetId)) return undefined
+      const retry = window.setTimeout(() => scrollToHashTarget(targetId), 200)
       return () => window.clearTimeout(retry)
     }
 
-    // Keep a small offset so route transitions feel less cramped under the sticky header.
-    window.scrollTo({ top: 16, left: 0, behavior: 'auto' })
-  }, [location.pathname, location.search, location.hash, prefersReducedMotion, scrollToHashTarget])
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    return undefined
+  }, [location.pathname, location.search, location.hash, scrollToHashTarget])
 
   useEffect(() => {
     function handleHashLinkClick(event: MouseEvent) {
@@ -70,11 +56,7 @@ export function SiteLayout() {
       }
 
       const url = new URL(link.href)
-      if (
-        url.origin !== window.location.origin ||
-        url.pathname !== window.location.pathname ||
-        !url.hash
-      ) {
+      if (url.origin !== window.location.origin || url.pathname !== window.location.pathname || !url.hash) {
         return
       }
 
@@ -83,35 +65,28 @@ export function SiteLayout() {
 
       event.preventDefault()
       navigate(`${url.pathname}${url.search}${url.hash}`)
-      if (window.location.hash === url.hash) {
-        scrollToHashTarget(targetId)
-      }
+      if (window.location.hash === url.hash) scrollToHashTarget(targetId)
     }
 
     document.addEventListener('click', handleHashLinkClick)
     return () => document.removeEventListener('click', handleHashLinkClick)
-  }, [navigate, prefersReducedMotion, scrollToHashTarget])
+  }, [navigate, scrollToHashTarget])
 
   return (
-    <div className="relative min-h-screen bg-[radial-gradient(circle_at_top_right,#11213f_0,#070b16_35%,#05070f_70%)] text-slate-100">
-      <div className="pointer-events-none fixed -right-28 -top-28 h-[32rem] w-[32rem] rounded-full bg-cyan-400/10 blur-3xl" />
-      <div className="pointer-events-none fixed -bottom-32 left-10 h-[32rem] w-[32rem] rounded-full bg-violet-400/10 blur-3xl" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-10 pt-5 md:px-8">
-        <Header />
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.main
-            key={location.pathname}
-            className="mt-6 flex-1"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
-            transition={{ duration: prefersReducedMotion ? 0.01 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {outlet}
-          </motion.main>
-        </AnimatePresence>
-        <Footer />
-      </div>
+    <div className="flex min-h-screen flex-col bg-paper text-ink">
+      <a
+        href="#main"
+        className="t-ui sr-only rounded-[4px] bg-paper-raised px-3 py-2 text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50"
+      >
+        Skip to content
+      </a>
+      <Header />
+      <main id="main" className="mx-auto w-full max-w-page flex-1 px-5 pb-24 md:px-8">
+        <Suspense fallback={<div className="min-h-[60vh]" aria-busy="true" />}>
+          <Outlet />
+        </Suspense>
+      </main>
+      <Footer />
       <ChatWidget />
     </div>
   )

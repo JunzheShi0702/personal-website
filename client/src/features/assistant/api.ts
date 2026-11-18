@@ -14,7 +14,7 @@ export async function askJunzheAssistant(
   const data = (await response.json().catch(() => ({}))) as AssistantApiResponse
 
   if (!response.ok || data.error) {
-    throw new Error(data.error || 'Ask Junzhe is unavailable right now.')
+    throw new Error(data.error || 'The assistant is unavailable right now. Email works too: jshi70@jh.edu')
   }
 
   return data

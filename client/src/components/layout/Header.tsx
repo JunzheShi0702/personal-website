@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
+import { profile } from '../../content/siteContent'
 
 const navItems = [
-  { label: 'Home', to: '/' },
   { label: 'Research', to: '/research' },
   { label: 'Publications', to: '/publications' },
   { label: 'Projects', to: '/projects' },
@@ -10,53 +10,45 @@ const navItems = [
   { label: 'Contact', to: '/#contact' },
 ]
 
+function isActive(to: string, pathname: string, hash: string) {
+  if (to.includes('#')) {
+    const [path, anchor] = to.split('#')
+    return pathname === (path || '/') && hash === `#${anchor}`
+  }
+  return pathname === to || pathname.startsWith(`${to}/`)
+}
+
 export function Header() {
-  const location = useLocation()
+  const { pathname, hash } = useLocation()
 
   return (
-    <header className="sticky top-4 z-30 rounded-2xl border border-white/15 bg-slate-950/70 px-4 py-3 backdrop-blur-xl">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <Link to="/" className="group flex items-center gap-2">
-          <div className="grid h-8 w-8 place-content-center rounded-lg border border-cyan-300/40 bg-cyan-300/10 text-xs font-semibold text-cyan-200">
-            JS
-          </div>
-          <div>
-            <p className="text-sm font-semibold tracking-wide text-slate-100">
-              Junzhe Shi
-            </p>
-            <p className="text-xs text-slate-400">
-              AI PhD-bound Research Engineer
-            </p>
-          </div>
+    <header className="sticky top-0 z-30 border-b border-rule bg-paper">
+      <div className="mx-auto flex w-full max-w-page flex-col gap-2 px-5 py-3 sm:min-h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:py-0 md:px-8">
+        <Link to="/" className="t-title-3 text-ink">
+          {profile.name}
         </Link>
-        <nav className="flex flex-wrap items-center gap-4" aria-label="Primary">
-          {navItems.map((item) => {
-            const [path, hash] = item.to.split('#')
-            const isHashLink = Boolean(hash)
-            const isActive = isHashLink
-              ? location.pathname === (path || '/') && location.hash === `#${hash}`
-              : location.pathname === item.to
-
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={clsx(
-                  'group relative py-1 text-xs font-medium text-slate-300 transition hover:text-white focus-visible:outline-none',
-                  isActive && 'text-cyan-100',
-                )}
-              >
-                {item.label}
-                <span
-                  aria-hidden="true"
-                  className={clsx(
-                    'absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-cyan-200 transition-transform group-hover:scale-x-100 group-focus-visible:scale-x-100',
-                    isActive && 'scale-x-100',
-                  )}
-                />
-              </Link>
-            )
-          })}
+        <nav aria-label="Primary">
+          <ul className="t-nav flex flex-wrap gap-x-4 gap-y-1 text-[0.875rem] sm:gap-x-6 sm:text-[0.9375rem]">
+            {navItems.map((item) => {
+              const active = isActive(item.to, pathname, hash)
+              return (
+                <li key={item.to}>
+                  <Link
+                    to={item.to}
+                    aria-current={active ? 'page' : undefined}
+                    className={clsx(
+                      'inline-block border-b-2 py-1 transition-colors duration-150',
+                      active
+                        ? 'border-accent text-ink'
+                        : 'border-transparent text-ink-muted hover:text-ink',
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
         </nav>
       </div>
     </header>
