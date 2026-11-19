@@ -166,6 +166,8 @@ export type ResearchItem = {
   methods?: string[]
   links?: ContentLink[]
   progress?: { label: string; text: string }[]
+  /** Shows the matching diagram from components/figures/ResearchFigures. */
+  figure?: boolean
 }
 
 export const currentResearch: ResearchItem[] = [
@@ -173,6 +175,7 @@ export const currentResearch: ResearchItem[] = [
     id: 'reach',
     period: 'Feb 2026 – present',
     status: 'progress',
+    figure: true,
     title: 'Dose extraction from EHR prescription text',
     affiliation: 'Data Science for Psychiatry Lab, Johns Hopkins University · Advisor: Roy Adams',
     summary:
@@ -189,6 +192,7 @@ export const currentResearch: ResearchItem[] = [
     id: 'arcade',
     period: 'Sep 2026 – present',
     status: 'progress',
+    figure: true,
     title: 'Synthetic images for auditing medical imaging datasets',
     affiliation:
       'ARCADE Lab, Johns Hopkins University · Project led by Mathias Unberath and Mitchell Pavlak',
@@ -287,6 +291,7 @@ export type Project = {
   summary: string
   myPart: string
   image?: { src: string; alt: string }
+  gallery?: { src: string; alt: string; caption: string }[]
   writeUp?: string
   links: ContentLink[]
 }
@@ -305,6 +310,23 @@ export const featuredProjects: Project[] = [
       src: '/screenshots/atlas-schedule-audit.webp',
       alt: 'Atlas schedule view with an AI schedule audit next to a weekly calendar',
     },
+    gallery: [
+      {
+        src: '/screenshots/atlas-weekly-calendar.webp',
+        alt: 'Atlas weekly calendar with courses added from the chat and an overlap warning',
+        caption: 'Courses added from the chat land on the calendar.',
+      },
+      {
+        src: '/screenshots/atlas-evaluation-data.webp',
+        alt: 'Raw course evaluation rows behind a summary, instructor names blurred',
+        caption: 'The raw evaluation rows behind a summary.',
+      },
+      {
+        src: '/screenshots/atlas-custom-event.webp',
+        alt: 'Dialog for editing a custom event called Lab meeting',
+        caption: 'Editing a custom event.',
+      },
+    ],
     writeUp: '/projects/atlas',
     links: [
       { label: 'Write-up', to: '/projects/atlas' },
@@ -339,6 +361,23 @@ export const featuredProjects: Project[] = [
       src: '/screenshots/launchstack-diff-review.webp',
       alt: 'LaunchStack diff view of AI-suggested edits waiting for review',
     },
+    gallery: [
+      {
+        src: '/screenshots/launchstack-rewrite-options.webp',
+        alt: 'Rewrite options with an instruction, tone presets and guardrails',
+        caption: 'Choosing what to rewrite and how.',
+      },
+      {
+        src: '/screenshots/launchstack-editor-handoff.webp',
+        alt: 'The accepted rewrite open in the editor',
+        caption: 'The accepted text in the editor.',
+      },
+      {
+        src: '/screenshots/launchstack-campaign-draft.webp',
+        alt: 'A campaign draft with trend references',
+        caption: 'A campaign draft with its trend references.',
+      },
+    ],
     writeUp: '/projects/pdr-ai',
     links: [
       { label: 'Write-up', to: '/projects/pdr-ai' },

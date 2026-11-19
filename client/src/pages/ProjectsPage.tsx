@@ -15,6 +15,7 @@ function Entry({ project, withImage }: { project: Project; withImage?: boolean }
       myPart={project.myPart}
       image={withImage ? project.image : undefined}
       imageTo={project.writeUp}
+      gallery={withImage ? project.gallery : undefined}
       links={project.links}
     />
   )

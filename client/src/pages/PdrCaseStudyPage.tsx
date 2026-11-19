@@ -10,12 +10,40 @@ const commitUrl = 'https://github.com/JunzheShi0702/LaunchStack/commit/ce08f6e'
 
 const figures: FigureMedia[] = [
   {
-    src: '/demos/launchstack/legal-track-changes-handoff.mp4',
+    src: '/screenshots/launchstack-rewrite-start.webp',
+    kind: 'image',
+    alt: 'LaunchStack rewrite start page with options to import a document, paste from the clipboard or start blank',
+    caption: 'The start page of the rewrite workflow.',
+    detail: 'Text comes in from an imported file, the clipboard or a blank editor.',
+  },
+  {
+    src: '/demos/launchstack/rewrite-workflow-handoff.mp4',
     kind: 'video',
-    alt: 'LaunchStack demo: validation, Send for review, Track Changes processing and the tracked DOCX download',
-    caption: 'Legal review handoff.',
+    alt: 'LaunchStack demo: pasted text, a finished rewrite, accepting it, and a Rewritten Text document in the editor',
+    caption: 'An accepted rewrite opens in the editor.',
     detail:
-      'I built the request, the handling of the tracked DOCX response and the download.',
+      "Once accepted, finished rewrite output becomes a temporary 'Rewritten Text' document. I wrote the rewrite workflow and this handoff.",
+  },
+  {
+    src: '/screenshots/launchstack-rewrite-options.webp',
+    kind: 'image',
+    alt: 'Rewrite options: the source text, an instruction, tone presets, sections to rewrite and guardrail switches',
+    caption: 'Choosing what to rewrite and how.',
+    detail: 'An instruction, tone presets, the sections to touch and guardrails such as keeping the structure.',
+  },
+  {
+    src: '/screenshots/launchstack-diff-review.webp',
+    kind: 'image',
+    alt: 'Side-by-side diff of the original paragraph and the proposed rewrite, with accept and reject buttons',
+    caption: 'Reviewing the proposal as a diff.',
+    detail: 'Each section is accepted or rejected before anything is applied.',
+  },
+  {
+    src: '/screenshots/launchstack-editor-handoff.webp',
+    kind: 'image',
+    alt: 'The accepted rewrite open in the editor as a Rewritten Text document',
+    caption: 'The accepted text in the editor.',
+    detail: 'From here it can be edited further or saved to Documents.',
   },
   {
     src: '/demos/launchstack/bluesky-api-first-trend-research.mp4',
@@ -26,12 +54,39 @@ const figures: FigureMedia[] = [
       'I wrote the API clients for Reddit, X, LinkedIn and Bluesky. This clip shows the Bluesky one feeding a campaign draft.',
   },
   {
-    src: '/demos/launchstack/rewrite-workflow-handoff.mp4',
+    src: '/screenshots/launchstack-pipeline-platforms.webp',
+    kind: 'image',
+    alt: 'Marketing pipeline platform picker with Reddit, Twitter/X, LinkedIn and Bluesky',
+    caption: 'Picking a platform.',
+    detail: 'Each platform has its own length limit and conventions.',
+  },
+  {
+    src: '/screenshots/launchstack-pipeline-brief.webp',
+    kind: 'image',
+    alt: 'Campaign brief form with a description, target subreddit, tone and content type',
+    caption: 'Describing the campaign.',
+    detail: 'The brief, target subreddit, tone and content type for a Reddit post.',
+  },
+  {
+    src: '/screenshots/launchstack-pipeline-steps.webp',
+    kind: 'image',
+    alt: 'List of pipeline steps for one campaign, including researching platform trends',
+    caption: 'The pipeline steps for one campaign.',
+    detail: "The 'Researching platform trends' step is where the platform clients I wrote are called.",
+  },
+  {
+    src: '/screenshots/launchstack-campaign-draft.webp',
+    kind: 'image',
+    alt: 'A Reddit campaign draft with three variants and a list of trend references',
+    caption: 'A campaign draft with its trend references.',
+    detail: 'Each reference links to its source and says why it is relevant.',
+  },
+  {
+    src: '/demos/launchstack/legal-track-changes-handoff.mp4',
     kind: 'video',
-    alt: 'LaunchStack demo: pasted text, a finished rewrite, accepting it, and a Rewritten Text document in the editor',
-    caption: 'An accepted rewrite opens in the editor.',
-    detail:
-      "Once accepted, finished rewrite output becomes a temporary 'Rewritten Text' document. I wrote the rewrite workflow and this handoff.",
+    alt: 'LaunchStack demo: validation, Send for review, Track Changes processing and the tracked DOCX download',
+    caption: 'Legal review handoff.',
+    detail: 'I built the request, the handling of the tracked DOCX response and the download.',
   },
 ]
 
@@ -56,6 +111,7 @@ const lessons = [
 
 export function PdrCaseStudyPage() {
   const [active, setActive] = useState<number | null>(null)
+  const open = (index: number) => () => setActive(index)
 
   return (
     <>
@@ -77,6 +133,10 @@ export function PdrCaseStudyPage() {
         <LinkRow links={links} />
       </PageHeader>
 
+      <div className="mt-10 md:mt-12">
+        <Figure media={figures[0]} number={1} aspectClass="aspect-[1600/977]" onOpen={open(0)} />
+      </div>
+
       <Section id="problem" title="The problem">
         <p className="t-body max-w-measure text-ink">
           LaunchStack starts from the idea that founders keep what they know in documents, calls,
@@ -85,24 +145,49 @@ export function PdrCaseStudyPage() {
         </p>
       </Section>
 
-      <Section id="legal-review" title="Legal review handoff">
-        <p className="t-body max-w-measure text-ink">
-          In the legal review flow, validated edits go out as an apply-edits request, the response comes back as a DOCX with Track Changes, and the
-          reviewer gets a file they can open outside the app.
-        </p>
-        <div className="mt-8">
-          <Figure media={figures[0]} number={1} aspectClass="aspect-[1920/1104]" onOpen={() => setActive(0)} />
+      <Section id="rewrite" title="Rewrite workflow">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-12">
+          <p className="t-body text-ink">
+            You bring in text, choose how it should change and get a proposed version next to the
+            original as a diff. Nothing touches the document until you accept it. Accepted output
+            opens in the editor, so the rewrite ends up as a document someone can keep working on
+            rather than a reply in a chat.
+          </p>
+          <Figure media={figures[1]} number={2} aspectClass="aspect-[1920/1104]" onOpen={open(1)} />
+        </div>
+        <div className="mt-10 grid items-start gap-10 md:grid-cols-3">
+          <Figure media={figures[2]} number={3} aspectClass="aspect-[1600/1407]" onOpen={open(2)} />
+          <Figure media={figures[3]} number={4} aspectClass="aspect-[1400/1230]" onOpen={open(3)} />
+          <Figure media={figures[4]} number={5} aspectClass="aspect-[1600/1403]" onOpen={open(4)} />
         </div>
       </Section>
 
-      <Section id="evidence" title="Two other workflows">
-        <p className="t-body max-w-measure text-ink">
-          Generated output stays separate from the document until someone accepts it. Preview,
-          accept, export and download are separate states in the app.
-        </p>
+      <Section id="trend-research" title="Trend research">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-12">
+          <p className="t-body text-ink">
+            The marketing pipeline drafts campaign posts from a company&apos;s own documents. One of
+            its steps looks up what people are currently discussing on the chosen platform. I wrote
+            the API clients behind that step for Reddit, X, LinkedIn and Bluesky, each with its own
+            fallback, so one platform failing doesn&apos;t break the whole campaign.
+          </p>
+          <Figure media={figures[5]} number={6} aspectClass="aspect-[1920/1104]" onOpen={open(5)} />
+        </div>
         <div className="mt-10 grid items-start gap-10 md:grid-cols-2">
-          <Figure media={figures[1]} number={2} aspectClass="aspect-[1920/1104]" onOpen={() => setActive(1)} />
-          <Figure media={figures[2]} number={3} aspectClass="aspect-[1920/1104]" onOpen={() => setActive(2)} />
+          <Figure media={figures[6]} number={7} aspectClass="aspect-[16/10]" onOpen={open(6)} />
+          <Figure media={figures[7]} number={8} aspectClass="aspect-[16/10]" onOpen={open(7)} />
+          <Figure media={figures[8]} number={9} aspectClass="aspect-[16/10]" onOpen={open(8)} />
+          <Figure media={figures[9]} number={10} aspectClass="aspect-[16/10]" onOpen={open(9)} />
+        </div>
+      </Section>
+
+      <Section id="legal-review" title="Legal review handoff">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-12">
+          <p className="t-body text-ink">
+            In the legal review flow, validated edits go out as an apply-edits request, the response
+            comes back as a DOCX with Track Changes, and the reviewer gets a file they can open
+            outside the app.
+          </p>
+          <Figure media={figures[10]} number={11} aspectClass="aspect-[1920/1104]" onOpen={open(10)} />
         </div>
       </Section>
 

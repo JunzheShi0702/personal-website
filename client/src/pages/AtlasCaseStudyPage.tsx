@@ -8,11 +8,33 @@ import { LinkRow } from '../components/ui/TextLink'
 
 const figures: FigureMedia[] = [
   {
+    src: '/screenshots/atlas-schedule-audit.webp',
+    kind: 'image',
+    alt: 'Atlas with a weekly calendar, the planning chat and a schedule audit side by side',
+    caption: 'The planner: calendar, chat and a schedule audit.',
+    detail:
+      "The audit estimates the weekly workload and checks the plan against the student's saved preferences and goals.",
+  },
+  {
     src: '/demos/atlas/atlas-planning-demo.mp4',
     kind: 'video',
     alt: 'Atlas demo: exploring courses, adding them explicitly, and the weekly calendar updating',
     caption: 'Planning in the calendar.',
     detail: 'Selected courses and custom events become calendar entries you can edit.',
+  },
+  {
+    src: '/screenshots/atlas-weekly-calendar.webp',
+    kind: 'image',
+    alt: 'Atlas weekly calendar after two courses were added from the chat, with an overlap warning',
+    caption: 'Courses added from the chat land on the calendar.',
+    detail: 'Overlapping blocks are flagged in amber.',
+  },
+  {
+    src: '/screenshots/atlas-custom-event.webp',
+    kind: 'image',
+    alt: 'Dialog for editing a custom event called Lab meeting, Monday 12:00 to 13:00',
+    caption: 'Editing a custom event.',
+    detail: 'Events such as a lab meeting are saved with the schedule and checked for overlaps too.',
   },
   {
     src: '/demos/atlas/atlas-evidence-demo.mp4',
@@ -21,6 +43,13 @@ const figures: FigureMedia[] = [
     caption: 'An evaluation summary with its raw rows.',
     detail:
       'Summaries stay tied to metric names, terms, instructors and respondent counts when the rows exist.',
+  },
+  {
+    src: '/screenshots/atlas-evaluation-data.webp',
+    kind: 'image',
+    alt: 'Table of raw course evaluation rows with metric, value, term and respondent count',
+    caption: 'The raw evaluation rows behind a summary.',
+    detail: 'Instructor names are blurred in this screenshot.',
   },
   {
     src: '/demos/atlas/atlas-clarification-demo.mp4',
@@ -55,6 +84,7 @@ const lessons = [
 
 export function AtlasCaseStudyPage() {
   const [active, setActive] = useState<number | null>(null)
+  const open = (index: number) => () => setActive(index)
 
   return (
     <>
@@ -76,6 +106,10 @@ export function AtlasCaseStudyPage() {
         <LinkRow links={links} />
       </PageHeader>
 
+      <div className="mt-10 md:mt-12">
+        <Figure media={figures[0]} number={1} aspectClass="aspect-[1400/803]" onOpen={open(0)} />
+      </div>
+
       <Section id="problem" title="The problem">
         <p className="t-body max-w-measure text-ink">
           Course search can rank options using semantic retrieval, exact course codes or SIS
@@ -94,7 +128,11 @@ export function AtlasCaseStudyPage() {
             fixed format, handles missing fields the same way every time and stores which courses
             belong to which schedule, per user and term.
           </p>
-          <Figure media={figures[0]} number={1} aspectClass="aspect-[2500/1738]" onOpen={() => setActive(0)} />
+          <Figure media={figures[1]} number={2} aspectClass="aspect-[2500/1738]" onOpen={open(1)} />
+        </div>
+        <div className="mt-10 grid items-start gap-10 md:grid-cols-2">
+          <Figure media={figures[2]} number={3} aspectClass="aspect-[1600/918]" onOpen={open(2)} />
+          <Figure media={figures[3]} number={4} aspectClass="aspect-[1600/918]" onOpen={open(3)} />
         </div>
       </Section>
 
@@ -102,12 +140,18 @@ export function AtlasCaseStudyPage() {
         <p className="t-body max-w-measure text-ink">
           Schedules are saved as named records with their courses and an audit history.
           Evaluation summaries come with the raw metric rows they were built from, and when data
-          is missing Atlas says there is none instead of writing a summary anyway. If a request to
-          add, drop, swap or replace a course is ambiguous, Atlas asks before it changes anything.
+          is missing Atlas says there is none instead of writing a summary anyway.
         </p>
         <div className="mt-10 grid items-start gap-10 md:grid-cols-2">
-          <Figure media={figures[1]} number={2} aspectClass="aspect-[1920/1104]" onOpen={() => setActive(1)} />
-          <Figure media={figures[2]} number={3} aspectClass="aspect-[1920/1334]" onOpen={() => setActive(2)} />
+          <Figure media={figures[4]} number={5} aspectClass="aspect-[1920/1104]" onOpen={open(4)} />
+          <Figure media={figures[5]} number={6} aspectClass="aspect-[1400/1209]" onOpen={open(5)} />
+        </div>
+        <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start lg:gap-12">
+          <p className="t-body text-ink">
+            If a request to add, drop, swap or replace a course is ambiguous, Atlas asks before it
+            changes anything.
+          </p>
+          <Figure media={figures[6]} number={7} aspectClass="aspect-[1920/1334]" onOpen={open(6)} />
         </div>
       </Section>
 

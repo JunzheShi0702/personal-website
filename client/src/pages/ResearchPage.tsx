@@ -1,5 +1,6 @@
 import { currentResearch, earlierResearch } from '../content/siteContent'
 import type { ResearchItem } from '../content/siteContent'
+import { ResearchFigure } from '../components/figures/ResearchFigures'
 import { PageHeader } from '../components/ui/PageHeader'
 import { ResearchEntry } from '../components/ui/ResearchEntry'
 import { Section } from '../components/ui/Section'
@@ -19,6 +20,7 @@ function Entry({ item }: { item: ResearchItem }) {
       methods={item.methods}
       links={item.links}
       progress={item.progress}
+      figure={item.figure ? <ResearchFigure id={item.id} /> : undefined}
     />
   )
 }
