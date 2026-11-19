@@ -7,6 +7,7 @@ import {
   profile,
   publications,
 } from '../content/siteContent'
+import { ResearchFigure } from '../components/figures/ResearchFigures'
 import { NewsList } from '../components/ui/NewsList'
 import { ProjectEntry } from '../components/ui/ProjectEntry'
 import { PublicationEntry } from '../components/ui/PublicationEntry'
@@ -85,6 +86,7 @@ export function HomePage() {
             affiliation={item.affiliation}
             description={<p>{item.summary}</p>}
             links={item.links}
+            figure={item.figure ? <ResearchFigure id={item.id} /> : undefined}
           />
         ))}
         <div className="mt-10">
@@ -127,6 +129,9 @@ export function HomePage() {
               context={project.context}
               summary={project.summary}
               myPart={project.myPart}
+              image={project.image}
+              imageTo={project.writeUp}
+              gallery={project.gallery}
               links={project.links.slice(0, 3)}
             />
           ))}

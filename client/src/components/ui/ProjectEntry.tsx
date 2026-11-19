@@ -1,7 +1,12 @@
+import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
+import type { FigureMedia } from './Figure'
+import { Lightbox } from './Lightbox'
 import { LinkRow, type EntryLink } from './TextLink'
+
+type GalleryImage = { src: string; alt: string; caption: string }
 
 type ProjectEntryProps = {
   id?: string
@@ -12,6 +17,8 @@ type ProjectEntryProps = {
   myPart?: ReactNode
   image?: { src: string; alt: string }
   imageTo?: string
+  /** Extra screenshots shown as thumbnails under the main image; they open in a lightbox. */
+  gallery?: GalleryImage[]
   links?: EntryLink[]
 }
 
@@ -24,14 +31,18 @@ export function ProjectEntry({
   myPart,
   image,
   imageTo,
+  gallery = [],
   links = [],
 }: ProjectEntryProps) {
+  const [active, setActive] = useState<number | null>(null)
+  const galleryMedia: FigureMedia[] = gallery.map((item) => ({ ...item, kind: 'image' }))
+
   const img = image ? (
     <img
       src={image.src}
       alt={image.alt}
       loading="lazy"
-      className="block aspect-[16/10] w-full rounded-lg border border-rule bg-paper-raised object-cover object-top"
+      className="block aspect-[16/10] w-full rounded-lg border border-rule bg-paper-raised object-cover object-top transition-colors duration-150 hover:border-rule-control"
     />
   ) : null
 
@@ -44,13 +55,36 @@ export function ProjectEntry({
       )}
     >
       {img ? (
-        imageTo ? (
-          <Link to={imageTo} className="block rounded-lg" aria-label={`${title} write-up`}>
-            {img}
-          </Link>
-        ) : (
-          img
-        )
+        <div className="min-w-0">
+          {imageTo ? (
+            <Link to={imageTo} className="block rounded-lg" aria-label={`${title} write-up`}>
+              {img}
+            </Link>
+          ) : (
+            img
+          )}
+          {galleryMedia.length ? (
+            <ul className="mt-3 grid grid-cols-3 gap-3">
+              {galleryMedia.map((media, index) => (
+                <li key={media.src}>
+                  <button
+                    type="button"
+                    onClick={() => setActive(index)}
+                    aria-label={`Enlarge: ${media.caption}`}
+                    className="block w-full cursor-zoom-in overflow-hidden rounded-md border border-rule bg-paper-raised transition-colors duration-150 hover:border-rule-control"
+                  >
+                    <img
+                      src={media.src}
+                      alt=""
+                      loading="lazy"
+                      className="block aspect-[16/10] w-full object-cover object-top"
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
       ) : null}
       <div className="min-w-0 max-w-measure">
         <p className="t-meta text-ink-subtle">
@@ -65,6 +99,9 @@ export function ProjectEntry({
         ) : null}
         <LinkRow links={links} className="mt-4" />
       </div>
+      {galleryMedia.length ? (
+        <Lightbox items={galleryMedia} activeIndex={active} onChange={setActive} />
+      ) : null}
     </article>
   )
 }
