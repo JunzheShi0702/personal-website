@@ -1,4 +1,5 @@
-// Site copy and records. Publication metadata matches the Crossref record for each DOI.
+// Site copy and records. Publication metadata matches the Crossref record for each DOI, except
+// the N_coll paper's title: Crossref's record drops the symbol, so that title follows the paper.
 
 export type ContentLink = {
   label: string
@@ -24,7 +25,21 @@ export const contactLinks: ContentLink[] = [
   { label: 'LinkedIn', href: profile.linkedin, external: true },
 ]
 
+export type PublicationFigure = {
+  src: string
+  /** The figure's label in the paper, such as "Fig. 3". */
+  label: string
+  /** What the figure shows. Used for the enlarge button and the lightbox. */
+  caption: string
+  /**
+   * Why the site may show it: the paper is open access under CC BY 4.0, or the
+   * Royal Society of Chemistry lets authors reuse their own figures with credit.
+   */
+  license: 'cc-by-4.0' | 'rsc-author-reuse'
+}
+
 export type Publication = {
+  /** Write a subscript as `_{...}`, for example `N_{coll}`. */
   title: string
   authors: string[]
   venue: string
@@ -35,6 +50,8 @@ export type Publication = {
   doi: string
   citation: string
   role: string
+  /** One figure from the paper, shown as a thumbnail beside the entry. */
+  figure?: PublicationFigure
 }
 
 // Newest first.
@@ -51,6 +68,13 @@ export const publications: Publication[] = [
     citation:
       'Shi, J. (2024). Hyperbolic-tangent-function-modeled transit light curve and planet radius calculation. Theoretical and Natural Science, 34(1), 134-140. https://doi.org/10.54254/2753-8818/34/20240704',
     role: 'the whole paper, including the light-curve processing code, the fits and the radius estimates.',
+    figure: {
+      src: '/paper-figures/transit-tanh-fit.webp',
+      label: 'Fig. 3',
+      caption:
+        'The hyperbolic-tangent model (red) fitted to a WASP-12 transit in normalized TESS data. The fitted parameters give the planet radius estimate.',
+      license: 'cc-by-4.0',
+    },
   },
   {
     title: 'Optimization of Asymmetry of Pb-Pb Nucleus Collision Based on Glauber Model Simulation',
@@ -64,9 +88,16 @@ export const publications: Publication[] = [
     citation:
       'Xu, H., Shi, J., & Song, Z. (2023). Optimization of asymmetry of Pb-Pb nucleus collision based on Glauber model simulation. Theoretical and Natural Science, 28(1), 206-217. https://doi.org/10.54254/2753-8818/28/20230428',
     role: 'the Glauber Monte Carlo runs, the asymmetry analysis across harmonics and the interpretation of the results.',
+    figure: {
+      src: '/paper-figures/pbpb-ecc2-npart.webp',
+      label: 'Fig. 2',
+      caption:
+        'Average path-length difference over a 20 × 20 grid of second-harmonic eccentricity (ecc2) and number of participants (Npart), generated in ROOT.',
+      license: 'cc-by-4.0',
+    },
   },
   {
-    title: 'The Relationship Between and Eccentricities Based on Glauber Model',
+    title: 'The Relationship Between N_{coll} and Eccentricities Based on Glauber Model',
     authors: ['Junzhe Shi'],
     venue: 'Theoretical and Natural Science',
     volume: '11',
@@ -75,8 +106,15 @@ export const publications: Publication[] = [
     year: '2023',
     doi: '10.54254/2753-8818/11/20230390',
     citation:
-      'Shi, J. (2023). The relationship between and eccentricities based on Glauber model. Theoretical and Natural Science, 11(1), 121-127. https://doi.org/10.54254/2753-8818/11/20230390',
+      'Shi, J. (2023). The relationship between Ncoll and eccentricities based on Glauber model. Theoretical and Natural Science, 11(1), 121-127. https://doi.org/10.54254/2753-8818/11/20230390',
     role: 'the whole paper, including the collision simulations and the analysis of eccentricity against the number of collisions.',
+    figure: {
+      src: '/paper-figures/ncoll-ecc1-scatter.webp',
+      label: 'Fig. 2(a)',
+      caption:
+        'Ncoll against Ecc1 for 10,000 simulated collision events, exported from CERN ROOT. The orange line marks the optimum average value.',
+      license: 'cc-by-4.0',
+    },
   },
   {
     title:
@@ -102,6 +140,13 @@ export const publications: Publication[] = [
     citation:
       'Lei, Y., Li, X., Liang, J., Shi, J., Wei, Y., Qin, P., Tao, H., Chen, J., Tan, Z., & Lei, H. (2023). Trap engineering using oxygen-doped graphitic carbon nitride for high-performance perovskite solar cells. Journal of Materials Chemistry C, 11(29), 9860-9870. https://doi.org/10.1039/D3TC01711G',
     role: 'refining the setup and testing workflow, helping interpret device measurements, and working on the manuscript.',
+    figure: {
+      src: '/paper-figures/perovskite-graphical-abstract.webp',
+      label: 'Graphical abstract',
+      caption:
+        'The oxygen-doped g-C₃N₄ additive at the SnO₂/perovskite interface, where it mitigates the two main deep traps: uncoordinated Sn dangling bonds and –OH groups.',
+      license: 'rsc-author-reuse',
+    },
   },
 ]
 
