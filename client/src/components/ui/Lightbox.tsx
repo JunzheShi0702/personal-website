@@ -46,9 +46,11 @@ export function Lightbox({ items, activeIndex, onChange }: LightboxProps) {
       >
         <div className="flex items-start justify-between gap-4">
           <p className="t-caption text-ink-muted">
-            <span className="t-meta mr-2 text-ink-subtle">
-              {activeIndex + 1}/{count}
-            </span>
+            {count > 1 ? (
+              <span className="t-meta mr-2 text-ink-subtle">
+                {activeIndex + 1}/{count}
+              </span>
+            ) : null}
             <span className="font-semibold text-ink">{media.caption}</span>
           </p>
           <div className="flex shrink-0 gap-2">
@@ -100,7 +102,9 @@ export function Lightbox({ items, activeIndex, onChange }: LightboxProps) {
           )}
         </div>
         {media.detail ? <p className="t-caption max-w-measure text-ink-muted">{media.detail}</p> : null}
-        <p className="t-caption text-ink-subtle">Esc closes. Arrow keys move between figures.</p>
+        <p className="t-caption text-ink-subtle">
+          {count > 1 ? 'Esc closes. Arrow keys move between figures.' : 'Esc closes.'}
+        </p>
       </div>
     </div>
   )
